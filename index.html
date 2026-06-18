@@ -120,7 +120,7 @@
   .hdr__nav a:hover::after{transform:scaleX(1);transform-origin:left}
   .hdr__cta{padding:.7rem 1.3rem;font-size:.78rem}
   .hdr__burger{display:none;background:none;border:0;color:var(--line);font-size:1.6rem;cursor:pointer;line-height:1;z-index:101}
-  @media(max-width:960px){
+  @media(max-width:1040px){
     .hdr__nav{position:fixed;inset:0;height:100vh;background:rgba(13,13,13,.98);flex-direction:column;
               justify-content:center;align-items:center;gap:1.8rem;transform:translateX(100%);
               transition:transform .45s var(--ease);z-index:95}
@@ -136,6 +136,7 @@
     <a href="#advantages">Преимущества</a>
     <a href="#structure">Устройство</a>
     <a href="#models">Модельный ряд</a>
+    <a href="#directions">Направления</a>
     <a href="#stages">Этапы</a>
     <a href="#about">О компании</a>
     <a href="#contact">Контакты</a>
@@ -236,7 +237,7 @@
       <p class="hero__kicker" data-reveal style="--d:80ms">Повышаем эффективность · конвейеры нового уровня</p>
       <h1 class="hero__title" data-reveal="clip" style="--d:160ms">Вантовые<br>конвейеры</h1>
       <p class="hero__sub" data-reveal style="--d:320ms">Будущее горнодобывающей отрасли</p>
-      <p class="hero__support" data-reveal style="--d:440ms">Одна опора вместо десятков. Свободный проезд техники, мобильный склад, монтаж за неделю.</p>
+      <p class="hero__support" data-reveal style="--d:440ms">Одна поворотная опора вместо десятков: свободный проезд техники, мобильный склад готовой продукции, рассчитанный запас прочности несущих конструкций.</p>
       <div class="hero__actions" data-reveal style="--d:560ms">
         <a href="#models" class="btn">Подобрать конвейер <span class="arr">→</span></a>
         <a href="#contact" class="btn btn--ghost">Оставить заявку</a>
@@ -277,11 +278,11 @@
     <div class="adv__grid">
       <div class="adv__visual shimmer" data-reveal aria-hidden="true"><span>// фото узлов — сменяется по скроллу</span></div>
       <div class="adv__list">
-        <div class="adv__item" data-reveal style="--d:80ms"><h3>Безопасность</h3><p>Одна опора под конвейером значительно снижает риск наезда техники на опорные конструкции. Меньше препятствий на площадке — меньше аварий и простоев.</p></div>
-        <div class="adv__item" data-reveal style="--d:160ms"><h3>Надёжность</h3><p>Прочностные характеристики несущего каркаса рассчитаны и подобраны с требуемым запасом прочности. Несущие элементы — из стали 09Г2С.</p></div>
-        <div class="adv__item" data-reveal style="--d:240ms"><h3>Скорость</h3><p>Установка конвейера в проектное положение — двумя кранами за 2 дня. Монтаж всего конвейера — 1 неделя.</p></div>
-        <div class="adv__item" data-reveal style="--d:320ms"><h3>Мобильность</h3><p>Конвейер перемещается вокруг опорной точки без демонтажно-монтажных работ. Это увеличивает ёмкость склада готовой продукции в несколько раз.</p></div>
-        <div class="adv__item" data-reveal style="--d:400ms"><h3>Удобство</h3><p>Под единственной опорой свободно проезжают автомобили и спецтехника. Площадки обслуживания с двух сторон — удобный доступ для работ по всей длине.</p></div>
+        <div class="adv__item" data-reveal style="--d:80ms"><h3>Безопасность</h3><p>Единственная опора снижает риск наезда техники на опорные конструкции. Меньше препятствий на площадке — меньше внеплановых простоев.</p></div>
+        <div class="adv__item" data-reveal style="--d:160ms"><h3>Надёжность</h3><p>Несущий каркас рассчитан с нормативным запасом прочности; основные элементы выполнены из конструкционной стали 09Г2С.</p></div>
+        <div class="adv__item" data-reveal style="--d:240ms"><h3>Сроки</h3><p>Подъём конструкции в проектное положение выполняется за два дня, полный монтаж — в нормативные сроки по проекту производства работ.</p></div>
+        <div class="adv__item" data-reveal style="--d:320ms"><h3>Мобильность</h3><p>Конвейер разворачивается вокруг поворотной опоры без демонтажных работ, многократно увеличивая полезную ёмкость склада готовой продукции.</p></div>
+        <div class="adv__item" data-reveal style="--d:400ms"><h3>Удобство</h3><p>Свободный проезд техники под конвейером и площадки обслуживания с двух сторон обеспечивают безопасный доступ к узлам по всей длине.</p></div>
       </div>
     </div>
   </div>
@@ -393,6 +394,54 @@
 <!-- ╚═══════════════════════════ BLOCK: MODELS — END ═════════════════════════════════════╝ -->
 
 
+<!-- ╔═══════════════════════════ BLOCK: DIRECTIONS — START ══════════════════════════════╗
+     Направления производства ГОРТЕХКОНСАЛТ (4 направления). Независимый блок. -->
+<style id="b-dir">
+  .dir{border-top:1px solid var(--hairline)}
+  .dir__cards{display:grid;grid-template-columns:repeat(2,1fr);gap:1.4rem;margin-top:3rem}
+  .dir__card{position:relative;border:1px solid var(--hairline);border-radius:3px;padding:2rem 1.9rem;
+    background:var(--surface-grad);box-shadow:var(--elev-1);overflow:hidden;
+    transition:transform .4s var(--ease),box-shadow .4s var(--ease),border-color .3s}
+  .dir__card:hover{transform:translateY(-5px);border-color:rgba(212,197,163,.45);box-shadow:var(--elev-2),var(--glow)}
+  .dir__num{font-family:var(--f-mono);font-size:.8rem;color:var(--sand);letter-spacing:.1em}
+  .dir__name{font-family:var(--f-display);font-weight:700;text-transform:uppercase;letter-spacing:-.01em;
+    font-size:clamp(1.3rem,2.4vw,1.7rem);margin-top:1rem;line-height:1.05}
+  .dir__desc{color:var(--muted);margin-top:.9rem;max-width:46ch}
+  @media(max-width:760px){.dir__cards{grid-template-columns:1fr}}
+</style>
+<section class="dir section" id="directions">
+  <div class="wrap">
+    <p class="eyebrow" data-reveal>04 · Направления</p>
+    <h2 class="h2" data-reveal="clip" style="--d:80ms">Направления производства</h2>
+    <span class="rule" data-reveal="line" style="--d:240ms"></span>
+    <p class="lead" data-reveal style="--d:200ms">Проектируем и изготавливаем оборудование для горнодобывающих и перерабатывающих предприятий — от отдельных узлов до законченных технологических решений.</p>
+    <div class="dir__cards">
+      <div class="dir__card" data-reveal style="--d:80ms">
+        <div class="dir__num">01</div>
+        <div class="dir__name">Конвейеры</div>
+        <p class="dir__desc">Ленточные и вантовые конвейеры для транспортировки и складирования сыпучих материалов. Флагманское направление — серия вантовых конвейеров КВЛ с одной поворотной опорой.</p>
+      </div>
+      <div class="dir__card" data-reveal style="--d:160ms">
+        <div class="dir__num">02</div>
+        <div class="dir__name">Грохоты вибрационные</div>
+        <p class="dir__desc">Вибрационные грохоты (вибросита) для классификации и рассева сыпучих материалов по фракциям, включая тонкое грохочение.</p>
+      </div>
+      <div class="dir__card" data-reveal style="--d:240ms">
+        <div class="dir__num">03</div>
+        <div class="dir__name">Грохоты колосниковые</div>
+        <p class="dir__desc">Колосниковые грохоты для предварительного грубого грохочения и отделения негабарита перед дроблением.</p>
+      </div>
+      <div class="dir__card" data-reveal style="--d:320ms">
+        <div class="dir__num">04</div>
+        <div class="dir__name">Барабаны конвейеров</div>
+        <p class="dir__desc">Приводные, натяжные и отклоняющие барабаны конвейеров. Изготовление, футеровка и балансировка под параметры оборудования заказчика.</p>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ╚═══════════════════════════ BLOCK: DIRECTIONS — END ════════════════════════════════╝ -->
+
+
 <!-- ╔═══════════════════════════ BLOCK: STAGES — START ══════════════════════════════════╗
      ⚠ III Доставка и V Пуско-наладка — черновые тексты, подтвердить. -->
 <style id="b-stg">
@@ -409,7 +458,7 @@
 </style>
 <section class="stg section" id="stages">
   <div class="wrap">
-    <p class="eyebrow" data-reveal>04 · Полный цикл</p>
+    <p class="eyebrow" data-reveal>05 · Полный цикл</p>
     <h2 class="h2" data-reveal="clip" style="--d:80ms">От проекта до пуска — под ключ</h2>
     <span class="rule" data-reveal="line" style="--d:240ms"></span>
     <p class="stg__lead" data-reveal style="--d:200ms">Проектирование · Изготовление · Доставка · Монтаж · Пуско-наладка</p>
@@ -452,11 +501,11 @@
 </style>
 <section class="abt section" id="about">
   <div class="wrap">
-    <p class="eyebrow" data-reveal>05 · О компании</p>
+    <p class="eyebrow" data-reveal>06 · О компании</p>
     <h2 class="h2" data-reveal="clip" style="--d:80ms">ГОРТЕХКОНСАЛТ</h2>
     <span class="rule" data-reveal="line" style="--d:240ms"></span>
     <div class="abt__year" data-parallax="0.06"><span data-count="1999">1999</span><small>Год запуска первого вантового конвейера нашей командой.</small></div>
-    <p class="abt__geo" data-reveal>Команда инженеров, которая проектирует, производит и модернизирует оборудование для горнодобывающих предприятий. Выполнены контракты на модернизацию производства в Калужской, Рязанской и Липецкой областях.</p>
+    <p class="abt__geo" data-reveal>Инженерное производство оборудования для горнодобывающей отрасли: конвейеры, вибрационные и колосниковые грохоты, барабаны конвейеров. Проектируем, изготавливаем и модернизируем производственные линии — от отдельных узлов до законченных решений. Выполнены контракты на модернизацию предприятий Калужской, Рязанской и Липецкой областей.</p>
     <div class="abt__tags" data-reveal>
       <span>Сушильные барабаны</span><span>Бункеры сыпучих материалов</span><span>Питатели подачи сырья</span>
       <span>Конвейеры ленточные</span><span>Конвейеры шнековые</span><span>Конвейеры вибрационные</span>
@@ -498,7 +547,7 @@
 </style>
 <section class="cta section" id="contact">
   <div class="wrap">
-    <p class="eyebrow" data-reveal>06 · Контакты</p>
+    <p class="eyebrow" data-reveal>07 · Контакты</p>
     <h2 class="h2" data-reveal="clip" style="--d:80ms">Экономьте время и деньги с конвейерами нового уровня</h2>
     <span class="rule" data-reveal="line" style="--d:240ms"></span>
     <div class="cta__grid">
@@ -568,7 +617,7 @@
       </div>
       <div class="ftr__col">
         <h4>Навигация</h4>
-        <a href="#advantages">Преимущества</a><a href="#structure">Устройство</a><a href="#models">Модельный ряд</a><a href="#stages">Этапы</a><a href="#about">О компании</a>
+        <a href="#advantages">Преимущества</a><a href="#structure">Устройство</a><a href="#models">Модельный ряд</a><a href="#directions">Направления</a><a href="#stages">Этапы</a><a href="#about">О компании</a>
       </div>
       <div class="ftr__col">
         <h4>Контакты</h4>
