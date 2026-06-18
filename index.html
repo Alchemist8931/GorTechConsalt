@@ -156,46 +156,91 @@
 
 
 <!-- ╔═══════════════════════════════ BLOCK: HERO — START ═════════════════════════════════╗
-     Текст готов. Визуал — заглушка под Three.js (#hero-canvas, с дрейфом сетки + shimmer). -->
+     Фон: неподвижная blueprint-сетка с ПОСЕКТОРНЫМ свечением (линии не движутся — медленно
+     дышит только яркость секторов). Поверх — фото гор1.jpg на всю ширину; высота блока = высоте
+     фото. Верхний угол фото фотореалистично рассеивается (~1/3), открывая сетку под ним.
+     Угол рассеивания: переменная --fade-corner  (0% 0% = верх-лево; 100% 0% = верх-право). -->
 <style id="b-hero">
-  .hero{position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden;padding-top:var(--header-h)}
-  .hero__canvas{position:absolute;inset:0;z-index:0;will-change:transform;
+  .hero{position:relative;overflow:hidden;--fade-corner:0% 0%}
+
+  /* — сетка-фон: неподвижная, посекторное свечение — */
+  .hero__grid{position:absolute;inset:0;z-index:0;overflow:hidden;background:var(--bg)}
+  .hero__grid::before{content:"";position:absolute;inset:-2px;
     background:
-      radial-gradient(120% 90% at 30% 35%, rgba(212,197,163,.06), transparent 55%),
-      linear-gradient(transparent 95%, var(--hairline) 95%),
-      linear-gradient(90deg, transparent 95%, var(--hairline) 95%);
-    background-size:auto, 100% 42px, 42px 100%;
-    animation:heroGrid 7s linear infinite}
-  @keyframes heroGrid{to{background-position:0 0, 0 42px, 42px 0}}
-  .hero__canvas::before{content:"// Блок 1 · здесь будет 3D-конвейер";position:absolute;
-    right:var(--pad);bottom:2rem;font-family:var(--f-mono);font-size:.7rem;color:var(--muted);opacity:.55;z-index:1}
-  .hero__veil{position:absolute;inset:0;z-index:1;pointer-events:none;
-    background:radial-gradient(110% 80% at 25% 45%, transparent 38%, rgba(13,13,13,.62) 100%)}
-  .hero__inner{position:relative;z-index:2;width:100%}
+      linear-gradient(to right, rgba(232,226,212,.07) 1px, transparent 1px) 0 0/46px 46px,
+      linear-gradient(to bottom, rgba(232,226,212,.07) 1px, transparent 1px) 0 0/46px 46px}
+  .hero__sec{position:absolute;inset:-2px;opacity:.14;will-change:opacity;
+    background:
+      linear-gradient(to right, rgba(212,197,163,.55) 1px, transparent 1px) 0 0/46px 46px,
+      linear-gradient(to bottom, rgba(212,197,163,.55) 1px, transparent 1px) 0 0/46px 46px}
+  .hero__sec--a{-webkit-mask-image:radial-gradient(42% 52% at 22% 28%,#000,transparent 70%);
+                mask-image:radial-gradient(42% 52% at 22% 28%,#000,transparent 70%);
+                animation:secGlow 9s var(--ease) infinite}
+  .hero__sec--b{-webkit-mask-image:radial-gradient(46% 50% at 74% 62%,#000,transparent 70%);
+                mask-image:radial-gradient(46% 50% at 74% 62%,#000,transparent 70%);
+                animation:secGlow 13s var(--ease) infinite 1.6s}
+  .hero__sec--c{-webkit-mask-image:radial-gradient(40% 46% at 50% 90%,#000,transparent 70%);
+                mask-image:radial-gradient(40% 46% at 50% 90%,#000,transparent 70%);
+                animation:secGlow 16s var(--ease) infinite .7s}
+  @keyframes secGlow{0%,100%{opacity:.05}50%{opacity:.22}}
+
+  /* — фото: на всю ширину, задаёт высоту блока; верхний угол рассеивается — */
+  .hero__photo{display:block;width:100%;height:auto;position:relative;z-index:1;
+    -webkit-mask-image:radial-gradient(130% 130% at var(--fade-corner), transparent 0%, transparent 14%, rgba(0,0,0,.35) 34%, #000 56%);
+    mask-image:radial-gradient(130% 130% at var(--fade-corner), transparent 0%, transparent 14%, rgba(0,0,0,.35) 34%, #000 56%)}
+  /* — полоса «пыли» на кромке рассеивания (добавляет грана, не трогая само фото) — */
+  .hero__dust{position:absolute;inset:0;z-index:1;pointer-events:none;mix-blend-mode:screen;opacity:.5;
+    background-size:180px;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='hd'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23hd)' opacity='0.6'/%3E%3C/svg%3E");
+    -webkit-mask-image:radial-gradient(130% 130% at var(--fade-corner), transparent 12%, #000 34%, transparent 60%);
+    mask-image:radial-gradient(130% 130% at var(--fade-corner), transparent 12%, #000 34%, transparent 60%)}
+
+  /* — текст поверх — */
+  .hero__overlay{position:absolute;inset:0;z-index:2;display:flex;align-items:center;pointer-events:none}
+  .hero__overlay::before{content:"";position:absolute;inset:0;pointer-events:none;
+    background:linear-gradient(90deg, rgba(13,13,13,.72) 0%, rgba(13,13,13,.3) 38%, transparent 62%)}
+  .hero__inner{position:relative;width:100%;pointer-events:auto}
   .hero__kicker{font-family:var(--f-mono);font-weight:500;letter-spacing:.2em;text-transform:uppercase;
     font-size:.78rem;color:var(--sand);display:inline-flex;align-items:center;gap:.6rem}
   .hero__kicker::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--sand);
     box-shadow:0 0 12px var(--sand);animation:pulse 2.4s var(--ease) infinite}
   @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.35;transform:scale(.7)}}
   .hero__title{font-family:var(--f-display);font-weight:800;text-transform:uppercase;
-    font-size:clamp(2.8rem,8.5vw,7rem);line-height:.94;letter-spacing:-.02em;margin-top:1.4rem}
+    font-size:clamp(2.6rem,7vw,6rem);line-height:.94;letter-spacing:-.02em;margin-top:1.4rem}
   .hero__sub{font-family:var(--f-display);font-weight:700;color:var(--muted);
-    font-size:clamp(1.1rem,2.6vw,2.1rem);line-height:1.05;margin-top:1.1rem;text-transform:uppercase}
-  .hero__support{max-width:46ch;margin-top:1.9rem;color:var(--line);opacity:.82;font-size:clamp(1rem,1.5vw,1.18rem)}
-  .hero__actions{display:flex;gap:1rem;margin-top:2.6rem;flex-wrap:wrap}
-  @media (prefers-reduced-motion: reduce){.hero__canvas{animation:none}.hero__kicker::before{animation:none}}
+    font-size:clamp(1.1rem,2.4vw,2rem);line-height:1.05;margin-top:1.1rem;text-transform:uppercase}
+  .hero__support{max-width:44ch;margin-top:1.6rem;color:var(--line);opacity:.85;font-size:clamp(1rem,1.4vw,1.15rem)}
+  .hero__actions{display:flex;gap:1rem;margin-top:2.2rem;flex-wrap:wrap}
+
+  /* — мобайл: не даём широкому кадру схлопнуться в полоску — */
+  @media(max-width:760px){
+    .hero{min-height:92vh}
+    .hero__photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:72% 50%;
+      -webkit-mask-image:none;mask-image:none}
+    .hero__dust{display:none}
+    .hero__overlay{align-items:flex-end;padding-bottom:9vh}
+    .hero__overlay::before{background:linear-gradient(180deg, rgba(13,13,13,.45) 0%, transparent 32%, rgba(13,13,13,.82) 100%)}
+  }
+  @media (prefers-reduced-motion: reduce){.hero__sec{animation:none}.hero__kicker::before{animation:none}}
 </style>
 <section class="hero" id="hero">
-  <div class="hero__canvas shimmer" id="hero-canvas" aria-hidden="true"></div>
-  <div class="hero__veil" aria-hidden="true"></div>
-  <div class="hero__inner wrap">
-    <p class="hero__kicker" data-reveal style="--d:80ms">Повышаем эффективность · конвейеры нового уровня</p>
-    <h1 class="hero__title" data-reveal="clip" style="--d:160ms">Вантовые<br>конвейеры</h1>
-    <p class="hero__sub" data-reveal style="--d:320ms">Будущее горнодобывающей отрасли</p>
-    <p class="hero__support" data-reveal style="--d:440ms">Одна опора вместо десятков. Свободный проезд техники, мобильный склад, монтаж за неделю.</p>
-    <div class="hero__actions" data-reveal style="--d:560ms">
-      <a href="#models" class="btn">Подобрать конвейер <span class="arr">→</span></a>
-      <a href="#contact" class="btn btn--ghost">Оставить заявку</a>
+  <div class="hero__grid" aria-hidden="true">
+    <div class="hero__sec hero__sec--a"></div>
+    <div class="hero__sec hero__sec--b"></div>
+    <div class="hero__sec hero__sec--c"></div>
+  </div>
+  <img class="hero__photo" src="гор1.jpg" alt="Вантовый конвейер на карьере: разгрузка щебня в облаке пыли на закате" loading="eager">
+  <div class="hero__dust" aria-hidden="true"></div>
+  <div class="hero__overlay">
+    <div class="hero__inner wrap">
+      <p class="hero__kicker" data-reveal style="--d:80ms">Повышаем эффективность · конвейеры нового уровня</p>
+      <h1 class="hero__title" data-reveal="clip" style="--d:160ms">Вантовые<br>конвейеры</h1>
+      <p class="hero__sub" data-reveal style="--d:320ms">Будущее горнодобывающей отрасли</p>
+      <p class="hero__support" data-reveal style="--d:440ms">Одна опора вместо десятков. Свободный проезд техники, мобильный склад, монтаж за неделю.</p>
+      <div class="hero__actions" data-reveal style="--d:560ms">
+        <a href="#models" class="btn">Подобрать конвейер <span class="arr">→</span></a>
+        <a href="#contact" class="btn btn--ghost">Оставить заявку</a>
+      </div>
     </div>
   </div>
 </section>
@@ -591,18 +636,7 @@
     counts.forEach(function(el){ co.observe(el); });
   }
 
-  // лёгкий mouse-parallax на сетке героя
-  if(!reduce){
-    var hero = document.getElementById('hero-canvas');
-    if(hero){
-      var raf=false;
-      window.addEventListener('mousemove', function(ev){
-        var hx = (ev.clientX/window.innerWidth - .5) * 14;
-        var hy = (ev.clientY/window.innerHeight - .5) * 14;
-        if(!raf){ requestAnimationFrame(function(){ hero.style.transform='translate('+(-hx).toFixed(1)+'px,'+(-hy).toFixed(1)+'px) scale(1.03)'; raf=false; }); raf=true; }
-      }, {passive:true});
-    }
-  }
+  // (mouse-parallax героя удалён — сетка в Hero статична)
 })();
 </script>
 <!-- ╚════════════════════════════════════════════════════════════════════════════════════════╝ -->
