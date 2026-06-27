@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Вантовые ленточные конвейеры КВЛ — проектирование, изготовление, монтаж | ГОРТЕХКОНСАЛТ</title>
-<meta name="description" content="Вантовые ленточные конвейеры с одной опорой для горнодобывающей отрасли. Готовая серия КВЛ-24/28/36. Проектирование, изготовление за 1 месяц, монтаж за 1 неделю. Несущий каркас из стали 09Г2С.">
+<title>Вантовые конвейеры, виброгрохоты, колосниковые грохоты | ГОРТЕХКОНСАЛТ</title>
+<meta name="description" content="Оборудование для горнодобывающей отрасли: вантовые ленточные конвейеры (серия КВЛ), вибрационные и колосниковые грохоты, барабаны конвейеров. Проектирование, изготовление, монтаж — полный цикл.">
 <meta name="theme-color" content="#0d0d0d">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Вантовые конвейеры КВЛ · ГОРТЕХКОНСАЛТ">
-<meta property="og:description" content="Одна опора вместо десятков: свободный проезд техники, мобильный склад, монтаж за неделю.">
+<meta property="og:title" content="ГОРТЕХКОНСАЛТ · оборудование для горнодобывающей отрасли">
+<meta property="og:description" content="Вантовые конвейеры, виброгрохоты, колосниковые грохоты. Полный цикл — от проекта до пуска.">
 <meta property="og:url" content="https://gortehkonsalt.ru/">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16,10 +16,10 @@
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700;800&family=Onest:wght@300;400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 
 <!-- ╔═══════════════════════════════════════════════════════════════════════╗
-     ║  FOUNDATION — общий слой: токены, тени/элевация, типографика,         ║
-     ║  примитивы + ОБЩИЙ ДВИЖОК АНИМАЦИЙ. Блоки подключаются через          ║
-     ║  атрибуты data-reveal / data-parallax / data-count и остаются         ║
-     ║  заменяемыми целиком (см. маркеры BLOCK START/END).                  ║
+     ║  FOUNDATION — общий слой: токены, тени, типографика, примитивы,       ║
+     ║  движок анимаций + ПЕРЕКЛЮЧАТЕЛЬ НАПРАВЛЕНИЙ.                         ║
+     ║  Персональные блоки 00–03 берут контент из DATA (внизу файла).        ║
+     ║  Общие блоки 04–07 одинаковы для всех направлений.                   ║
      ╚═══════════════════════════════════════════════════════════════════════╝ -->
 <style id="foundation">
   :root{
@@ -71,6 +71,10 @@
   .progress{position:fixed;top:0;left:0;height:2px;width:100%;transform:scaleX(0);transform-origin:left;
     background:var(--sand);z-index:201;will-change:transform}
 
+  /* — плавная подмена контента персональных блоков при смене направления — */
+  .swap-target{transition:opacity .3s var(--ease)}
+  .swap-target.is-swapping{opacity:.12}
+
   /* — общий движок reveal (только если движение разрешено) — */
   @media (prefers-reduced-motion: no-preference){
     [data-reveal]{opacity:0;transform:translateY(26px);filter:blur(6px);
@@ -96,14 +100,14 @@
 <div class="grain" aria-hidden="true"></div>
 <div class="progress" id="progress" aria-hidden="true"></div>
 
-<!-- минимальная разметка для поисковиков; юр-данные дополнить позже -->
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Organization","name":"ГОРТЕХКОНСАЛТ",
- "url":"https://gortehkonsalt.ru/","description":"Вантовые ленточные конвейеры для горнодобывающей отрасли."}
+ "url":"https://gortehkonsalt.ru/","description":"Оборудование для горнодобывающей отрасли: вантовые конвейеры, виброгрохоты, колосниковые грохоты."}
 </script>
 
 
-<!-- ╔═══════════════════════════════ BLOCK: HEADER — START ═══════════════════════════════╗ -->
+<!-- ╔═══════════════════════════════ BLOCK: HEADER — START ═══════════════════════════════╗
+     В навигации «Направления» — выпадающее меню-переключатель (3 направления). -->
 <style id="b-header">
   .hdr{position:fixed;top:0;left:0;width:100%;z-index:100;height:var(--header-h);
        display:flex;align-items:center;justify-content:space-between;padding-inline:var(--pad);
@@ -111,7 +115,7 @@
   .hdr.scrolled{background:rgba(13,13,13,.72);backdrop-filter:blur(16px) saturate(1.2);border-color:var(--hairline)}
   .hdr__logo{font-family:var(--f-display);font-weight:800;letter-spacing:.06em;font-size:1.25rem}
   .hdr__logo b{color:var(--sand)}
-  .hdr__nav{display:flex;gap:2rem}
+  .hdr__nav{display:flex;align-items:center;gap:1.9rem}
   .hdr__nav a{position:relative;font-family:var(--f-mono);font-size:.76rem;letter-spacing:.08em;
               color:var(--muted);text-transform:uppercase;transition:color .25s;padding-block:.4rem}
   .hdr__nav a::after{content:"";position:absolute;left:0;bottom:0;width:100%;height:1px;background:var(--sand);
@@ -120,14 +124,41 @@
   .hdr__nav a:hover::after{transform:scaleX(1);transform-origin:left}
   .hdr__cta{padding:.7rem 1.3rem;font-size:.78rem}
   .hdr__burger{display:none;background:none;border:0;color:var(--line);font-size:1.6rem;cursor:pointer;line-height:1;z-index:101}
+
+  /* выпадающее меню «Направления» */
+  .hdr__drop{position:relative}
+  .hdr__drop-trigger{background:none;border:0;cursor:pointer;color:var(--muted);font-family:var(--f-mono);
+    font-size:.76rem;letter-spacing:.08em;text-transform:uppercase;padding-block:.4rem;display:inline-flex;align-items:center;gap:.4rem;transition:color .25s}
+  .hdr__drop-trigger:hover{color:var(--line)}
+  .hdr__caret{font-size:.7em;transition:transform .3s var(--ease)}
+  .hdr__drop-menu{position:absolute;top:calc(100% + .9rem);left:50%;transform:translateX(-50%) translateY(8px);
+    min-width:250px;background:rgba(13,13,13,.97);backdrop-filter:blur(16px);border:1px solid var(--hairline);
+    border-radius:4px;box-shadow:var(--elev-2);padding:.5rem;display:flex;flex-direction:column;gap:.2rem;
+    opacity:0;visibility:hidden;transition:opacity .25s var(--ease),transform .25s var(--ease);z-index:101}
+  .hdr__drop:hover .hdr__drop-menu,.hdr__drop.open .hdr__drop-menu{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+  .hdr__drop:hover .hdr__caret,.hdr__drop.open .hdr__caret{transform:rotate(180deg)}
+  .hdr__drop-item{text-align:left;background:none;border:0;cursor:pointer;color:var(--line);font-family:var(--f-body);
+    font-size:.85rem;padding:.7rem .9rem;border-radius:3px;transition:background .2s,color .2s;white-space:nowrap;display:flex;justify-content:space-between;gap:1rem}
+  .hdr__drop-item:hover{background:rgba(212,197,163,.1);color:var(--sand)}
+  .hdr__drop-item.is-active{color:var(--sand)}
+  .hdr__drop-item .tick{opacity:0}
+  .hdr__drop-item.is-active .tick{opacity:1}
+
   @media(max-width:1040px){
     .hdr__nav{position:fixed;inset:0;height:100vh;background:rgba(13,13,13,.98);flex-direction:column;
-              justify-content:center;align-items:center;gap:1.8rem;transform:translateX(100%);
-              transition:transform .45s var(--ease);z-index:95}
+              justify-content:center;align-items:center;gap:1.6rem;transform:translateX(100%);overflow-y:auto;
+              transition:transform .45s var(--ease);z-index:95;padding:6rem 1.5rem}
     body.nav-open .hdr__nav{transform:none}
-    .hdr__nav a{font-size:1.3rem}
+    .hdr__nav a{font-size:1.25rem}
     .hdr__cta{display:none}
     .hdr__burger{display:block}
+    .hdr__drop{width:100%;display:flex;flex-direction:column;align-items:center}
+    .hdr__drop-trigger{font-size:1.25rem}
+    .hdr__caret{display:none}
+    .hdr__drop-menu{position:static;transform:none;opacity:1;visibility:visible;background:none;border:0;
+      box-shadow:none;backdrop-filter:none;margin-top:.7rem;align-items:center;min-width:0;padding:0;gap:.3rem}
+    .hdr__drop-item{font-size:1rem;justify-content:center}
+    .hdr__drop-item .tick{display:none}
   }
 </style>
 <header class="hdr" id="hdr">
@@ -136,7 +167,14 @@
     <a href="#advantages">Преимущества</a>
     <a href="#structure">Устройство</a>
     <a href="#models">Модельный ряд</a>
-    <a href="#directions">Направления</a>
+    <div class="hdr__drop" id="dirDrop">
+      <button type="button" class="hdr__drop-trigger" aria-haspopup="true" aria-expanded="false">Направления <span class="hdr__caret">▾</span></button>
+      <div class="hdr__drop-menu">
+        <button type="button" class="hdr__drop-item" data-dir="conveyor">Конвейеры вантовые <span class="tick">✓</span></button>
+        <button type="button" class="hdr__drop-item" data-dir="screen">Вибросито тонкого рассева <span class="tick">✓</span></button>
+        <button type="button" class="hdr__drop-item" data-dir="grizzly">Грохоты колосниковые <span class="tick">✓</span></button>
+      </div>
+    </div>
     <a href="#stages">Этапы</a>
     <a href="#about">О компании</a>
     <a href="#contact">Контакты</a>
@@ -147,137 +185,110 @@
 <script>
 (function(){
   var hdr=document.getElementById('hdr'), burger=document.getElementById('burger');
+  var drop=document.getElementById('dirDrop'), trig=drop&&drop.querySelector('.hdr__drop-trigger');
   window.addEventListener('scroll',function(){ hdr.classList.toggle('scrolled', window.scrollY>20); },{passive:true});
   function toggle(open){ document.body.classList.toggle('nav-open',open); burger.setAttribute('aria-expanded',open); burger.innerHTML=open?'&#10005;':'&#9776;'; }
   burger.addEventListener('click',function(){ toggle(!document.body.classList.contains('nav-open')); });
   document.querySelectorAll('#nav a').forEach(function(a){ a.addEventListener('click',function(){ toggle(false); }); });
+  // дропдаун: клик/клавиатура (на десктопе ещё и hover через CSS)
+  if(trig){ trig.addEventListener('click',function(e){ e.stopPropagation(); drop.classList.toggle('open'); trig.setAttribute('aria-expanded', drop.classList.contains('open')); }); }
+  document.addEventListener('click',function(e){ if(drop && !drop.contains(e.target)) drop.classList.remove('open'); });
 })();
 </script>
 <!-- ╚═══════════════════════════════ BLOCK: HEADER — END ═════════════════════════════════╝ -->
 
 
-<!-- ╔═══════════════════════════════ BLOCK: HERO — START ═════════════════════════════════╗
-     Фон: неподвижная blueprint-сетка с ПОСЕКТОРНЫМ свечением (линии не движутся — медленно
-     дышит только яркость секторов). Поверх — фото гор1.jpg на всю ширину; высота блока = высоте
-     фото. Верхний угол фото фотореалистично рассеивается (~1/3), открывая сетку под ним.
-     Угол рассеивания: переменная --fade-corner  (0% 0% = верх-лево; 100% 0% = верх-право). -->
+<!-- ╔═══════════════ BLOCK: HERO — START · ПЕРСОНАЛЬНЫЙ (00) ══════════════════╗
+     Контент берётся из DATA[направление]. Поля помечены data-f, изображение — #hero-photo.
+     Сетка-фон неподвижная с посекторным свечением; верхний угол фото рассеивается. -->
 <style id="b-hero">
   .hero{position:relative;overflow:hidden;--fade-corner:0% 0%}
-
-  /* — сетка-фон: неподвижная, посекторное свечение — */
   .hero__grid{position:absolute;inset:0;z-index:0;overflow:hidden;background:var(--bg)}
   .hero__grid::before{content:"";position:absolute;inset:-2px;
-    background:
-      linear-gradient(to right, rgba(232,226,212,.07) 1px, transparent 1px) 0 0/46px 46px,
-      linear-gradient(to bottom, rgba(232,226,212,.07) 1px, transparent 1px) 0 0/46px 46px}
+    background:linear-gradient(to right, rgba(232,226,212,.07) 1px, transparent 1px) 0 0/46px 46px,
+               linear-gradient(to bottom, rgba(232,226,212,.07) 1px, transparent 1px) 0 0/46px 46px}
   .hero__sec{position:absolute;inset:-2px;opacity:.14;will-change:opacity;
-    background:
-      linear-gradient(to right, rgba(212,197,163,.55) 1px, transparent 1px) 0 0/46px 46px,
-      linear-gradient(to bottom, rgba(212,197,163,.55) 1px, transparent 1px) 0 0/46px 46px}
-  .hero__sec--a{-webkit-mask-image:radial-gradient(42% 52% at 22% 28%,#000,transparent 70%);
-                mask-image:radial-gradient(42% 52% at 22% 28%,#000,transparent 70%);
-                animation:secGlow 9s var(--ease) infinite}
-  .hero__sec--b{-webkit-mask-image:radial-gradient(46% 50% at 74% 62%,#000,transparent 70%);
-                mask-image:radial-gradient(46% 50% at 74% 62%,#000,transparent 70%);
-                animation:secGlow 13s var(--ease) infinite 1.6s}
-  .hero__sec--c{-webkit-mask-image:radial-gradient(40% 46% at 50% 90%,#000,transparent 70%);
-                mask-image:radial-gradient(40% 46% at 50% 90%,#000,transparent 70%);
-                animation:secGlow 16s var(--ease) infinite .7s}
+    background:linear-gradient(to right, rgba(212,197,163,.55) 1px, transparent 1px) 0 0/46px 46px,
+               linear-gradient(to bottom, rgba(212,197,163,.55) 1px, transparent 1px) 0 0/46px 46px}
+  .hero__sec--a{-webkit-mask-image:radial-gradient(42% 52% at 22% 28%,#000,transparent 70%);mask-image:radial-gradient(42% 52% at 22% 28%,#000,transparent 70%);animation:secGlow 9s var(--ease) infinite}
+  .hero__sec--b{-webkit-mask-image:radial-gradient(46% 50% at 74% 62%,#000,transparent 70%);mask-image:radial-gradient(46% 50% at 74% 62%,#000,transparent 70%);animation:secGlow 13s var(--ease) infinite 1.6s}
+  .hero__sec--c{-webkit-mask-image:radial-gradient(40% 46% at 50% 90%,#000,transparent 70%);mask-image:radial-gradient(40% 46% at 50% 90%,#000,transparent 70%);animation:secGlow 16s var(--ease) infinite .7s}
   @keyframes secGlow{0%,100%{opacity:.05}50%{opacity:.22}}
-
-  /* — фото: на всю ширину, задаёт высоту блока; верхний угол рассеивается — */
-  .hero__photo{display:block;width:100%;height:auto;position:relative;z-index:1;
+  .hero__photo{display:block;width:100%;height:auto;position:relative;z-index:1;transition:opacity .3s var(--ease);
     -webkit-mask-image:radial-gradient(130% 130% at var(--fade-corner), transparent 0%, transparent 14%, rgba(0,0,0,.35) 34%, #000 56%);
     mask-image:radial-gradient(130% 130% at var(--fade-corner), transparent 0%, transparent 14%, rgba(0,0,0,.35) 34%, #000 56%)}
-  /* — полоса «пыли» на кромке рассеивания (добавляет грана, не трогая само фото) — */
-  .hero__dust{position:absolute;inset:0;z-index:1;pointer-events:none;mix-blend-mode:screen;opacity:.5;
-    background-size:180px;
+  .hero__dust{position:absolute;inset:0;z-index:1;pointer-events:none;mix-blend-mode:screen;opacity:.5;background-size:180px;
     background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='hd'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23hd)' opacity='0.6'/%3E%3C/svg%3E");
     -webkit-mask-image:radial-gradient(130% 130% at var(--fade-corner), transparent 12%, #000 34%, transparent 60%);
     mask-image:radial-gradient(130% 130% at var(--fade-corner), transparent 12%, #000 34%, transparent 60%)}
-
-  /* — текст поверх — */
   .hero__overlay{position:absolute;inset:0;z-index:2;display:flex;align-items:center;pointer-events:none}
   .hero__overlay::before{content:"";position:absolute;inset:0;pointer-events:none;
     background:linear-gradient(90deg, rgba(13,13,13,.72) 0%, rgba(13,13,13,.3) 38%, transparent 62%)}
   .hero__inner{position:relative;width:100%;pointer-events:auto}
-  .hero__kicker{font-family:var(--f-mono);font-weight:500;letter-spacing:.2em;text-transform:uppercase;
-    font-size:.78rem;color:var(--sand);display:inline-flex;align-items:center;gap:.6rem}
-  .hero__kicker::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--sand);
-    box-shadow:0 0 12px var(--sand);animation:pulse 2.4s var(--ease) infinite}
+  .hero__kicker{font-family:var(--f-mono);font-weight:500;letter-spacing:.2em;text-transform:uppercase;font-size:.78rem;color:var(--sand);display:inline-flex;align-items:center;gap:.6rem}
+  .hero__kicker::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--sand);box-shadow:0 0 12px var(--sand);animation:pulse 2.4s var(--ease) infinite}
   @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.35;transform:scale(.7)}}
-  .hero__title{font-family:var(--f-display);font-weight:800;text-transform:uppercase;
-    font-size:clamp(2.6rem,7vw,6rem);line-height:.94;letter-spacing:-.02em;margin-top:1.4rem}
-  .hero__sub{font-family:var(--f-display);font-weight:700;color:var(--muted);
-    font-size:clamp(1.1rem,2.4vw,2rem);line-height:1.05;margin-top:1.1rem;text-transform:uppercase}
-  .hero__support{max-width:44ch;margin-top:1.6rem;color:var(--line);opacity:.85;font-size:clamp(1rem,1.4vw,1.15rem)}
+  .hero__title{font-family:var(--f-display);font-weight:800;text-transform:uppercase;font-size:clamp(2.4rem,6.6vw,5.6rem);line-height:.94;letter-spacing:-.02em;margin-top:1.4rem}
+  .hero__sub{font-family:var(--f-display);font-weight:700;color:var(--muted);font-size:clamp(1.1rem,2.4vw,2rem);line-height:1.05;margin-top:1.1rem;text-transform:uppercase}
+  .hero__support{max-width:46ch;margin-top:1.6rem;color:var(--line);opacity:.85;font-size:clamp(1rem,1.4vw,1.15rem)}
   .hero__actions{display:flex;gap:1rem;margin-top:2.2rem;flex-wrap:wrap}
-
-  /* — мобайл: не даём широкому кадру схлопнуться в полоску — */
   @media(max-width:760px){
     .hero{min-height:92vh}
-    .hero__photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:72% 50%;
-      -webkit-mask-image:none;mask-image:none}
+    .hero__photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:72% 50%;-webkit-mask-image:none;mask-image:none}
     .hero__dust{display:none}
     .hero__overlay{align-items:flex-end;padding-bottom:9vh}
     .hero__overlay::before{background:linear-gradient(180deg, rgba(13,13,13,.45) 0%, transparent 32%, rgba(13,13,13,.82) 100%)}
   }
   @media (prefers-reduced-motion: reduce){.hero__sec{animation:none}.hero__kicker::before{animation:none}}
 </style>
-<section class="hero" id="hero">
+<section class="hero swap-target" id="hero">
   <div class="hero__grid" aria-hidden="true">
-    <div class="hero__sec hero__sec--a"></div>
-    <div class="hero__sec hero__sec--b"></div>
-    <div class="hero__sec hero__sec--c"></div>
+    <div class="hero__sec hero__sec--a"></div><div class="hero__sec hero__sec--b"></div><div class="hero__sec hero__sec--c"></div>
   </div>
-  <img class="hero__photo" src="гор1.jpg" alt="Вантовый конвейер на карьере: разгрузка щебня в облаке пыли на закате" loading="eager">
+  <img class="hero__photo" id="hero-photo" src="гор1.1.jpeg" alt="Вантовый конвейер на карьере: разгрузка щебня в облаке пыли на закате" loading="eager">
   <div class="hero__dust" aria-hidden="true"></div>
   <div class="hero__overlay">
     <div class="hero__inner wrap">
-      <p class="hero__kicker" data-reveal style="--d:80ms">Повышаем эффективность · конвейеры нового уровня</p>
-      <h1 class="hero__title" data-reveal="clip" style="--d:160ms">Вантовые<br>конвейеры</h1>
-      <p class="hero__sub" data-reveal style="--d:320ms">Будущее горнодобывающей отрасли</p>
-      <p class="hero__support" data-reveal style="--d:440ms">Одна поворотная опора вместо десятков: свободный проезд техники, мобильный склад готовой продукции, рассчитанный запас прочности несущих конструкций.</p>
+      <p class="hero__kicker" data-f="hero.kicker" data-reveal style="--d:80ms">Повышаем эффективность · конвейеры нового уровня</p>
+      <h1 class="hero__title" data-f="hero.title" data-reveal="clip" style="--d:160ms">Вантовые<br>конвейеры</h1>
+      <p class="hero__sub" data-f="hero.sub" data-reveal style="--d:320ms">Будущее горнодобывающей отрасли</p>
+      <p class="hero__support" data-f="hero.support" data-reveal style="--d:440ms">Одна поворотная опора вместо десятков: свободный проезд техники, мобильный склад готовой продукции, рассчитанный запас прочности несущих конструкций.</p>
       <div class="hero__actions" data-reveal style="--d:560ms">
-        <a href="#models" class="btn">Подобрать конвейер <span class="arr">→</span></a>
+        <a href="#models" class="btn">Подобрать оборудование <span class="arr">→</span></a>
         <a href="#contact" class="btn btn--ghost">Оставить заявку</a>
       </div>
     </div>
   </div>
 </section>
-<!-- ╚═══════════════════════════════ BLOCK: HERO — END ═══════════════════════════════════╝ -->
+<!-- ╚═══════════════ BLOCK: HERO — END ═══════════════╝ -->
 
 
-<!-- ╔═══════════════════════════ BLOCK: ADVANTAGES — START ═══════════════════════════════╗ -->
+<!-- ╔═══════════════ BLOCK: ADVANTAGES — START · ПЕРСОНАЛЬНЫЙ (01) ══════════════════╗ -->
 <style id="b-adv">
   .adv{border-top:1px solid var(--hairline)}
   .adv__grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,5vw,5rem);align-items:start;margin-top:3rem}
-  .adv__visual{position:sticky;top:120px;aspect-ratio:4/5;border:1px solid var(--hairline);overflow:hidden;
-    border-radius:3px;background:var(--surface-grad);box-shadow:var(--elev-1);display:flex;align-items:flex-end;padding:1.4rem}
-  .adv__visual::before{content:"";position:absolute;inset:0;
-    background:repeating-linear-gradient(135deg,transparent 0 15px,rgba(212,197,163,.04) 15px 16px)}
+  .adv__visual{position:sticky;top:120px;aspect-ratio:4/5;border:1px solid var(--hairline);overflow:hidden;border-radius:3px;background:var(--surface-grad);box-shadow:var(--elev-1);display:flex;align-items:flex-end;padding:1.4rem}
+  .adv__visual::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(135deg,transparent 0 15px,rgba(212,197,163,.04) 15px 16px)}
   .adv__visual span{position:relative;font-family:var(--f-mono);font-size:.7rem;color:var(--muted)}
   .adv__list{display:flex;flex-direction:column}
   .adv__item{position:relative;padding:2.2rem 0 2.2rem 1.6rem;border-bottom:1px solid var(--hairline);transition:padding .35s var(--ease)}
-  .adv__item::before{content:"";position:absolute;left:0;top:2.2rem;bottom:2.2rem;width:2px;background:var(--sand);
-    transform:scaleY(0);transform-origin:top;transition:transform .4s var(--ease)}
+  .adv__item::before{content:"";position:absolute;left:0;top:2.2rem;bottom:2.2rem;width:2px;background:var(--sand);transform:scaleY(0);transform-origin:top;transition:transform .4s var(--ease)}
   .adv__item:hover{padding-left:2.1rem}
   .adv__item:hover::before{transform:scaleY(1)}
   .adv__item:first-child{padding-top:0}.adv__item:first-child::before{top:0}
-  .adv__item h3{font-family:var(--f-display);font-weight:700;text-transform:uppercase;
-    font-size:clamp(1.4rem,2.6vw,2rem);letter-spacing:-.01em;transition:color .3s}
+  .adv__item h3{font-family:var(--f-display);font-weight:700;text-transform:uppercase;font-size:clamp(1.4rem,2.6vw,2rem);letter-spacing:-.01em;transition:color .3s}
   .adv__item:hover h3{color:var(--sand)}
   .adv__item p{color:var(--muted);margin-top:.8rem;max-width:48ch}
   @media(max-width:860px){.adv__grid{grid-template-columns:1fr}.adv__visual{position:relative;top:0;aspect-ratio:16/10;order:-1}}
 </style>
-<section class="adv section" id="advantages">
+<section class="adv section swap-target" id="advantages">
   <div class="wrap">
     <p class="eyebrow" data-reveal>01 · Преимущества</p>
-    <h2 class="h2" data-reveal="clip" style="--d:80ms">Преимущества наших конвейеров</h2>
+    <h2 class="h2" data-f="adv.h2" data-reveal="clip" style="--d:80ms">Преимущества наших конвейеров</h2>
     <span class="rule" data-reveal="line" style="--d:240ms"></span>
     <div class="adv__grid">
       <div class="adv__visual shimmer" data-reveal aria-hidden="true"><span>// фото узлов — сменяется по скроллу</span></div>
-      <div class="adv__list">
+      <div class="adv__list" data-list="adv">
         <div class="adv__item" data-reveal style="--d:80ms"><h3>Безопасность</h3><p>Единственная опора снижает риск наезда техники на опорные конструкции. Меньше препятствий на площадке — меньше внеплановых простоев.</p></div>
         <div class="adv__item" data-reveal style="--d:160ms"><h3>Надёжность</h3><p>Несущий каркас рассчитан с нормативным запасом прочности; основные элементы выполнены из конструкционной стали 09Г2С.</p></div>
         <div class="adv__item" data-reveal style="--d:240ms"><h3>Сроки</h3><p>Подъём конструкции в проектное положение выполняется за два дня, полный монтаж — в нормативные сроки по проекту производства работ.</p></div>
@@ -287,18 +298,14 @@
     </div>
   </div>
 </section>
-<!-- ╚═══════════════════════════ BLOCK: ADVANTAGES — END ═════════════════════════════════╝ -->
+<!-- ╚═══════════════ BLOCK: ADVANTAGES — END ═══════════════╝ -->
 
 
-<!-- ╔═══════════════════════════ BLOCK: STRUCTURE — START ════════════════════════════════╗ -->
+<!-- ╔═══════════════ BLOCK: STRUCTURE — START · ПЕРСОНАЛЬНЫЙ (02) ══════════════════╗ -->
 <style id="b-str">
   .str{border-top:1px solid var(--hairline)}
-  .str__scheme{position:relative;margin-top:3rem;aspect-ratio:21/9;border:1px solid var(--hairline);overflow:hidden;
-    border-radius:3px;box-shadow:var(--elev-1);
-    background:
-      radial-gradient(60% 60% at 50% 60%, rgba(212,197,163,.05), transparent),
-      linear-gradient(transparent 95%, var(--hairline) 95%),
-      linear-gradient(90deg, transparent 95%, var(--hairline) 95%);
+  .str__scheme{position:relative;margin-top:3rem;aspect-ratio:21/9;border:1px solid var(--hairline);overflow:hidden;border-radius:3px;box-shadow:var(--elev-1);
+    background:radial-gradient(60% 60% at 50% 60%, rgba(212,197,163,.05), transparent),linear-gradient(transparent 95%, var(--hairline) 95%),linear-gradient(90deg, transparent 95%, var(--hairline) 95%);
     background-size:auto,100% 36px,36px 100%;display:flex;align-items:center;justify-content:center}
   .str__scheme span{position:relative;font-family:var(--f-mono);font-size:.74rem;color:var(--muted)}
   .str__nodes{display:grid;grid-template-columns:repeat(4,1fr);gap:1.4rem;margin-top:2.5rem}
@@ -311,14 +318,14 @@
   @media(max-width:860px){.str__nodes{grid-template-columns:1fr 1fr}}
   @media(max-width:520px){.str__nodes{grid-template-columns:1fr}.str__scheme{aspect-ratio:4/3}}
 </style>
-<section class="str section" id="structure">
+<section class="str section swap-target" id="structure">
   <div class="wrap">
     <p class="eyebrow" data-reveal>02 · Устройство</p>
-    <h2 class="h2" data-reveal="clip" style="--d:80ms">Как устроен вантовый конвейер</h2>
+    <h2 class="h2" data-f="str.h2" data-reveal="clip" style="--d:80ms">Как устроен вантовый конвейер</h2>
     <span class="rule" data-reveal="line" style="--d:240ms"></span>
-    <p class="lead" data-reveal style="--d:200ms">Несущая ферма на одной поворотной опоре, удержанная тросовыми вантами. Минимум конструкций на земле — максимум свободного пространства под конвейером.</p>
-    <div class="str__scheme shimmer" data-reveal aria-hidden="true"><span>// Блок 3 · интерактивная blueprint-схема</span></div>
-    <div class="str__nodes">
+    <p class="lead" data-f="str.lead" data-reveal style="--d:200ms">Несущая ферма на одной поворотной опоре, удержанная тросовыми вантами. Минимум конструкций на земле — максимум свободного пространства под конвейером.</p>
+    <div class="str__scheme shimmer" data-reveal aria-hidden="true"><span data-f="str.scheme">// схема вантового конвейера</span></div>
+    <div class="str__nodes" data-list="str">
       <div class="str__node" data-reveal style="--d:80ms"><h3>Поворотная опора</h3><p>Единственная точка опоры. Вокруг неё конвейер разворачивается, формируя склад без демонтажа.</p></div>
       <div class="str__node" data-reveal style="--d:160ms"><h3>Тросовые подвесы</h3><p>Высокопрочные ванты удерживают консоль фермы и передают нагрузку на опору.</p></div>
       <div class="str__node" data-reveal style="--d:240ms"><h3>Рама из профтрубы</h3><p>Несущий каркас из стали 09Г2С с расчётным запасом прочности.</p></div>
@@ -326,21 +333,19 @@
     </div>
   </div>
 </section>
-<!-- ╚═══════════════════════════ BLOCK: STRUCTURE — END ══════════════════════════════════╝ -->
+<!-- ╚═══════════════ BLOCK: STRUCTURE — END ═══════════════╝ -->
 
 
-<!-- ╔═══════════════════════════ BLOCK: MODELS — START ═══════════════════════════════════╗ -->
+<!-- ╔═══════════════ BLOCK: MODELS — START · ПЕРСОНАЛЬНЫЙ (03) ══════════════════╗ -->
 <style id="b-mdl">
   .mdl{border-top:1px solid var(--hairline)}
   .mdl__cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem;margin-top:3rem}
-  .mdl__card{position:relative;border:1px solid var(--hairline);border-radius:3px;padding:2rem 1.8rem;
-    background:var(--surface-grad);box-shadow:var(--elev-1);
+  .mdl__card{position:relative;border:1px solid var(--hairline);border-radius:3px;padding:2rem 1.8rem;background:var(--surface-grad);box-shadow:var(--elev-1);
     transition:transform .4s var(--ease),box-shadow .4s var(--ease),border-color .3s}
   .mdl__card:hover{transform:translateY(-6px);border-color:rgba(212,197,163,.5);box-shadow:var(--elev-2),var(--glow)}
   .mdl__card--feat{border-color:rgba(212,197,163,.35)}
-  .mdl__tag{position:absolute;top:1rem;right:1rem;font-family:var(--f-mono);font-size:.62rem;letter-spacing:.1em;
-    text-transform:uppercase;color:#0d0d0d;background:var(--sand);padding:.25rem .55rem;border-radius:2px}
-  .mdl__name{font-family:var(--f-display);font-weight:800;font-size:1.9rem;letter-spacing:-.01em}
+  .mdl__tag{position:absolute;top:1rem;right:1rem;font-family:var(--f-mono);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:#0d0d0d;background:var(--sand);padding:.25rem .55rem;border-radius:2px}
+  .mdl__name{font-family:var(--f-display);font-weight:800;font-size:1.7rem;letter-spacing:-.01em}
   .mdl__spec{margin-top:1.6rem;display:flex;flex-direction:column;gap:.7rem}
   .mdl__row{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;padding-bottom:.7rem;border-bottom:1px solid var(--hairline)}
   .mdl__row span{color:var(--muted);font-size:.82rem;text-transform:uppercase;letter-spacing:.04em}
@@ -349,100 +354,72 @@
   .mdl__note{margin-top:2.2rem;color:var(--muted);font-size:.84rem;max-width:80ch;line-height:1.7}
   @media(max-width:820px){.mdl__cards{grid-template-columns:1fr}}
 </style>
-<section class="mdl section" id="models">
+<section class="mdl section swap-target" id="models">
   <div class="wrap">
     <p class="eyebrow" data-reveal>03 · Модельный ряд</p>
-    <h2 class="h2" data-reveal="clip" style="--d:80ms">Серия КВЛ</h2>
+    <h2 class="h2" data-f="mdl.h2" data-reveal="clip" style="--d:80ms">Серия КВЛ</h2>
     <span class="rule" data-reveal="line" style="--d:240ms"></span>
-    <p class="lead" data-reveal style="--d:200ms">Готовая серия вантовых ленточных конвейеров. Выбирайте по требуемой длине и ёмкости склада — и запускайте в изготовление без долгого проектирования.</p>
-    <div class="mdl__cards">
-      <div class="mdl__card" data-reveal style="--d:80ms">
-        <div class="mdl__name">КВЛ-24</div>
-        <div class="mdl__spec">
-          <div class="mdl__row"><span>Длина конвейера</span><b>24 м</b></div>
-          <div class="mdl__row"><span>Высота конуса</span><b>8,4 м</b></div>
-          <div class="mdl__row"><span>Объём конуса</span><b>590 м³</b></div>
-          <div class="mdl__row"><span>Угол наклона</span><b>18°</b></div>
-          <div class="mdl__row"><span>Ширина ленты</span><b>800 мм</b></div>
-        </div>
-      </div>
-      <div class="mdl__card" data-reveal style="--d:160ms">
-        <div class="mdl__name">КВЛ-28</div>
-        <div class="mdl__spec">
-          <div class="mdl__row"><span>Длина конвейера</span><b>28 м</b></div>
-          <div class="mdl__row"><span>Высота конуса</span><b>9,6 м</b></div>
-          <div class="mdl__row"><span>Объём конуса</span><b>880 м³</b></div>
-          <div class="mdl__row"><span>Угол наклона</span><b>18°</b></div>
-          <div class="mdl__row"><span>Ширина ленты</span><b>800 мм</b></div>
-        </div>
-      </div>
-      <div class="mdl__card mdl__card--feat" data-reveal style="--d:240ms">
-        <div class="mdl__tag">макс. объём</div>
-        <div class="mdl__name">КВЛ-36</div>
-        <div class="mdl__spec">
-          <div class="mdl__row"><span>Длина конвейера</span><b>36 м</b></div>
-          <div class="mdl__row"><span>Высота конуса</span><b>12,1 м</b></div>
-          <div class="mdl__row"><span>Объём конуса</span><b>1770 м³</b></div>
-          <div class="mdl__row"><span>Угол наклона</span><b>18°</b></div>
-          <div class="mdl__row"><span>Ширина ленты</span><b>800 мм</b></div>
-        </div>
-      </div>
+    <p class="lead" data-f="mdl.lead" data-reveal style="--d:200ms">Готовая серия вантовых ленточных конвейеров. Выбирайте по требуемой длине и ёмкости склада — и запускайте в изготовление без долгого проектирования.</p>
+    <div class="mdl__cards" data-list="mdl">
+      <div class="mdl__card" data-reveal style="--d:80ms"><div class="mdl__name">КВЛ-24</div><div class="mdl__spec"><div class="mdl__row"><span>Длина конвейера</span><b>24 м</b></div><div class="mdl__row"><span>Высота конуса</span><b>8,4 м</b></div><div class="mdl__row"><span>Объём конуса</span><b>590 м³</b></div><div class="mdl__row"><span>Угол наклона</span><b>18°</b></div><div class="mdl__row"><span>Ширина ленты</span><b>800 мм</b></div></div></div>
+      <div class="mdl__card" data-reveal style="--d:160ms"><div class="mdl__name">КВЛ-28</div><div class="mdl__spec"><div class="mdl__row"><span>Длина конвейера</span><b>28 м</b></div><div class="mdl__row"><span>Высота конуса</span><b>9,6 м</b></div><div class="mdl__row"><span>Объём конуса</span><b>880 м³</b></div><div class="mdl__row"><span>Угол наклона</span><b>18°</b></div><div class="mdl__row"><span>Ширина ленты</span><b>800 мм</b></div></div></div>
+      <div class="mdl__card mdl__card--feat" data-reveal style="--d:240ms"><div class="mdl__tag">макс. объём</div><div class="mdl__name">КВЛ-36</div><div class="mdl__spec"><div class="mdl__row"><span>Длина конвейера</span><b>36 м</b></div><div class="mdl__row"><span>Высота конуса</span><b>12,1 м</b></div><div class="mdl__row"><span>Объём конуса</span><b>1770 м³</b></div><div class="mdl__row"><span>Угол наклона</span><b>18°</b></div><div class="mdl__row"><span>Ширина ленты</span><b>800 мм</b></div></div></div>
     </div>
-    <p class="mdl__note" data-reveal>Объём конуса рассчитан геометрически для установки конвейера на горизонтальной площадке при указанном угле наклона. Уровень ленты на загрузке — +1 м относительно площадки. Угол естественного откоса материала принят 45°.</p>
+    <p class="mdl__note" data-f="mdl.note" data-reveal>Объём конуса рассчитан геометрически для установки конвейера на горизонтальной площадке при указанном угле наклона. Уровень ленты на загрузке — +1 м относительно площадки. Угол естественного откоса материала принят 45°.</p>
   </div>
 </section>
-<!-- ╚═══════════════════════════ BLOCK: MODELS — END ═════════════════════════════════════╝ -->
+<!-- ╚═══════════════ BLOCK: MODELS — END ═══════════════╝ -->
 
 
-<!-- ╔═══════════════════════════ BLOCK: DIRECTIONS — START ══════════════════════════════╗
-     Направления производства ГОРТЕХКОНСАЛТ (4 направления). Независимый блок. -->
+<!-- ╔═══════════════ BLOCK: DIRECTIONS — START · ОБЩИЙ (04) ══════════════════╗
+     Хаб переключения: карточки кликабельны и меняют направление сайта (data-dir). -->
 <style id="b-dir">
   .dir{border-top:1px solid var(--hairline)}
-  .dir__cards{display:grid;grid-template-columns:repeat(2,1fr);gap:1.4rem;margin-top:3rem}
-  .dir__card{position:relative;border:1px solid var(--hairline);border-radius:3px;padding:2rem 1.9rem;
-    background:var(--surface-grad);box-shadow:var(--elev-1);overflow:hidden;
+  .dir__cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem;margin-top:3rem}
+  .dir__card{position:relative;border:1px solid var(--hairline);border-radius:3px;padding:2rem 1.9rem;background:var(--surface-grad);box-shadow:var(--elev-1);overflow:hidden;
+    text-align:left;cursor:pointer;font:inherit;color:inherit;width:100%;display:block;
     transition:transform .4s var(--ease),box-shadow .4s var(--ease),border-color .3s}
   .dir__card:hover{transform:translateY(-5px);border-color:rgba(212,197,163,.45);box-shadow:var(--elev-2),var(--glow)}
+  .dir__card.is-active{border-color:var(--sand);box-shadow:var(--elev-2),var(--glow)}
   .dir__num{font-family:var(--f-mono);font-size:.8rem;color:var(--sand);letter-spacing:.1em}
-  .dir__name{font-family:var(--f-display);font-weight:700;text-transform:uppercase;letter-spacing:-.01em;
-    font-size:clamp(1.3rem,2.4vw,1.7rem);margin-top:1rem;line-height:1.05}
-  .dir__desc{color:var(--muted);margin-top:.9rem;max-width:46ch}
-  @media(max-width:760px){.dir__cards{grid-template-columns:1fr}}
+  .dir__name{font-family:var(--f-display);font-weight:700;text-transform:uppercase;letter-spacing:-.01em;font-size:clamp(1.2rem,2.2vw,1.55rem);margin-top:1rem;line-height:1.05}
+  .dir__desc{color:var(--muted);margin-top:.9rem;font-size:.95rem}
+  .dir__go{display:inline-block;margin-top:1.3rem;font-family:var(--f-mono);font-size:.76rem;color:var(--sand);opacity:0;transform:translateY(4px);transition:opacity .3s var(--ease),transform .3s var(--ease)}
+  .dir__card:hover .dir__go,.dir__card.is-active .dir__go{opacity:1;transform:none}
+  @media(max-width:820px){.dir__cards{grid-template-columns:1fr}}
 </style>
 <section class="dir section" id="directions">
   <div class="wrap">
     <p class="eyebrow" data-reveal>04 · Направления</p>
     <h2 class="h2" data-reveal="clip" style="--d:80ms">Направления производства</h2>
     <span class="rule" data-reveal="line" style="--d:240ms"></span>
-    <p class="lead" data-reveal style="--d:200ms">Проектируем и изготавливаем оборудование для горнодобывающих и перерабатывающих предприятий — от отдельных узлов до законченных технологических решений.</p>
+    <p class="lead" data-reveal style="--d:200ms">Выберите направление — верхняя часть сайта перестроится под него. Проектируем и изготавливаем оборудование для горнодобывающих и перерабатывающих предприятий.</p>
     <div class="dir__cards">
-      <div class="dir__card" data-reveal style="--d:80ms">
+      <button type="button" class="dir__card" data-dir="conveyor" data-reveal style="--d:80ms">
         <div class="dir__num">01</div>
-        <div class="dir__name">Конвейеры</div>
-        <p class="dir__desc">Ленточные и вантовые конвейеры для транспортировки и складирования сыпучих материалов. Флагманское направление — серия вантовых конвейеров КВЛ с одной поворотной опорой.</p>
-      </div>
-      <div class="dir__card" data-reveal style="--d:160ms">
+        <div class="dir__name">Конвейеры вантовые</div>
+        <p class="dir__desc">Ленточные и вантовые конвейеры для транспортировки и складирования сыпучих материалов, включая изготовление барабанов конвейеров.</p>
+        <span class="dir__go">Открыть направление →</span>
+      </button>
+      <button type="button" class="dir__card" data-dir="screen" data-reveal style="--d:160ms">
         <div class="dir__num">02</div>
-        <div class="dir__name">Грохоты вибрационные</div>
-        <p class="dir__desc">Вибрационные грохоты (вибросита) для классификации и рассева сыпучих материалов по фракциям, включая тонкое грохочение.</p>
-      </div>
-      <div class="dir__card" data-reveal style="--d:240ms">
+        <div class="dir__name">Вибросито тонкого рассева</div>
+        <p class="dir__desc">Вибрационные грохоты (вибросита) для классификации и тонкого рассева сыпучих материалов по фракциям.</p>
+        <span class="dir__go">Открыть направление →</span>
+      </button>
+      <button type="button" class="dir__card" data-dir="grizzly" data-reveal style="--d:240ms">
         <div class="dir__num">03</div>
         <div class="dir__name">Грохоты колосниковые</div>
         <p class="dir__desc">Колосниковые грохоты для предварительного грубого грохочения и отделения негабарита перед дроблением.</p>
-      </div>
-      <div class="dir__card" data-reveal style="--d:320ms">
-        <div class="dir__num">04</div>
-        <div class="dir__name">Барабаны конвейеров</div>
-        <p class="dir__desc">Приводные, натяжные и отклоняющие барабаны конвейеров. Изготовление, футеровка и балансировка под параметры оборудования заказчика.</p>
-      </div>
+        <span class="dir__go">Открыть направление →</span>
+      </button>
     </div>
   </div>
 </section>
-<!-- ╚═══════════════════════════ BLOCK: DIRECTIONS — END ════════════════════════════════╝ -->
+<!-- ╚═══════════════ BLOCK: DIRECTIONS — END ═══════════════╝ -->
 
 
-<!-- ╔═══════════════════════════ BLOCK: STAGES — START ══════════════════════════════════╗
+<!-- ╔═══════════════ BLOCK: STAGES — START · ОБЩИЙ (05) ══════════════════╗
      ⚠ III Доставка и V Пуско-наладка — черновые тексты, подтвердить. -->
 <style id="b-stg">
   .stg{border-top:1px solid var(--hairline)}
@@ -451,7 +428,7 @@
   .stg__line{position:absolute;left:0;top:0;width:2px;height:100%;background:linear-gradient(var(--sand),transparent)}
   .stg__item{display:grid;grid-template-columns:140px 1fr;gap:2rem;padding:2.4rem 0;border-top:1px solid var(--hairline);transition:transform .35s var(--ease)}
   .stg__item:hover{transform:translateX(8px)}
-  .stg__no{font-family:var(--f-display);font-weight:800;font-size:clamp(2.2rem,5vw,3.6rem);color:var(--sand);line-height:.9;transition:opacity .3s}
+  .stg__no{font-family:var(--f-display);font-weight:800;font-size:clamp(2.2rem,5vw,3.6rem);color:var(--sand);line-height:.9}
   .stg__item h3{font-family:var(--f-display);font-weight:700;text-transform:uppercase;font-size:clamp(1.3rem,2.4vw,1.8rem);letter-spacing:-.01em}
   .stg__item p{color:var(--muted);margin-top:.8rem;max-width:64ch}
   @media(max-width:680px){.stg__item{grid-template-columns:1fr;gap:.6rem}}
@@ -464,34 +441,28 @@
     <p class="stg__lead" data-reveal style="--d:200ms">Проектирование · Изготовление · Доставка · Монтаж · Пуско-наладка</p>
     <div class="stg__list">
       <span class="stg__line" data-reveal="line-y" aria-hidden="true"></span>
-      <div class="stg__item" data-reveal style="--d:60ms"><div class="stg__no">I</div><div><h3>Проектирование</h3><p>Готовая серия позволяет подобрать конвейер и запустить в производство в кратчайшие сроки. Утверждение и, при необходимости, корректировка проекта под ваши задачи — как правило, 1–2 недели.</p></div></div>
-      <div class="stg__item" data-reveal style="--d:120ms"><div class="stg__no">II</div><div><h3>Изготовление</h3><p>Налаженное производство металлокаркаса и отработанные схемы поставки комплектующих и сборки. Ориентировочный срок изготовления конвейера — 1 месяц.</p></div></div>
+      <div class="stg__item" data-reveal style="--d:60ms"><div class="stg__no">I</div><div><h3>Проектирование</h3><p>Готовые серии позволяют подобрать оборудование и запустить в производство в кратчайшие сроки. Утверждение и, при необходимости, корректировка проекта под ваши задачи — как правило, 1–2 недели.</p></div></div>
+      <div class="stg__item" data-reveal style="--d:120ms"><div class="stg__no">II</div><div><h3>Изготовление</h3><p>Налаженное производство металлоконструкций и отработанные схемы поставки комплектующих и сборки. Ориентировочный срок изготовления — от 1 месяца.</p></div></div>
       <div class="stg__item" data-reveal style="--d:180ms"><div class="stg__no">III</div><div><h3>Доставка</h3><p>Доставка металлоконструкций и оборудования на площадку заказчика.</p></div></div>
-      <div class="stg__item" data-reveal style="--d:240ms"><div class="stg__no">IV</div><div><h3>Монтаж</h3><p>Установка по разработанному проекту производства работ (ППР). Подъём в проектное положение двумя кранами — 2 дня, монтаж всего конвейера — 1 неделя.</p></div></div>
-      <div class="stg__item" data-reveal style="--d:300ms"><div class="stg__no">V</div><div><h3>Пуско-наладка</h3><p>Запуск, проверка узлов и вывод конвейера на рабочий режим.</p></div></div>
+      <div class="stg__item" data-reveal style="--d:240ms"><div class="stg__no">IV</div><div><h3>Монтаж</h3><p>Установка по разработанному проекту производства работ (ППР). Подъём в проектное положение двумя кранами — 2 дня, полный монтаж — в нормативные сроки.</p></div></div>
+      <div class="stg__item" data-reveal style="--d:300ms"><div class="stg__no">V</div><div><h3>Пуско-наладка</h3><p>Запуск, проверка узлов и вывод оборудования на рабочий режим.</p></div></div>
     </div>
   </div>
 </section>
-<!-- ╚═══════════════════════════ BLOCK: STAGES — END ═════════════════════════════════════╝ -->
+<!-- ╚═══════════════ BLOCK: STAGES — END ═══════════════╝ -->
 
 
-<!-- ╔═══════════════════════════ BLOCK: ABOUT — START ═══════════════════════════════════╗
-     Карточки команды — заглушки фото (grayscale→цвет на hover уже подключён). -->
+<!-- ╔═══════════════ BLOCK: ABOUT — START · ОБЩИЙ (06) ══════════════════╗ -->
 <style id="b-abt">
   .abt{border-top:1px solid var(--hairline)}
-  .abt__year{position:relative;font-family:var(--f-display);font-weight:800;font-size:clamp(5rem,18vw,13rem);
-    line-height:.85;letter-spacing:-.03em;margin-top:1.4rem;color:var(--line);will-change:transform}
-  .abt__year small{display:block;font-family:var(--f-body);font-weight:300;font-size:clamp(.95rem,1.5vw,1.1rem);
-    letter-spacing:.02em;color:var(--muted);text-transform:none;margin-top:1rem;max-width:40ch}
-  .abt__geo{margin-top:2.6rem;font-size:clamp(1.05rem,1.8vw,1.3rem);max-width:60ch}
+  .abt__year{position:relative;font-family:var(--f-display);font-weight:800;font-size:clamp(5rem,18vw,13rem);line-height:.85;letter-spacing:-.03em;margin-top:1.4rem;color:var(--line);will-change:transform}
+  .abt__year small{display:block;font-family:var(--f-body);font-weight:300;font-size:clamp(.95rem,1.5vw,1.1rem);letter-spacing:.02em;color:var(--muted);text-transform:none;margin-top:1rem;max-width:40ch}
+  .abt__geo{margin-top:2.6rem;font-size:clamp(1.05rem,1.8vw,1.3rem);max-width:62ch}
   .abt__tags{margin-top:2rem;display:flex;flex-wrap:wrap;gap:.6rem}
-  .abt__tags span{font-family:var(--f-mono);font-size:.78rem;color:var(--muted);border:1px solid var(--hairline);
-    padding:.45rem .8rem;border-radius:2px;transition:border-color .25s,color .25s,background .25s}
+  .abt__tags span{font-family:var(--f-mono);font-size:.78rem;color:var(--muted);border:1px solid var(--hairline);padding:.45rem .8rem;border-radius:2px;transition:border-color .25s,color .25s,background .25s}
   .abt__tags span:hover{border-color:var(--sand);color:var(--line);background:rgba(212,197,163,.06)}
   .abt__team{margin-top:4rem;display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem}
-  .abt__photo{position:relative;aspect-ratio:3/4;background:var(--surface-grad);border:1px solid var(--hairline);
-    border-radius:3px;overflow:hidden;display:flex;align-items:flex-end;padding:1rem;
-    filter:grayscale(1);box-shadow:var(--elev-1);transition:filter .5s var(--ease),box-shadow .4s var(--ease),transform .4s var(--ease)}
+  .abt__photo{position:relative;aspect-ratio:3/4;background:var(--surface-grad);border:1px solid var(--hairline);border-radius:3px;overflow:hidden;display:flex;align-items:flex-end;padding:1rem;filter:grayscale(1);box-shadow:var(--elev-1);transition:filter .5s var(--ease),box-shadow .4s var(--ease),transform .4s var(--ease)}
   .abt__card:hover .abt__photo{filter:grayscale(0);transform:translateY(-5px);box-shadow:var(--elev-2)}
   .abt__photo span{font-family:var(--f-mono);font-size:.68rem;color:var(--muted)}
   .abt__card h3{font-family:var(--f-display);font-weight:700;font-size:1.2rem;margin-top:1.1rem;text-transform:uppercase}
@@ -505,11 +476,11 @@
     <h2 class="h2" data-reveal="clip" style="--d:80ms">ГОРТЕХКОНСАЛТ</h2>
     <span class="rule" data-reveal="line" style="--d:240ms"></span>
     <div class="abt__year" data-parallax="0.06"><span data-count="1999">1999</span><small>Год запуска первого вантового конвейера нашей командой.</small></div>
-    <p class="abt__geo" data-reveal>Инженерное производство оборудования для горнодобывающей отрасли: конвейеры, вибрационные и колосниковые грохоты, барабаны конвейеров. Проектируем, изготавливаем и модернизируем производственные линии — от отдельных узлов до законченных решений. Выполнены контракты на модернизацию предприятий Калужской, Рязанской и Липецкой областей.</p>
+    <p class="abt__geo" data-reveal>Инженерное производство оборудования для горнодобывающей отрасли: вантовые конвейеры, вибрационные и колосниковые грохоты, барабаны конвейеров. Проектируем, изготавливаем и модернизируем производственные линии — от отдельных узлов до законченных решений. Выполнены контракты на модернизацию предприятий Калужской, Рязанской и Липецкой областей.</p>
     <div class="abt__tags" data-reveal>
-      <span>Сушильные барабаны</span><span>Бункеры сыпучих материалов</span><span>Питатели подачи сырья</span>
-      <span>Конвейеры ленточные</span><span>Конвейеры шнековые</span><span>Конвейеры вибрационные</span>
-      <span>Виброгрохоты для тонкого рассева</span><span>Фундаменты под оборудование</span>
+      <span>Вантовые конвейеры</span><span>Конвейеры ленточные</span><span>Конвейеры шнековые</span>
+      <span>Виброгрохоты</span><span>Колосниковые грохоты</span><span>Барабаны конвейеров</span>
+      <span>Сушильные барабаны</span><span>Бункеры и питатели</span><span>Фундаменты под оборудование</span>
     </div>
     <div class="abt__team">
       <div class="abt__card" data-reveal style="--d:80ms"><div class="abt__photo"><span>// фото</span></div><h3>Дмитрий</h3><p>Финансовый директор</p></div>
@@ -518,25 +489,23 @@
     </div>
   </div>
 </section>
-<!-- ╚═══════════════════════════ BLOCK: ABOUT — END ══════════════════════════════════════╝ -->
+<!-- ╚═══════════════ BLOCK: ABOUT — END ═══════════════╝ -->
 
 
-<!-- ╔═══════════════════════════ BLOCK: CONTACT — START ═════════════════════════════════╗
+<!-- ╔═══════════════ BLOCK: CONTACT — START · ОБЩИЙ (07) ══════════════════╗
      Форма функциональна (валидация, honeypot, состояния). Отправка — заглушка: впиши ENDPOINT. -->
 <style id="b-cta">
   .cta{border-top:1px solid var(--hairline);background:radial-gradient(80% 120% at 80% 0%, rgba(212,197,163,.05), transparent 60%)}
   .cta__grid{display:grid;grid-template-columns:1.1fr 1fr;gap:clamp(2rem,6vw,6rem);margin-top:2.6rem;align-items:start}
   .cta__sub{color:var(--muted);max-width:42ch;margin-top:1.4rem;font-size:1.1rem}
   .cta__direct{margin-top:2.4rem;display:flex;flex-direction:column;gap:.9rem}
-  .cta__direct a{display:flex;align-items:center;justify-content:space-between;gap:1rem;border:1px solid var(--hairline);
-    border-radius:3px;padding:1rem 1.3rem;transition:border-color .25s,color .25s,box-shadow .35s,transform .3s var(--ease)}
+  .cta__direct a{display:flex;align-items:center;justify-content:space-between;gap:1rem;border:1px solid var(--hairline);border-radius:3px;padding:1rem 1.3rem;transition:border-color .25s,color .25s,box-shadow .35s,transform .3s var(--ease)}
   .cta__direct a:hover{border-color:var(--sand);color:var(--sand);box-shadow:var(--glow);transform:translateY(-2px)}
   .cta__direct b{font-family:var(--f-body);font-weight:500}
   .cta__direct span{font-family:var(--f-mono);font-size:.8rem;color:var(--muted)}
   .cta__form{display:flex;flex-direction:column;gap:1.1rem}
   .cta__field label{display:block;font-family:var(--f-mono);font-size:.74rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.5rem}
-  .cta__field input,.cta__field textarea{width:100%;background:var(--surface);border:1px solid var(--hairline);color:var(--line);
-    font-family:var(--f-body);font-size:1rem;padding:.9rem 1rem;border-radius:3px;transition:border-color .25s,box-shadow .3s,background .25s}
+  .cta__field input,.cta__field textarea{width:100%;background:var(--surface);border:1px solid var(--hairline);color:var(--line);font-family:var(--f-body);font-size:1rem;padding:.9rem 1rem;border-radius:3px;transition:border-color .25s,box-shadow .3s,background .25s}
   .cta__field input:focus,.cta__field textarea:focus{outline:none;border-color:var(--sand);box-shadow:0 0 0 3px rgba(212,197,163,.12);background:#171717}
   .cta__field textarea{resize:vertical;min-height:110px}
   .cta__hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
@@ -548,11 +517,11 @@
 <section class="cta section" id="contact">
   <div class="wrap">
     <p class="eyebrow" data-reveal>07 · Контакты</p>
-    <h2 class="h2" data-reveal="clip" style="--d:80ms">Экономьте время и деньги с конвейерами нового уровня</h2>
+    <h2 class="h2" data-reveal="clip" style="--d:80ms">Экономьте время и деньги с оборудованием нового уровня</h2>
     <span class="rule" data-reveal="line" style="--d:240ms"></span>
     <div class="cta__grid">
       <div data-reveal>
-        <p class="cta__sub">Расскажите о вашей площадке и задаче — подберём конвейер из серии КВЛ или спроектируем под вас.</p>
+        <p class="cta__sub">Расскажите о вашей площадке и задаче — подберём оборудование из готовых серий или спроектируем под вас.</p>
         <div class="cta__direct">
           <a href="https://t.me/shishoff89" target="_blank" rel="noopener"><b>Написать в Telegram</b><span>@shishoff89</span></a>
           <!-- ⚠ MAX: подставить точную ссылку -->
@@ -591,10 +560,10 @@
   function success(){ form.reset(); form.style.display='none'; status.textContent='Заявка отправлена. Свяжемся с вами в ближайшее время.'; status.className='cta__status ok'; }
 })();
 </script>
-<!-- ╚═══════════════════════════ BLOCK: CONTACT — END ════════════════════════════════════╝ -->
+<!-- ╚═══════════════ BLOCK: CONTACT — END ═══════════════╝ -->
 
 
-<!-- ╔═══════════════════════════ BLOCK: FOOTER — START ══════════════════════════════════╗
+<!-- ╔═══════════════ BLOCK: FOOTER — START · ОБЩИЙ ══════════════════╗
      ⚠ Юр-данные (ООО, ИНН/ОГРН) и контакты — дополнить. -->
 <style id="b-ftr">
   .ftr{border-top:1px solid var(--hairline);padding-block:3.5rem}
@@ -613,7 +582,7 @@
     <div class="ftr__grid">
       <div class="ftr__logo-col">
         <div class="ftr__logo">Г<b>Т</b>К · ГОРТЕХКОНСАЛТ</div>
-        <p class="ftr__tag">Вантовые ленточные конвейеры для горнодобывающей отрасли.</p>
+        <p class="ftr__tag">Оборудование для горнодобывающей отрасли: конвейеры, виброгрохоты, колосниковые грохоты.</p>
       </div>
       <div class="ftr__col">
         <h4>Навигация</h4>
@@ -626,69 +595,182 @@
         <p>⚠ ООО / ИНН — дополнить</p>
       </div>
     </div>
-    <div class="ftr__bottom"><span>© 2026 ГОРТЕХКОНСАЛТ</span><span>Вантовые конвейеры КВЛ</span></div>
+    <div class="ftr__bottom"><span>© 2026 ГОРТЕХКОНСАЛТ</span><span>Горное оборудование</span></div>
   </div>
 </footer>
-<!-- ╚═══════════════════════════ BLOCK: FOOTER — END ═════════════════════════════════════╝ -->
+<!-- ╚═══════════════ BLOCK: FOOTER — END ═══════════════╝ -->
 
 
-<!-- ╔═══════════════════ FOUNDATION · ДВИЖОК АНИМАЦИЙ (общий для всех блоков) ═══════════════════╗
-     Reveal по скроллу, шкала прогресса, parallax, счётчики. Уважает prefers-reduced-motion. -->
+<!-- ╔═══════════════════ FOUNDATION · ДВИЖОК АНИМАЦИЙ ═══════════════════╗ -->
 <script id="motion-engine">
 (function(){
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var bar = document.getElementById('progress');
   var pxEls = [].slice.call(document.querySelectorAll('[data-parallax]'));
   var ticking = false;
-
   function frame(){
-    var h = document.documentElement;
-    var max = h.scrollHeight - h.clientHeight;
+    var h = document.documentElement, max = h.scrollHeight - h.clientHeight;
     if(bar) bar.style.transform = 'scaleX(' + (max>0 ? h.scrollTop/max : 0) + ')';
-    if(!reduce){
-      var vh = window.innerHeight;
-      pxEls.forEach(function(el){
-        var r = el.getBoundingClientRect();
-        var speed = parseFloat(el.getAttribute('data-parallax')) || 0.08;
-        var off = ((r.top + r.height/2) - vh/2) * -speed;
-        el.style.transform = 'translateY(' + off.toFixed(1) + 'px)';
-      });
-    }
+    if(!reduce){ var vh = window.innerHeight;
+      pxEls.forEach(function(el){ var r=el.getBoundingClientRect(); var s=parseFloat(el.getAttribute('data-parallax'))||0.08;
+        el.style.transform='translateY('+(((r.top+r.height/2)-vh/2)*-s).toFixed(1)+'px)'; }); }
     ticking = false;
   }
-  window.addEventListener('scroll', function(){ if(!ticking){ requestAnimationFrame(frame); ticking = true; } }, {passive:true});
+  window.addEventListener('scroll', function(){ if(!ticking){ requestAnimationFrame(frame); ticking=true; } }, {passive:true});
   window.addEventListener('resize', frame); frame();
 
-  // reveal
-  var reveals = document.querySelectorAll('[data-reveal]');
-  if('IntersectionObserver' in window && !reduce){
-    var io = new IntersectionObserver(function(entries){
-      entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('is-in'); io.unobserve(e.target); } });
-    }, {threshold:0.12, rootMargin:'0px 0px -8% 0px'});
-    reveals.forEach(function(el){ io.observe(el); });
-  } else {
-    reveals.forEach(function(el){ el.classList.add('is-in'); });
-  }
+  window.__revealObserve = function(){
+    var reveals = document.querySelectorAll('[data-reveal]:not(.is-in)');
+    if('IntersectionObserver' in window && !reduce){
+      var io = new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('is-in'); io.unobserve(e.target); } }); }, {threshold:0.12, rootMargin:'0px 0px -8% 0px'});
+      reveals.forEach(function(el){ io.observe(el); });
+    } else { reveals.forEach(function(el){ el.classList.add('is-in'); }); }
+  };
+  window.__revealObserve();
 
-  // count-up
-  function countUp(el){
-    var target = parseInt(el.getAttribute('data-count'),10), dur=1300, t0=null;
-    function step(ts){ if(!t0)t0=ts; var p=Math.min((ts-t0)/dur,1); var e=1-Math.pow(1-p,3);
-      el.textContent = Math.round(target*e); if(p<1) requestAnimationFrame(step); else el.textContent = target; }
-    requestAnimationFrame(step);
-  }
+  function countUp(el){ var t=parseInt(el.getAttribute('data-count'),10),d=1300,t0=null;
+    function step(ts){ if(!t0)t0=ts; var p=Math.min((ts-t0)/d,1),e=1-Math.pow(1-p,3); el.textContent=Math.round(t*e); if(p<1)requestAnimationFrame(step); else el.textContent=t; } requestAnimationFrame(step); }
   var counts = document.querySelectorAll('[data-count]');
   if('IntersectionObserver' in window && !reduce){
-    var co = new IntersectionObserver(function(entries){
-      entries.forEach(function(e){ if(e.isIntersecting){ countUp(e.target); co.unobserve(e.target); } });
-    }, {threshold:0.5});
+    var co=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ countUp(e.target); co.unobserve(e.target); } }); },{threshold:0.5});
     counts.forEach(function(el){ co.observe(el); });
   }
-
-  // (mouse-parallax героя удалён — сетка в Hero статична)
 })();
 </script>
-<!-- ╚════════════════════════════════════════════════════════════════════════════════════════╝ -->
+
+
+<!-- ╔═══════════════════ FOUNDATION · ПЕРЕКЛЮЧАТЕЛЬ НАПРАВЛЕНИЙ ═══════════════════╗
+     Весь персональный контент блоков 00–03. Конвейеры отрисованы статически выше
+     (SEO / без JS); при выборе другого направления блоки перерисовываются отсюда.
+     ⚠ ТТХ виброгрохотов и колосниковых грохотов — ОРИЕНТИРОВОЧНЫЕ, заменить на фактические. -->
+<script id="direction-engine">
+(function(){
+  var DATA = {
+    conveyor: {
+      img:'гор1.1.jpeg',
+      hero:{ kicker:'Повышаем эффективность · конвейеры нового уровня', title:'Вантовые<br>конвейеры', sub:'Будущее горнодобывающей отрасли',
+        support:'Одна поворотная опора вместо десятков: свободный проезд техники, мобильный склад готовой продукции, рассчитанный запас прочности несущих конструкций.' },
+      adv:{ h2:'Преимущества наших конвейеров', items:[
+        {t:'Безопасность',d:'Единственная опора снижает риск наезда техники на опорные конструкции. Меньше препятствий на площадке — меньше внеплановых простоев.'},
+        {t:'Надёжность',d:'Несущий каркас рассчитан с нормативным запасом прочности; основные элементы выполнены из конструкционной стали 09Г2С.'},
+        {t:'Сроки',d:'Подъём конструкции в проектное положение выполняется за два дня, полный монтаж — в нормативные сроки по проекту производства работ.'},
+        {t:'Мобильность',d:'Конвейер разворачивается вокруг поворотной опоры без демонтажных работ, многократно увеличивая полезную ёмкость склада готовой продукции.'},
+        {t:'Удобство',d:'Свободный проезд техники под конвейером и площадки обслуживания с двух сторон обеспечивают безопасный доступ к узлам по всей длине.'} ] },
+      str:{ h2:'Как устроен вантовый конвейер', scheme:'// схема вантового конвейера',
+        lead:'Несущая ферма на одной поворотной опоре, удержанная тросовыми вантами. Минимум конструкций на земле — максимум свободного пространства под конвейером.', nodes:[
+        {t:'Поворотная опора',d:'Единственная точка опоры. Вокруг неё конвейер разворачивается, формируя склад без демонтажа.'},
+        {t:'Тросовые подвесы',d:'Высокопрочные ванты удерживают консоль фермы и передают нагрузку на опору.'},
+        {t:'Рама из профтрубы',d:'Несущий каркас из стали 09Г2С с расчётным запасом прочности.'},
+        {t:'Площадки обслуживания',d:'С двух сторон — безопасный доступ к ленте и узлам по всей длине конвейера.'} ] },
+      mdl:{ h2:'Серия КВЛ', lead:'Готовая серия вантовых ленточных конвейеров. Выбирайте по требуемой длине и ёмкости склада — и запускайте в изготовление без долгого проектирования.',
+        note:'Объём конуса рассчитан геометрически для установки конвейера на горизонтальной площадке при указанном угле наклона. Уровень ленты на загрузке — +1 м относительно площадки. Угол естественного откоса материала принят 45°.', cards:[
+        {name:'КВЛ-24', rows:[['Длина конвейера','24 м'],['Высота конуса','8,4 м'],['Объём конуса','590 м³'],['Угол наклона','18°'],['Ширина ленты','800 мм']]},
+        {name:'КВЛ-28', rows:[['Длина конвейера','28 м'],['Высота конуса','9,6 м'],['Объём конуса','880 м³'],['Угол наклона','18°'],['Ширина ленты','800 мм']]},
+        {name:'КВЛ-36', feat:'макс. объём', rows:[['Длина конвейера','36 м'],['Высота конуса','12,1 м'],['Объём конуса','1770 м³'],['Угол наклона','18°'],['Ширина ленты','800 мм']]} ] }
+    },
+
+    screen: {
+      img:'гор1.2.jpeg',
+      hero:{ kicker:'Точная классификация · тонкое грохочение', title:'Вибросито<br>тонкого рассева', sub:'Чистое разделение по фракциям',
+        support:'Многоярусное виброгрохочение с подбором ячейки и амплитуды под материал: стабильная точность фракций и высокая производительность на единицу площади.' },
+      adv:{ h2:'Преимущества наших виброгрохотов', items:[
+        {t:'Точность рассева',d:'Стабильная классификация по заданным фракциям с минимальным засором и подрешётным продуктом в норме.'},
+        {t:'Производительность',d:'Высокая удельная производительность на единицу площади просеивающей поверхности.'},
+        {t:'Надёжность',d:'Виброузел и просеивающие поверхности рассчитаны на абразивные нагрузки; конструкционная сталь.'},
+        {t:'Обслуживание',d:'Быстросъёмные сита и удобный доступ к виброприводу сокращают время планового обслуживания.'},
+        {t:'Адаптивность',d:'Амплитуда, угол наклона и тип сетки подбираются под конкретный материал и задачу.'} ] },
+      str:{ h2:'Как устроено вибросито', scheme:'// схема вибросита тонкого рассева',
+        lead:'Наклонная просеивающая дека на виброопорах, приводимая дебалансным вибратором. Материал классифицируется по фракциям при прохождении по ситам.', nodes:[
+        {t:'Просеивающая дека',d:'Один или несколько ярусов сит с ячейкой под заданные фракции.'},
+        {t:'Вибропривод',d:'Дебалансный вибратор задаёт амплитуду и частоту колебаний деки.'},
+        {t:'Опорная рама',d:'Жёсткая рама на виброопорах гасит динамические нагрузки.'},
+        {t:'Натяжение сит',d:'Быстросъёмное крепление и натяжение просеивающих поверхностей.'} ] },
+      mdl:{ h2:'Модельный ряд виброгрохотов', lead:'Виброгрохоты для тонкой классификации сыпучих материалов. Подбор по площади просеивания и требуемой производительности.',
+        note:'⚠ ТТХ ориентировочные — заменить на фактические. Производительность зависит от типа материала, влажности и размера ячейки и подбирается под задачу.', cards:[
+        {name:'ВГ-1', rows:[['Площадь просеивания','4,5 м²'],['Число ярусов','2'],['Размер ячейки','0–10 мм'],['Производительность','до 40 т/ч'],['Мощность привода','7,5 кВт']]},
+        {name:'ВГ-2', rows:[['Площадь просеивания','6,0 м²'],['Число ярусов','2'],['Размер ячейки','0–10 мм'],['Производительность','до 70 т/ч'],['Мощность привода','11 кВт']]},
+        {name:'ВГ-3', feat:'макс. произв.', rows:[['Площадь просеивания','8,0 м²'],['Число ярусов','3'],['Размер ячейки','0–10 мм'],['Производительность','до 110 т/ч'],['Мощность привода','15 кВт']]} ] }
+    },
+
+    grizzly: {
+      img:'гор1.3.jpeg',
+      hero:{ kicker:'Подготовка материала · грубое грохочение', title:'Грохоты<br>колосниковые', sub:'Отделение негабарита перед дроблением',
+        support:'Массивная колосниковая решётка из износостойкой стали: отделение негабарита и посторонних включений, защита дробильного оборудования на входе в линию.' },
+      adv:{ h2:'Преимущества колосниковых грохотов', items:[
+        {t:'Защита оборудования',d:'Отделение негабарита и посторонних предметов защищает дробилку от поломок и простоев.'},
+        {t:'Надёжность',d:'Массивные колосники из износостойкой стали выдерживают ударные нагрузки крупных кусков.'},
+        {t:'Простота',d:'Минимум подвижных частей — высокая ремонтопригодность и низкие эксплуатационные затраты.'},
+        {t:'Производительность',d:'Эффективное грубое грохочение больших объёмов горной массы на входе в линию.'},
+        {t:'Настройка',d:'Регулируемый зазор между колосниками под требуемый размер отсева.'} ] },
+      str:{ h2:'Как устроен колосниковый грохот', scheme:'// схема колосникового грохота',
+        lead:'Наклонная решётка из параллельных колосников. Крупные куски сходят по решётке, мелкая фракция проваливается между колосниками.', nodes:[
+        {t:'Колосниковая решётка',d:'Параллельные колосники из износостойкой стали с регулируемым зазором.'},
+        {t:'Несущая рама',d:'Массивная сварная рама воспринимает ударные нагрузки.'},
+        {t:'Приёмная зона',d:'Зона загрузки рассчитана на приём крупной горной массы.'},
+        {t:'Опоры',d:'Стационарная или виброопорная установка под условия площадки.'} ] },
+      mdl:{ h2:'Модельный ряд колосниковых грохотов', lead:'Колосниковые грохоты для предварительного грохочения. Подбор по ширине решётки и крупности исходного материала.',
+        note:'⚠ ТТХ ориентировочные — заменить на фактические. Производительность и зазор колосников подбираются под крупность исходного материала и требуемый размер отсева.', cards:[
+        {name:'ГК-1', rows:[['Ширина решётки','1,2 м'],['Длина решётки','2,0 м'],['Зазор колосников','50–100 мм'],['Макс. размер куска','600 мм'],['Производительность','до 150 т/ч']]},
+        {name:'ГК-2', rows:[['Ширина решётки','1,5 м'],['Длина решётки','2,5 м'],['Зазор колосников','50–120 мм'],['Макс. размер куска','800 мм'],['Производительность','до 250 т/ч']]},
+        {name:'ГК-3', feat:'макс. произв.', rows:[['Ширина решётки','1,8 м'],['Длина решётки','3,0 м'],['Зазор колосников','60–150 мм'],['Макс. размер куска','1000 мм'],['Производительность','до 400 т/ч']]} ] }
+    }
+  };
+
+  var current='conveyor';
+  var qs=function(s){ return document.querySelector(s); };
+  var qsa=function(s){ return [].slice.call(document.querySelectorAll(s)); };
+  var heroImg=document.getElementById('hero-photo');
+  var swapSections=qsa('.swap-target');
+
+  function rows(r){ return r.map(function(x){ return '<div class="mdl__row"><span>'+x[0]+'</span><b>'+x[1]+'</b></div>'; }).join(''); }
+  function renderAdv(it){ return it.map(function(i,n){ return '<div class="adv__item" data-reveal style="--d:'+(80+n*80)+'ms"><h3>'+i.t+'</h3><p>'+i.d+'</p></div>'; }).join(''); }
+  function renderNodes(it){ return it.map(function(i,n){ return '<div class="str__node" data-reveal style="--d:'+(80+n*80)+'ms"><h3>'+i.t+'</h3><p>'+i.d+'</p></div>'; }).join(''); }
+  function renderCards(c){ return c.map(function(x,n){ var tag=x.feat?'<div class="mdl__tag">'+x.feat+'</div>':'';
+    return '<div class="mdl__card'+(x.feat?' mdl__card--feat':'')+'" data-reveal style="--d:'+(80+n*80)+'ms">'+tag+'<div class="mdl__name">'+x.name+'</div><div class="mdl__spec">'+rows(x.rows)+'</div></div>'; }).join(''); }
+  function setF(k,v){ qsa('[data-f="'+k+'"]').forEach(function(e){ e.innerHTML=v; }); }
+
+  function paint(dir){
+    var d=DATA[dir]; if(!d) return;
+    if(heroImg) heroImg.src=d.img;
+    setF('hero.kicker',d.hero.kicker); setF('hero.title',d.hero.title); setF('hero.sub',d.hero.sub); setF('hero.support',d.hero.support);
+    setF('adv.h2',d.adv.h2); var al=qs('[data-list="adv"]'); if(al) al.innerHTML=renderAdv(d.adv.items);
+    setF('str.h2',d.str.h2); setF('str.lead',d.str.lead); setF('str.scheme',d.str.scheme); var sl=qs('[data-list="str"]'); if(sl) sl.innerHTML=renderNodes(d.str.nodes);
+    setF('mdl.h2',d.mdl.h2); setF('mdl.lead',d.mdl.lead); setF('mdl.note',d.mdl.note); var ml=qs('[data-list="mdl"]'); if(ml) ml.innerHTML=renderCards(d.mdl.cards);
+    qsa('.swap-target [data-reveal]').forEach(function(e){ e.classList.add('is-in'); });
+  }
+  function updateActive(dir){
+    qsa('[data-dir]').forEach(function(e){ var on=e.getAttribute('data-dir')===dir; e.classList.toggle('is-active',on); e.setAttribute('aria-current',on?'true':'false'); });
+  }
+  function persist(dir){ try{ history.replaceState(null,'','?d='+dir+location.hash); }catch(e){} }
+
+  window.setDirection=function(dir, instant){
+    if(!DATA[dir]) return;
+    current=dir;
+    if(instant){ paint(dir); updateActive(dir); persist(dir); return; }
+    swapSections.forEach(function(s){ s.classList.add('is-swapping'); });
+    setTimeout(function(){ paint(dir); updateActive(dir); persist(dir);
+      swapSections.forEach(function(s){ s.classList.remove('is-swapping'); }); }, 230);
+  };
+
+  // привязка кликов: пункты дропдауна + карточки блока «Направления»
+  qsa('[data-dir]').forEach(function(el){
+    el.addEventListener('click', function(e){ e.preventDefault();
+      window.setDirection(el.getAttribute('data-dir'));
+      var dd=document.getElementById('dirDrop'); if(dd) dd.classList.remove('open');
+      document.body.classList.remove('nav-open');
+      var b=document.getElementById('burger'); if(b){ b.setAttribute('aria-expanded','false'); b.innerHTML='&#9776;'; }
+    });
+  });
+
+  // предзагрузка изображений направлений
+  Object.keys(DATA).forEach(function(k){ var im=new Image(); im.src=DATA[k].img; });
+
+  // стартовое направление из ?d=
+  var p=null; try{ p=new URLSearchParams(location.search).get('d'); }catch(e){}
+  if(p && DATA[p] && p!=='conveyor'){ window.setDirection(p, true); } else { updateActive('conveyor'); }
+})();
+</script>
+<!-- ╚════════════════════════════════════════════════════════════════════════╝ -->
 
 </body>
 </html>
