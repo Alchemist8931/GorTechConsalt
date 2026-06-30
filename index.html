@@ -35,8 +35,8 @@
     /* шрифты (значения по умолчанию = вариант 1; реально переключаются классом на <html>) */
     --f-xl:"Unbounded",sans-serif;      /* самые крупные надписи */
     --f-display:"Unbounded",sans-serif; /* средние заголовки */
-    --f-body:"SN Pro",sans-serif;       /* основной текст — одинаков в обоих вариантах */
-    --f-mono:"IBM Plex Mono",monospace; /* служебные подписи — одинаков в обоих вариантах */
+    --f-body:"SN Pro";/* основной текст — одинаков в обоих вариантах */
+    --f-mono:"SN Pro";/* служебные подписи — одинаков в обоих вариантах */
     --ease:cubic-bezier(.16,1,.3,1);
     --surface-grad:linear-gradient(180deg,#181818,#101010);
     --elev-1:0 1px 0 rgba(232,226,212,.05) inset, 0 14px 34px -16px rgba(0,0,0,.7);
@@ -46,7 +46,7 @@
   /* ── НАБОР 1: заголовки Unbounded + текст SN Pro ── */
   html.variant1{ --f-xl:"Unbounded",sans-serif; --f-display:"Unbounded",sans-serif; }
   /* ── НАБОР 2: крупные надписи Rubik Maps, средние Rubik Dirt, текст SN Pro ── */
-  html.variant2{ --f-xl:"Rubik Maps",system-ui; --f-display:"Rubik Dirt",system-ui; }
+  html.variant2{ --f-xl:"Rubik Dirt",system-ui; --f-display:"Rubik Dirt",system-ui; }
   /* Тир XL (--f-xl): .hero__title, .h2, .abt__year.  Остальные заголовки — тир --f-display.
      Чтобы перенести элемент между тирами — поменяй у его правила var(--f-display) ↔ var(--f-xl). */
 
