@@ -62,14 +62,15 @@
   .rule{display:block;width:64px;height:2px;background:var(--sand);margin-top:1.5rem;transform-origin:left}
   .lead{color:var(--muted);max-width:56ch;margin-top:1.6rem;font-size:clamp(1rem,1.4vw,1.15rem)}
 
-  /* — номер раздела слева от заголовка (анимированная чернильная цифра) — */
+  /* — номер раздела В ЛЕВОМ ПОЛЕ: absolute, НЕ сдвигает заголовок и контент — */
   .sec-head{position:relative}
-  .sec-num{position:absolute;top:0;margin-top:-60px;right:calc(100% + clamp(1rem,2.2vw,2.6rem));
-         width:clamp(64px,9vw,128px);height:clamp(64px,9vw,170px)}
-  /* на узких экранах номер встаёт над заголовком */
-  @media(max-width:1500px){ .sec-num{position:static;margin-bottom:.4rem} }
+  .sec-num{--w:clamp(64px,9vw,128px);
+           position:absolute;top:0;right:calc(100% + clamp(1rem,2.2vw,2.6rem));
+           width:var(--w);height:calc(var(--w) * 1.8)}
   .sec-head .h2{margin-top:0}
   .ink-num{display:block;width:100%;height:100%;pointer-events:none}
+  /* на экранах без бокового поля номер встаёт НАД заголовком (контент по горизонтали не сдвигается) */
+  @media(max-width:1500px){ .sec-num{position:static;margin-bottom:.4rem} }
 
   .arr{display:inline-block;transition:transform .3s var(--ease)}
   .btn{display:inline-flex;align-items:center;justify-content:center;gap:.6rem;
@@ -861,7 +862,7 @@
 
   /* ——— параметры для компактных номеров (полный набор ключей сохранён) ——— */
   const DEFAULTS = {
-    number:"0", fitW:0.96, maxFont:0.86, digitGap:0.06, baselineY:0.66,
+    number:"0", fitW:0.96, maxFont:0.47, digitGap:0.06, baselineY:0.37,
     fontStack:'"Anton","Arial Black",Impact,sans-serif',
     background:null, bgSat:1.0, bgTexture:false, pointerThrough:true,
     ink:"#d4c5a3", inkSat:1.0, inkAlpha:0.9, solidFrac:0.12, maxDripFrac:0.45,
@@ -880,7 +881,7 @@
   function createInk(canvas, opts){
     const CONFIG=Object.assign({},DEFAULTS,opts);
     const ctx=canvas.getContext('2d');
-    let S,dpr,P,drawY,fontStr,fontSize,step,lineW;
+    let S,dpr,P,PW,PH,drawY,fontStr,fontSize,step,lineW;
     let fieldBlur,ghostBlur,gridStep;
     let inkRGB,ghostRGB,scanRGB,gridRGB,markRGB,bgRGB;
     let inkCss,ghostCss,scanCss,gridCss,markCss,bgCss;
@@ -891,22 +892,22 @@
     function buildDigit(ch,cx,adv){
       const m=Math.round(fontSize*0.14);
       const x0=Math.max(0,Math.floor(cx-adv/2-m));
-      const x1=Math.min(P-1,Math.ceil(cx+adv/2+m));
+      const x1=Math.min(PW-1,Math.ceil(cx+adv/2+m));
       const w=x1-x0+1;
-      sb.clearRect(0,0,P,P);
+      sb.clearRect(0,0,PW,PH);
       sb.fillStyle="#000"; sb.textAlign="center"; sb.textBaseline="middle"; sb.font=fontStr;
       sb.fillText(ch,cx,drawY);
-      const d=sb.getImageData(x0,0,w,P).data;
-      const cols=new Array(P).fill(null);
-      let gl=P,gr=0,gt=P,gb=0;
+      const d=sb.getImageData(x0,0,w,PH).data;
+      const cols=new Array(PW).fill(null);
+      let gl=PW,gr=0,gt=PH,gb=0;
       for(let xi=0;xi<w;xi++){
         let t=-1,b=-1;
-        for(let y=0;y<P;y++){ if(d[(y*w+xi)*4+3]>40){ if(t<0)t=y; b=y; } }
+        for(let y=0;y<PH;y++){ if(d[(y*w+xi)*4+3]>40){ if(t<0)t=y; b=y; } }
         if(t>=0){ const x=x0+xi; cols[x]={top:t,bot:b}; if(x<gl)gl=x; if(x>gr)gr=x; if(t<gt)gt=t; if(b>gb)gb=b; }
       }
       if(gr<gl) return null;
       const h=gb-gt, ww=gr-gl+1;
-      sb.clearRect(0,0,P,P);
+      sb.clearRect(0,0,PW,PH);
       sb.fillStyle=inkCss; sb.font=fontStr; sb.textAlign="center"; sb.textBaseline="middle";
       sb.fillText(ch,cx,drawY);
       const full=document.createElement('canvas'); full.width=ww; full.height=h+1;
@@ -915,7 +916,7 @@
       grad.addColorStop(0,"rgba(255,255,255,1)");
       grad.addColorStop(Math.min(0.95,CONFIG.solidFrac*0.95),"rgba(255,255,255,1)");
       grad.addColorStop(1,"rgba(255,255,255,0.10)");
-      sb.globalCompositeOperation="destination-in"; sb.fillStyle=grad; sb.fillRect(0,0,P,P);
+      sb.globalCompositeOperation="destination-in"; sb.fillStyle=grad; sb.fillRect(0,0,PW,PH);
       sb.globalCompositeOperation="source-over";
       const body=document.createElement('canvas'); body.width=ww; body.height=h+1;
       body.getContext('2d').drawImage(sb.canvas,gl,gt,ww,h+1,0,0,ww,h+1);
@@ -928,18 +929,18 @@
     function layoutNumber(){
       const str=String(CONFIG.number||"");
       digits=[]; if(!str.length) return;
-      let fs=Math.round(P*CONFIG.maxFont);
+      let fs=Math.round(PH*CONFIG.maxFont);
       sb.font=fs+'px '+CONFIG.fontStack;
       let widths=[],total=0;
       for(const ch of str){ const ww=sb.measureText(ch).width; widths.push(ww); total+=ww; }
       total+=fs*CONFIG.digitGap*(str.length-1);
-      const maxW=P*CONFIG.fitW;
+      const maxW=PW*CONFIG.fitW;
       if(total>maxW) fs=Math.floor(fs*(maxW/total));
       fontSize=fs; fontStr=fs+'px '+CONFIG.fontStack; sb.font=fontStr;
       widths=[]; total=0;
       for(const ch of str){ const ww=sb.measureText(ch).width; widths.push(ww); total+=ww; }
       const gap=fs*CONFIG.digitGap; total+=gap*(str.length-1);
-      let x=(P-total)/2;
+      let x=(PW-total)/2;
       for(let i=0;i<str.length;i++){ const cx=x+widths[i]/2; const dg=buildDigit(str[i],cx,widths[i]); if(dg) digits.push(dg); x+=widths[i]+gap; }
       let mw=1,mh=1;
       for(const dg of digits){ if(dg.W>mw)mw=dg.W; if(dg.H>mh)mh=dg.H; }
@@ -1150,14 +1151,14 @@
     }
 
     function buildAll(){
-      const box=Math.max(canvas.clientWidth,canvas.clientHeight)||120;
-      S=Math.round(box);
+      const w=canvas.clientWidth||120, h=canvas.clientHeight||120;
       dpr=Math.min(window.devicePixelRatio||1,2);
-      P=Math.round(S*dpr);
-      canvas.width=P; canvas.height=P;
+      PW=Math.round(w*dpr); PH=Math.round(h*dpr);
+      P=Math.max(PW,PH); S=Math.round(Math.max(w,h));
+      canvas.width=PW; canvas.height=PH;
       if(CONFIG.pointerThrough) canvas.style.pointerEvents='none';
-      drawY=P*CONFIG.baselineY;
-      step=Math.max(2,Math.round(P/900));
+      drawY=PH*CONFIG.baselineY;
+      step=Math.max(2,Math.round(PH/900));
       lineW=Math.max(1,step-1);
       fieldBlur=CONFIG.blur.map(v=>v*dpr);
       ghostBlur=CONFIG.ghostBlur.map(v=>v*dpr);
@@ -1168,7 +1169,7 @@
       markRGB=colorOf(CONFIG.markColor,CONFIG.markSat); markCss=css(markRGB,CONFIG.markAlpha);
       paperOn=!!(CONFIG.background&&String(CONFIG.background).trim());
       bgRGB=paperOn?colorOf(CONFIG.background,CONFIG.bgSat):[0,0,0]; bgCss=css(bgRGB);
-      solidBuf=document.createElement('canvas'); solidBuf.width=P; solidBuf.height=P; sb=solidBuf.getContext('2d',{willReadFrequently:true});
+      solidBuf=document.createElement('canvas'); solidBuf.width=PW; solidBuf.height=PH; sb=solidBuf.getContext('2d',{willReadFrequently:true});
       buildBrush();
       if(paperOn) buildPaper(); else paper=null;
       if(CONFIG.grainAlpha>0) buildGrainTile();
@@ -1179,7 +1180,7 @@
     function render(now){
       time=now/1000;
       ctx.setTransform(1,0,0,1,0,0);
-      ctx.clearRect(0,0,P,P);
+      ctx.clearRect(0,0,PW,PH);
       if(paperOn&&paper) ctx.drawImage(paper,0,0);
       for(const dg of digits) renderDigit(dg);
       if(paperOn&&CONFIG.grainAlpha>0) drawGrain(now);
