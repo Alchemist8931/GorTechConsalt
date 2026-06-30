@@ -65,7 +65,7 @@
   /* — номер раздела В ЛЕВОМ ПОЛЕ: absolute, НЕ сдвигает заголовок и контент — */
   .sec-head{position:relative}
   .sec-num{--w:clamp(64px,9vw,128px);
-           position:absolute;top:0;margin-top:-60px;right:calc(100% + clamp(1rem,2.2vw,2.6rem));
+           position:absolute;top:0;margin-top:-46px;right:calc(100% + clamp(1rem,2.2vw,2.6rem));
            width:var(--w);height:calc(var(--w) * 1.8)}
   .sec-head .h2{margin-top:0}
   .ink-num{display:block;width:100%;height:100%;pointer-events:none}
@@ -862,7 +862,7 @@
 
   /* ——— параметры для компактных номеров (полный набор ключей сохранён) ——— */
   const DEFAULTS = {
-    number:"0", fitW:0.96, maxFont:1.1, digitGap:0.06, baselineY:0.37,
+    number:"0", fitW:0.96, maxFont:1.0, digitGap:0.06, baselineY:0.37,
     fontStack:'"Anton","Arial Black",Impact,sans-serif',
     background:null, bgSat:1.0, bgTexture:false, pointerThrough:true,
     ink:"#d4c5a3", inkSat:1.0, inkAlpha:0.9, solidFrac:0.12, maxDripFrac:0.45,
