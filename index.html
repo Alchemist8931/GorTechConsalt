@@ -64,8 +64,8 @@
 
   /* — номер раздела слева от заголовка (анимированная чернильная цифра) — */
   .sec-head{position:relative}
-  .sec-num{position:absolute;top:0;right:calc(100% + clamp(1rem,2.2vw,2.6rem));
-         width:clamp(64px,9vw,128px);height:clamp(64px,9vw,128px)}
+  .sec-num{position:absolute;top:0;margin-top:-60px;right:calc(100% + clamp(1rem,2.2vw,2.6rem));
+         width:clamp(64px,9vw,128px);height:clamp(64px,9vw,170px)}
   /* на узких экранах номер встаёт над заголовком */
   @media(max-width:1500px){ .sec-num{position:static;margin-bottom:.4rem} }
   .sec-head .h2{margin-top:0}
