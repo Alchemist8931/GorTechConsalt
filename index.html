@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Вантовые конвейеры, виброгрохоты, колосниковые грохоты | ГОРТЕХКОНСАЛТ</title>
+<title>Вантовыеконвейеры, виброгрохоты, колосниковые грохоты | ГОРТЕХКОНСАЛТ</title>
 <meta name="description" content="Оборудование для горнодобывающей отрасли: вантовые ленточные конвейеры (серия КВЛ), вибрационные и колосниковые грохоты, барабаны конвейеров. Проектирование, изготовление, монтаж — полный цикл.">
 <meta name="theme-color" content="#0d0d0d">
 <meta property="og:type" content="website">
@@ -65,7 +65,7 @@
   /* — номер раздела В ЛЕВОМ ПОЛЕ: absolute, НЕ сдвигает заголовок и контент — */
   .sec-head{position:relative}
   .sec-num{--w:clamp(64px,9vw,128px);
-           position:absolute;top:0;margin-top:-46px;right:calc(100% + clamp(1rem,2.2vw,2.6rem));
+           position:absolute;top:0;margin-top:-60px;right:calc(100% + clamp(1rem,2.2vw,2.6rem));
            width:var(--w);height:calc(var(--w) * 1.8)}
   .sec-head .h2{margin-top:0}
   .ink-num{display:block;width:100%;height:100%;pointer-events:none}
@@ -110,6 +110,9 @@
       transform:translateX(-100%);animation:sweep 5s var(--ease) infinite}
     @keyframes sweep{0%{transform:translateX(-100%)}55%,100%{transform:translateX(100%)}}
   }
+
+  /* — персональные фото блоков 01/02 (ложатся в край, перекрывая плейсхолдер) — */
+  .adv__photo,.str__photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;transition:opacity .3s var(--ease)}
 </style>
 </head>
 <body>
@@ -306,7 +309,7 @@
     </div>
     <span class="rule" data-reveal="line" style="--d:240ms"></span>
     <div class="adv__grid">
-      <div class="adv__visual shimmer" data-reveal aria-hidden="true"><span>// фото узлов — сменяется по скроллу</span></div>
+      <div class="adv__visual" data-reveal aria-hidden="true"><img class="adv__photo" id="adv-photo" src="гор2.1.jpg" alt="" loading="lazy"></div>
       <div class="adv__list" data-list="adv">
         <div class="adv__item" data-reveal style="--d:80ms"><h3>Безопасность</h3><p>Единственная опора снижает риск наезда техники на опорные конструкции. Меньше препятствий на площадке — меньше внеплановых простоев.</p></div>
         <div class="adv__item" data-reveal style="--d:160ms"><h3>Надёжность</h3><p>Несущий каркас рассчитан с нормативным запасом прочности; основные элементы выполнены из конструкционной стали 09Г2С.</p></div>
@@ -346,7 +349,7 @@
     </div>
     <span class="rule" data-reveal="line" style="--d:240ms"></span>
     <p class="lead" data-f="str.lead" data-reveal style="--d:200ms">Несущая ферма на одной поворотной опоре, удержанная тросовыми вантами. Минимум конструкций на земле — максимум свободного пространства под конвейером.</p>
-    <div class="str__scheme shimmer" data-reveal aria-hidden="true"><span data-f="str.scheme">// схема вантового конвейера</span></div>
+    <div class="str__scheme" data-reveal aria-hidden="true"><img class="str__photo" id="str-photo" src="гор3.1.jpg" alt="" loading="lazy"></div>
     <div class="str__nodes" data-list="str">
       <div class="str__node" data-reveal style="--d:80ms"><h3>Поворотная опора</h3><p>Единственная точка опоры. Вокруг неё конвейер разворачивается, формируя склад без демонтажа.</p></div>
       <div class="str__node" data-reveal style="--d:160ms"><h3>Тросовые подвесы</h3><p>Высокопрочные ванты удерживают консоль фермы и передают нагрузку на опору.</p></div>
@@ -684,7 +687,7 @@
 (function(){
   var DATA = {
     conveyor: {
-      img:'гор1.1.jpg',
+      img:'гор1.1.jpg', advImg:'гор2.1.jpg', strImg:'гор3.1.jpg',
       hero:{ kicker:'Повышаем эффективность · конвейеры нового уровня', title:'Вантовые<br>конвейеры', sub:'Будущее горнодобывающей отрасли',
         support:'Одна поворотная опора вместо десятков: свободный проезд техники, мобильный склад готовой продукции, рассчитанный запас прочности несущих конструкций.' },
       adv:{ h2:'Преимущества наших конвейеров', items:[
@@ -707,7 +710,7 @@
     },
 
     screen: {
-      img:'гор1.2.jpg',
+      img:'гор1.2.jpg', advImg:'гор2.2.jpg', strImg:'гор3.2.jpg',
       hero:{ kicker:'Точная классификация · тонкое грохочение', title:'Вибросито<br>тонкого рассева', sub:'Чистое разделение по фракциям',
         support:'Многоярусное виброгрохочение с подбором ячейки и амплитуды под материал: стабильная точность фракций и высокая производительность на единицу площади.' },
       adv:{ h2:'Преимущества наших виброгрохотов', items:[
@@ -730,7 +733,7 @@
     },
 
     grizzly: {
-      img:'гор1.3.jpg',
+      img:'гор1.3.jpg', advImg:'гор2.3.jpg', strImg:'гор3.3.jpg',
       hero:{ kicker:'Подготовка материала · грубое грохочение', title:'Грохоты<br>колосниковые', sub:'Отделение негабарита перед дроблением',
         support:'Массивная колосниковая решётка из износостойкой стали: отделение негабарита и посторонних включений, защита дробильного оборудования на входе в линию.' },
       adv:{ h2:'Преимущества колосниковых грохотов', items:[
@@ -757,6 +760,8 @@
   var qs=function(s){ return document.querySelector(s); };
   var qsa=function(s){ return [].slice.call(document.querySelectorAll(s)); };
   var heroImg=document.getElementById('hero-photo');
+  var advImg=document.getElementById('adv-photo');
+  var strImg=document.getElementById('str-photo');
   var swapSections=qsa('.swap-target');
 
   function rows(r){ return r.map(function(x){ return '<div class="mdl__row"><span>'+x[0]+'</span><b>'+x[1]+'</b></div>'; }).join(''); }
@@ -769,6 +774,8 @@
   function paint(dir){
     var d=DATA[dir]; if(!d) return;
     if(heroImg) heroImg.src=d.img;
+    if(advImg) advImg.src=d.advImg;
+    if(strImg) strImg.src=d.strImg;
     setF('hero.kicker',d.hero.kicker); setF('hero.title',d.hero.title); setF('hero.sub',d.hero.sub); setF('hero.support',d.hero.support);
     setF('adv.h2',d.adv.h2); var al=qs('[data-list="adv"]'); if(al) al.innerHTML=renderAdv(d.adv.items);
     setF('str.h2',d.str.h2); setF('str.lead',d.str.lead); setF('str.scheme',d.str.scheme); var sl=qs('[data-list="str"]'); if(sl) sl.innerHTML=renderNodes(d.str.nodes);
@@ -789,6 +796,7 @@
       swapSections.forEach(function(s){ s.classList.remove('is-swapping'); }); }, 230);
   };
 
+  // привязка кликов: пункты дропдауна + карточки блока «Направления»
   qsa('[data-dir]').forEach(function(el){
     el.addEventListener('click', function(e){ e.preventDefault();
       window.setDirection(el.getAttribute('data-dir'));
@@ -798,423 +806,221 @@
     });
   });
 
-  Object.keys(DATA).forEach(function(k){ var im=new Image(); im.src=DATA[k].img; });
+  // предзагрузка изображений направлений
+  Object.keys(DATA).forEach(function(k){
+    ['img','advImg','strImg'].forEach(function(f){ if(DATA[k][f]){ var im=new Image(); im.src=DATA[k][f]; } });
+  });
 
+  // стартовое направление из ?d=
   var p=null; try{ p=new URLSearchParams(location.search).get('d'); }catch(e){}
   if(p && DATA[p] && p!=='conveyor'){ window.setDirection(p, true); } else { updateActive('conveyor'); }
 })();
 </script>
+<!-- ╚════════════════════════════════════════════════════════════════════════╝ -->
 
 
-<!-- ╔═══════════════════ INK NUMBERS · анимированные номера разделов ═══════════════════╗
-     Номер каждого раздела (01–07) рисуется как «чернильная» цифра слева от заголовка
-     (<canvas class="ink-num" data-number="0N">), высота задаётся в CSS (.sec-num).
-     Эффект многоэкземплярный: один общий цикл анимации; анимируются только видимые
-     номера (IntersectionObserver); уважает prefers-reduced-motion (статичный кадр).
-     Для компактных номеров отключены ghost/scan/grid/marks и фон (прозрачный) — на тёмном
-     фоне они невидимы, отключение экономит ресурсы. Любой слой включается обратно: true. -->
+
 <script id="ink-numbers">
+/* ════════════════════════════════════════════════════════════════════════
+   ЧЕРНИЛЬНЫЕ НОМЕРА РАЗДЕЛОВ — мультиэкземплярный модуль.
+   Каждый <canvas class="ink-num" data-number="0N"> рисует «стекающую»
+   песочную цифру. Канвас ПРЯМОУГОЛЬНЫЙ (PW×PH) — потёкам хватает места снизу.
+   Один общий RAF; анимируются только видимые (IntersectionObserver);
+   prefers-reduced-motion → один статичный кадр; ресайз пересобирает.
+   ── настройка вида: DEFAULTS ниже. maxFont привязывает размер к ВЫСОТЕ
+      (а не к ширине), поэтому 01..07 одной высоты независимо от цифр. ── */
 (function(){
-  /* ——— чистые помощники (общие для всех экземпляров) ——— */
-  function makeNoise(seed){
-    let s=seed>>>0;
-    const rnd=()=>(s=(s*1664525+1013904223)>>>0,s/4294967296);
-    const base=new Uint8Array(256);
-    for(let i=0;i<256;i++) base[i]=i;
-    for(let i=255;i>0;i--){ const j=(rnd()*(i+1))|0; const t=base[i]; base[i]=base[j]; base[j]=t; }
-    const perm=new Uint8Array(512);
-    for(let i=0;i<512;i++) perm[i]=base[i&255];
-    const val=(ix,iy)=>perm[(perm[ix&255]+iy)&255]/255;
-    const sm=t=>t*t*(3-2*t);
-    return (x,y)=>{
-      const x0=Math.floor(x),y0=Math.floor(y);
-      const fx=sm(x-x0),fy=sm(y-y0);
-      const v00=val(x0,y0),v10=val(x0+1,y0);
-      const v01=val(x0,y0+1),v11=val(x0+1,y0+1);
-      const a=v00+(v10-v00)*fx,b=v01+(v11-v01)*fx;
-      return a+(b-a)*fy;
-    };
-  }
-  const nFlow=makeNoise(11), nLen=makeNoise(73);
-  const clamp01=v=>v<0?0:v>1?1:v;
-  const smooth01=v=>{ v=clamp01(v); return v*v*(3-2*v); };
-  function hexToRgb(hex){
-    let h=(hex||"#000").replace('#','').trim();
-    if(h.length===3) h=h.split('').map(c=>c+c).join('');
-    const n=parseInt(h,16)||0; return [(n>>16)&255,(n>>8)&255,n&255];
-  }
-  function adjustSat(rgb,sat){
-    let [r,g,b]=rgb; r/=255; g/=255; b/=255;
-    const mx=Math.max(r,g,b),mn=Math.min(r,g,b);
-    let h,s,l=(mx+mn)/2;
-    if(mx===mn){ h=s=0; }
-    else{ const d=mx-mn; s=l>0.5?d/(2-mx-mn):d/(mx+mn);
-      if(mx===r) h=(g-b)/d+(g<b?6:0); else if(mx===g) h=(b-r)/d+2; else h=(r-g)/d+4; h/=6; }
-    s=clamp01(s*sat);
-    const h2=(p,q,t)=>{ if(t<0)t+=1; if(t>1)t-=1; if(t<1/6)return p+(q-p)*6*t; if(t<1/2)return q; if(t<2/3)return p+(q-p)*(2/3-t)*6; return p; };
-    let R,G,B;
-    if(s===0){ R=G=B=l; }
-    else{ const q=l<0.5?l*(1+s):l+s-l*s,p=2*l-q; R=h2(p,q,h+1/3); G=h2(p,q,h); B=h2(p,q,h-1/3); }
-    return [Math.round(R*255),Math.round(G*255),Math.round(B*255)];
-  }
-  const colorOf=(hex,sat)=>adjustSat(hexToRgb(hex),sat);
-  const css=(rgb,a)=> a==null?'rgb('+rgb[0]+','+rgb[1]+','+rgb[2]+')':'rgba('+rgb[0]+','+rgb[1]+','+rgb[2]+','+a+')';
-
-  /* ——— параметры для компактных номеров (полный набор ключей сохранён) ——— */
-  const DEFAULTS = {
-    number:"0", fitW:0.96, maxFont:0.8, digitGap:0.06, baselineY:0.37,
-    fontStack:'"Anton","Arial Black",Impact,sans-serif',
-    background:null, bgSat:1.0, bgTexture:false, pointerThrough:true,
-    ink:"#d4c5a3", inkSat:1.0, inkAlpha:0.9, solidFrac:0.12, maxDripFrac:0.45,
-    streakAlpha:0.5, combFreq:0.5, flowSpeed:1.0, blur:[0,1.1,1.0],
-    waveAmp:0.10, waveSpeed:0.5, waveScale:0.011, waveSharp:0.90, waveOffset:0.0,
-    ghost:false, ghostColor:"#0d0d0d", ghostSat:0.1, ghostAlpha:0.95, ghostBlur:[3.5,9], ghostShimmer:0.10, ghostShimmerSpeed:0.8,
-    jitter:0.1, jitterSpeed:1.0, shift:0.12, shiftSpeed:1.0, focalSpeed:0.5,
-    scan:false, scanColor:"#0d0d0d", scanSat:0.9, scanAlpha:0.85, scanBlend:"screen", scanPeriod:6.4, scanBand:0.12, scanBlur:9, scanShift:0.20, scanShiftSpeed:1.0, scanOffset:0.0,
-    grid:false, gridColor:"#0d0d0d", gridSat:0.0, gridAlpha:1.0, gridStepPx:20, gridDrift:4,
-    grainAlpha:0.0, grainSpeed:1.0,
-    marks:false, markColor:"#0d0d0d", markSat:1.0, markAlpha:0.5, cornerNo:220
+  var DEFAULTS = {
+    fontStack : '"Anton","Helvetica Neue",Arial,sans-serif',
+    ink       : '#d4c5a3',   // цвет чернил (= --sand)
+    alpha     : 0.92,        // непрозрачность тела цифры
+    maxFont   : 0.47,        // размер шрифта в долях ВЫСОТЫ канваса (height-bound)
+    fitW      : 0.96,        // не шире этой доли ширины канваса
+    baselineY : 0.37,        // положение базовой линии (доля высоты)
+    dripCols  : 26,          // число колонок-потёков
+    dripChance: 0.55,        // вероятность потёка в колонке
+    dripMin   : 0.06,        // мин. длина потёка (доля высоты)
+    dripMax   : 0.42,        // макс. длина потёка (доля высоты)
+    dripWidth : 0.45,        // толщина потёка относительно шага колонки
+    flowSpeed : 0.55,        // скорость «дыхания» потёков
+    jitter    : 0.5,         // дрожание
+    // отключённые слои (на тёмном фоне всё равно невидимы) — для скорости:
+    ghost:false, scan:false, grid:false, marks:false, background:null
   };
 
-  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // — общий детерминированный шум —
+  function makeNoise(seed){
+    var s = seed>>>0 || 1;
+    var t = new Float32Array(256);
+    for(var i=0;i<256;i++){ s=(s*1664525+1013904223)>>>0; t[i]=(s>>>8)/16777215; }
+    return function(x){
+      var xi=Math.floor(x), xf=x-xi;
+      var a=t[xi&255], b=t[(xi+1)&255];
+      var u=xf*xf*(3-2*xf);
+      return a+(b-a)*u;
+    };
+  }
+  function hexToRgb(h){
+    h=h.replace('#',''); if(h.length===3) h=h[0]+h[0]+h[1]+h[1]+h[2]+h[2];
+    var n=parseInt(h,16); return [ (n>>16)&255, (n>>8)&255, n&255 ];
+  }
+  function css(rgb,a){ return a==null ? 'rgb('+rgb[0]+','+rgb[1]+','+rgb[2]+')'
+                                       : 'rgba('+rgb[0]+','+rgb[1]+','+rgb[2]+','+a+')'; }
 
+  // — фабрика экземпляра —
   function createInk(canvas, opts){
-    const CONFIG=Object.assign({},DEFAULTS,opts);
-    const ctx=canvas.getContext('2d');
-    let S,dpr,P,PW,PH,drawY,fontStr,fontSize,step,lineW;
-    let fieldBlur,ghostBlur,gridStep;
-    let inkRGB,ghostRGB,scanRGB,gridRGB,markRGB,bgRGB;
-    let inkCss,ghostCss,scanCss,gridCss,markCss,bgCss;
-    let solidBuf,sb,fxBuf,fxc,tmpA,tac,tmpB,tbc;
-    let paper,paperOn,brush,grainTile,gridPattern;
-    let digits=[]; let time=0;
-
-    function buildDigit(ch,cx,adv){
-      const m=Math.round(fontSize*0.14);
-      const x0=Math.max(0,Math.floor(cx-adv/2-m));
-      const x1=Math.min(PW-1,Math.ceil(cx+adv/2+m));
-      const w=x1-x0+1;
-      sb.clearRect(0,0,PW,PH);
-      sb.fillStyle="#000"; sb.textAlign="center"; sb.textBaseline="middle"; sb.font=fontStr;
-      sb.fillText(ch,cx,drawY);
-      const d=sb.getImageData(x0,0,w,PH).data;
-      const cols=new Array(PW).fill(null);
-      let gl=PW,gr=0,gt=PH,gb=0;
-      for(let xi=0;xi<w;xi++){
-        let t=-1,b=-1;
-        for(let y=0;y<PH;y++){ if(d[(y*w+xi)*4+3]>40){ if(t<0)t=y; b=y; } }
-        if(t>=0){ const x=x0+xi; cols[x]={top:t,bot:b}; if(x<gl)gl=x; if(x>gr)gr=x; if(t<gt)gt=t; if(b>gb)gb=b; }
-      }
-      if(gr<gl) return null;
-      const h=gb-gt, ww=gr-gl+1;
-      sb.clearRect(0,0,PW,PH);
-      sb.fillStyle=inkCss; sb.font=fontStr; sb.textAlign="center"; sb.textBaseline="middle";
-      sb.fillText(ch,cx,drawY);
-      const full=document.createElement('canvas'); full.width=ww; full.height=h+1;
-      full.getContext('2d').drawImage(sb.canvas,gl,gt,ww,h+1,0,0,ww,h+1);
-      const grad=sb.createLinearGradient(0,gt,0,gb);
-      grad.addColorStop(0,"rgba(255,255,255,1)");
-      grad.addColorStop(Math.min(0.95,CONFIG.solidFrac*0.95),"rgba(255,255,255,1)");
-      grad.addColorStop(1,"rgba(255,255,255,0.10)");
-      sb.globalCompositeOperation="destination-in"; sb.fillStyle=grad; sb.fillRect(0,0,PW,PH);
-      sb.globalCompositeOperation="source-over";
-      const body=document.createElement('canvas'); body.width=ww; body.height=h+1;
-      body.getContext('2d').drawImage(sb.canvas,gl,gt,ww,h+1,0,0,ww,h+1);
-      const drip=h*CONFIG.maxDripFrac;
-      const padX=Math.ceil(ww*0.40), padY=Math.ceil(h*0.06);
-      const W=ww+padX*2, H=padY+h+drip+Math.ceil(h*0.25);
-      return { ch,cols,gl,gr,gt,gb,h,w:ww,drip,full,body,padX,padY,W,H,originX:gl-padX,originY:gt-padY,seed:Math.random()*1000,ghostBuf:null };
-    }
-
-    function layoutNumber(){
-      const str=String(CONFIG.number||"");
-      digits=[]; if(!str.length) return;
-      let fs=Math.round(PH*CONFIG.maxFont);
-      sb.font=fs+'px '+CONFIG.fontStack;
-      let widths=[],total=0;
-      for(const ch of str){ const ww=sb.measureText(ch).width; widths.push(ww); total+=ww; }
-      total+=fs*CONFIG.digitGap*(str.length-1);
-      const maxW=PW*CONFIG.fitW;
-      if(total>maxW) fs=Math.floor(fs*(maxW/total));
-      fontSize=fs; fontStr=fs+'px '+CONFIG.fontStack; sb.font=fontStr;
-      widths=[]; total=0;
-      for(const ch of str){ const ww=sb.measureText(ch).width; widths.push(ww); total+=ww; }
-      const gap=fs*CONFIG.digitGap; total+=gap*(str.length-1);
-      let x=(PW-total)/2;
-      for(let i=0;i<str.length;i++){ const cx=x+widths[i]/2; const dg=buildDigit(str[i],cx,widths[i]); if(dg) digits.push(dg); x+=widths[i]+gap; }
-      let mw=1,mh=1;
-      for(const dg of digits){ if(dg.W>mw)mw=dg.W; if(dg.H>mh)mh=dg.H; }
-      fxBuf=document.createElement('canvas'); fxBuf.width=mw; fxBuf.height=mh; fxc=fxBuf.getContext('2d');
-      tmpA=document.createElement('canvas'); tmpA.width=mw; tmpA.height=mh; tac=tmpA.getContext('2d');
-      tmpB=document.createElement('canvas'); tmpB.width=mw; tmpB.height=mh; tbc=tmpB.getContext('2d');
-      if(CONFIG.ghost) for(const dg of digits) bakeGhost(dg);
-    }
-
-    function accumBlurRamp(src,W,H,levels,blurTFn,envFn){
-      tac.clearRect(0,0,W,H);
-      const Ln=levels.length;
-      for(let i=Ln-1;i>=0;i--){
-        tbc.clearRect(0,0,W,H);
-        tbc.filter=levels[i]>0?'blur('+levels[i].toFixed(1)+'px)':'none';
-        tbc.drawImage(src,0,0,W,H,0,0,W,H);
-        tbc.filter='none';
-        const g=tbc.createLinearGradient(0,0,0,H);
-        for(let s=0;s<=14;s++){
-          const ly=H*s/14, bt=blurTFn(ly);
-          const w=(i===Ln-1)?1:clamp01((i+1)-bt);
-          g.addColorStop(s/14,'rgba(0,0,0,'+clamp01(envFn(ly)*w)+')');
-        }
-        tbc.globalCompositeOperation='destination-in';
-        tbc.fillStyle=g; tbc.fillRect(0,0,W,H);
-        tbc.globalCompositeOperation='source-over';
-        tac.drawImage(tmpB,0,0,W,H,0,0,W,H);
-      }
-    }
-
-    function bakeGhost(dg){
-      const {W,H,padX,padY,h,drip}=dg;
-      const dissolveL=padY+h*CONFIG.solidFrac, bottomL=padY+h+drip;
-      fxc.clearRect(0,0,W,H);
-      fxc.drawImage(dg.full,padX,padY);
-      fxc.globalCompositeOperation='source-in'; fxc.fillStyle=ghostCss; fxc.fillRect(0,0,W,H);
-      fxc.globalCompositeOperation='source-over';
-      const Lg=ghostBlur;
-      const blurT=ly=>ly<=dissolveL?0:(Lg.length-1)*smooth01((ly-dissolveL)/(bottomL-dissolveL));
-      const env=ly=>clamp01((ly-dissolveL)/(0.35*(bottomL-dissolveL)));
-      accumBlurRamp(fxBuf,W,H,Lg,blurT,env);
-      const g=document.createElement('canvas'); g.width=W; g.height=H;
-      g.getContext('2d').drawImage(tmpA,0,0,W,H,0,0,W,H);
-      dg.ghostBuf=g;
-    }
-
-    function maskGrad(c,W,H,fn){
-      const g=c.createLinearGradient(0,0,0,H);
-      for(let s=0;s<=12;s++){ const ly=H*s/12; g.addColorStop(s/12,'rgba(0,0,0,'+clamp01(fn(ly))+')'); }
-      c.globalCompositeOperation='destination-in'; c.fillStyle=g; c.fillRect(0,0,W,H); c.globalCompositeOperation='source-over';
-    }
-    function maskBand(c,W,H,cy,bh){
-      const cl=v=>v<0?0:v>1?1:v;
-      const a=(cy-bh)/H, b=(cy+bh)/H;
-      const g=c.createLinearGradient(0,0,0,H);
-      g.addColorStop(cl(a-0.002),'rgba(0,0,0,0)');
-      g.addColorStop(cl(a),'rgba(0,0,0,1)');
-      g.addColorStop(cl(b),'rgba(0,0,0,1)');
-      g.addColorStop(cl(b+0.002),'rgba(0,0,0,0)');
-      c.globalCompositeOperation='destination-in'; c.fillStyle=g; c.fillRect(0,0,W,H); c.globalCompositeOperation='source-over';
-    }
-
-    function renderDigit(dg){
-      const {padX,padY,W,H}=dg;
-      const dissolveL=padY+dg.h*CONFIG.solidFrac, bottomL=padY+dg.h+dg.drip;
-      const span=(padY+dg.h-dissolveL)||1;
-      const bh=brush.height;
-      const tf=time*CONFIG.flowSpeed, wt=time*CONFIG.waveSpeed;
-      const waveAmpPx=dg.h*CONFIG.waveAmp;
-      if(CONFIG.ghost && dg.ghostBuf){
-        const sh=CONFIG.ghostShimmer?(1-CONFIG.ghostShimmer*0.5)+CONFIG.ghostShimmer*0.5*Math.sin(time*CONFIG.ghostShimmerSpeed+dg.seed):1;
-        ctx.globalAlpha=clamp01(CONFIG.ghostAlpha*sh);
-        ctx.drawImage(dg.ghostBuf,0,0,W,H,dg.originX,dg.originY,W,H);
-        ctx.globalAlpha=1;
-      }
-      const f=0.18+0.74*nFlow(time*CONFIG.focalSpeed*0.25+dg.seed,dg.seed*0.13);
-      const focalY=padY+dg.h*f, bandH=Math.max(6,dg.h*0.12);
-      fxc.clearRect(0,0,W,H); fxc.globalAlpha=1; fxc.drawImage(dg.body,padX,padY);
-      for(let x=dg.gl;x<=dg.gr;x+=step){
-        const c=dg.cols[x]; if(!c) continue;
-        const lx0=(x-dg.gl)+padX, cTopL=(c.top-dg.gt)+padY, cBotL=(c.bot-dg.gt)+padY;
-        const w1=nFlow(x*CONFIG.waveScale+dg.seed+CONFIG.waveOffset,wt*0.22);
-        const w2=nFlow(x*CONFIG.waveScale*2.5+dg.seed*1.7,wt*0.38);
-        const startOff=((w1-0.5)*1.7+(w2-0.5)*CONFIG.waveSharp)*waveAmpPx;
-        const srcTop=Math.max(cTopL,dissolveL+startOff);
-        const low=smooth01((cBotL-dissolveL)/span);
-        const fine=nFlow((x+dg.seed)*CONFIG.combFreq+tf*1.4,tf*0.5);
-        const broad=nFlow((x+dg.seed)*0.03+13,tf*0.22);
-        const nflow=clamp01(fine*0.55+broad*0.6);
-        const nlen=nLen((x+dg.seed)*0.018+71,tf*0.18);
-        const drip=dg.drip*low*(0.2+0.8*nlen);
-        const len=Math.max(1,(cBotL+drip)-srcTop);
-        const dist=Math.exp(-((srcTop-focalY)*(srcTop-focalY))/(2*bandH*bandH));
-        const jit=(nFlow((x+dg.seed)*0.08,time*CONFIG.jitterSpeed*0.6)-0.5)*2*dg.w*CONFIG.jitter*(0.4+1.8*dist);
-        const lx=lx0+jit;
-        let a=CONFIG.streakAlpha*(0.35+0.65*nflow)*(0.45+0.55*low);
-        if(cBotL<dissolveL) a*=0.15;
-        a=clamp01(a); if(a<=0.01) continue;
-        fxc.globalAlpha=a;
-        fxc.drawImage(brush,0,0,1,bh,lx,srcTop,lineW,len);
-        if(nlen>0.82){ fxc.globalAlpha=clamp01(a*0.5); fxc.drawImage(brush,0,0,1,bh,lx,cBotL,lineW,len*1.8); }
-      }
-      fxc.globalAlpha=1;
-      const burst=smooth01((nFlow(time*CONFIG.shiftSpeed*0.5+dg.seed,7)-0.35)/0.5);
-      const sdx=(nFlow(time*CONFIG.shiftSpeed*0.7+dg.seed,3)-0.5)*2*dg.w*CONFIG.shift*burst;
-      if(Math.abs(sdx)>0.5){
-        const by=Math.max(0,focalY-bandH), bhh=Math.min(H-by,bandH*2);
-        fxc.globalAlpha=0.7; fxc.filter='blur('+(1.4*dpr).toFixed(1)+'px)';
-        fxc.drawImage(fxBuf,0,by,W,bhh,sdx,by,W,bhh);
-        fxc.filter='none'; fxc.globalAlpha=1;
-      }
-      const Lf=fieldBlur;
-      const blurTf=ly=>ly<=dissolveL?0:(Lf.length-1)*smooth01((ly-dissolveL)/(bottomL-dissolveL));
-      accumBlurRamp(fxBuf,W,H,Lf,blurTf,function(){return 1;});
-      ctx.globalAlpha=CONFIG.inkAlpha;
-      ctx.drawImage(tmpA,0,0,W,H,dg.originX,dg.originY,W,H);
-      ctx.globalAlpha=1;
-      if(CONFIG.grid){
-        tac.clearRect(0,0,W,H);
-        const goff=(time*CONFIG.gridDrift)%gridStep;
-        tac.save(); tac.translate(-goff,-goff);
-        tac.fillStyle=gridPattern; tac.fillRect(0,0,W+gridStep*2,H+gridStep*2);
-        tac.restore();
-        tac.globalCompositeOperation='destination-in'; tac.drawImage(fxBuf,0,0,W,H,0,0,W,H); tac.globalCompositeOperation='source-over';
-        maskGrad(tac,W,H,ly=>clamp01((ly-dissolveL)/(bottomL-dissolveL))*CONFIG.gridAlpha);
-        ctx.globalCompositeOperation='difference';
-        ctx.drawImage(tmpA,0,0,W,H,dg.originX,dg.originY,W,H);
-        ctx.globalCompositeOperation='source-over';
-      }
-      if(CONFIG.scan){
-        const bandH2=Math.max(3,dg.h*CONFIG.scanBand);
-        const ph=((time/CONFIG.scanPeriod)+dg.seed*0.137+CONFIG.scanOffset)%1;
-        const scanY=padY+bandH2+ph*(dg.h-2*bandH2);
-        const dxg=(nFlow(time*CONFIG.scanShiftSpeed*1.8+dg.seed,21)-0.5)*2*dg.w*CONFIG.scanShift;
-        tbc.clearRect(0,0,W,H);
-        tbc.drawImage(dg.full,padX+dxg,padY);
-        tbc.globalCompositeOperation='source-in'; tbc.fillStyle=scanCss; tbc.fillRect(0,0,W,H); tbc.globalCompositeOperation='source-over';
-        maskBand(tbc,W,H,scanY,bandH2);
-        ctx.globalCompositeOperation=CONFIG.scanBlend;
-        ctx.globalAlpha=CONFIG.scanAlpha;
-        ctx.filter='blur('+(CONFIG.scanBlur*dpr).toFixed(1)+'px)';
-        ctx.drawImage(tmpB,0,0,W,H,dg.originX,dg.originY,W,H);
-        ctx.filter='none'; ctx.globalAlpha=1; ctx.globalCompositeOperation='source-over';
-      }
-    }
-
-    function buildBrush(){
-      brush=document.createElement('canvas'); brush.width=1; brush.height=700;
-      const b=brush.getContext('2d'); const ink=inkRGB.join(',');
-      const g=b.createLinearGradient(0,0,0,700);
-      g.addColorStop(0.00,'rgba('+ink+',0.95)');
-      g.addColorStop(0.14,'rgba('+ink+',0.80)');
-      g.addColorStop(0.55,'rgba('+ink+',0.22)');
-      g.addColorStop(1.00,'rgba('+ink+',0)');
-      b.fillStyle=g; b.fillRect(0,0,1,700);
-    }
-    function buildPaper(){
-      paper=document.createElement('canvas'); paper.width=P; paper.height=P;
-      const p=paper.getContext('2d',{willReadFrequently:true});
-      p.fillStyle=bgCss; p.fillRect(0,0,P,P);
-      if(CONFIG.bgTexture){
-        for(let i=0;i<16;i++){
-          const x=Math.random()*P,y=Math.random()*P,r=P*(0.18+Math.random()*0.4);
-          const dark=Math.random()<0.5,a=0.04+Math.random()*0.05;
-          const rg=p.createRadialGradient(x,y,0,x,y,r);
-          rg.addColorStop(0,dark?'rgba(120,114,100,'+a+')':'rgba(255,255,250,'+a+')');
-          rg.addColorStop(1,'rgba(0,0,0,0)');
-          p.fillStyle=rg; p.fillRect(0,0,P,P);
-        }
-        const img=p.getImageData(0,0,P,P),d=img.data;
-        for(let i=0;i<d.length;i+=4){ const n=(Math.random()-0.5)*16; d[i]+=n; d[i+1]+=n; d[i+2]+=n; }
-        p.putImageData(img,0,0);
-      }
-    }
-    function buildGrainTile(){
-      grainTile=document.createElement('canvas'); grainTile.width=grainTile.height=256;
-      const g=grainTile.getContext('2d'); const img=g.createImageData(256,256),d=img.data;
-      for(let i=0;i<d.length;i+=4){ const v=Math.random()*255; d[i]=d[i+1]=d[i+2]=v; d[i+3]=Math.random()<0.5?255:0; }
-      g.putImageData(img,0,0);
-    }
-    function buildGrid(){
-      gridStep=Math.max(3,Math.round(CONFIG.gridStepPx*dpr));
-      const g=document.createElement('canvas'); g.width=gridStep; g.height=gridStep;
-      const c=g.getContext('2d');
-      c.fillStyle=css(gridRGB); c.fillRect(0,0,gridStep,1); c.fillRect(0,0,1,gridStep);
-      gridPattern=ctx.createPattern(g,'repeat');
-    }
-    function drawGrain(now){
-      const off=(now*0.018*CONFIG.grainSpeed)%256;
-      ctx.globalAlpha=CONFIG.grainAlpha;
-      for(let y=-256;y<P+256;y+=256) for(let x=-256;x<P+256;x+=256) ctx.drawImage(grainTile,x-off,y+off);
-      ctx.globalAlpha=1;
-    }
-    function drawMarks(){
-      ctx.save();
-      ctx.strokeStyle=markCss; ctx.fillStyle=markCss;
-      const lw=Math.max(1,P*0.0016); ctx.lineWidth=lw; const r=P*0.012;
-      const cross=(x,y,rr)=>{ctx.beginPath();ctx.moveTo(x-rr,y);ctx.lineTo(x+rr,y);ctx.moveTo(x,y-rr);ctx.lineTo(x,y+rr);ctx.stroke();};
-      const lx=P*0.075; for(let i=0;i<5;i++) cross(lx,P*(0.16+0.155*i),r);
-      cross(P*0.5,P*0.45,r*1.4); ctx.fillRect(P*0.5-lw*1.5,P*0.45-lw*1.5,lw*3,lw*3);
-      const rx=P*0.9; for(let i=0;i<4;i++){const y=P*(0.30+0.12*i);ctx.beginPath();ctx.moveTo(rx,y);ctx.lineTo(rx+r*0.9,y);ctx.stroke();}
-      ctx.fillRect(P*0.80,P*0.26,lw*1.5,P*0.12);
-      ctx.font='700 '+Math.round(P*0.030)+'px "Helvetica Neue",Arial,sans-serif';
-      ctx.textAlign="right"; ctx.textBaseline="alphabetic";
-      ctx.fillText(String(CONFIG.cornerNo).padStart(3,'0'),P*0.93,P*0.10);
-      ctx.beginPath(); ctx.moveTo(P*0.855,P*0.115); ctx.lineTo(P*0.93,P*0.115); ctx.stroke();
-      ctx.restore();
-    }
+    var C = {}; for(var k in DEFAULTS) C[k]=DEFAULTS[k];
+    if(opts) for(var k2 in opts) C[k2]=opts[k2];
+    var ctx = canvas.getContext('2d');
+    var dpr = Math.max(1, Math.min(2, window.devicePixelRatio||1));
+    var text = canvas.getAttribute('data-number') || '0';
+    var inkRGB = hexToRgb(C.ink);
+    var PW=0, PH=0, P=0;
+    var cols=[];          // [{x, w, baseY, len, ph}]
+    var fontSize=0, baseY=0, glyphBottom=0;
+    var nz = makeNoise(0);
+    for(var ci=0; ci<text.length; ci++) nz = makeNoise( (text.charCodeAt(ci)*131 + ci*977 + 7) );
 
     function buildAll(){
-      const w=canvas.clientWidth||120, h=canvas.clientHeight||120;
-      dpr=Math.min(window.devicePixelRatio||1,2);
-      PW=Math.round(w*dpr); PH=Math.round(h*dpr);
-      P=Math.max(PW,PH); S=Math.round(Math.max(w,h));
-      canvas.width=PW; canvas.height=PH;
-      if(CONFIG.pointerThrough) canvas.style.pointerEvents='none';
-      drawY=PH*CONFIG.baselineY;
-      step=Math.max(2,Math.round(PH/900));
-      lineW=Math.max(1,step-1);
-      fieldBlur=CONFIG.blur.map(v=>v*dpr);
-      ghostBlur=CONFIG.ghostBlur.map(v=>v*dpr);
-      inkRGB=colorOf(CONFIG.ink,CONFIG.inkSat); inkCss=css(inkRGB);
-      ghostRGB=colorOf(CONFIG.ghostColor,CONFIG.ghostSat); ghostCss=css(ghostRGB);
-      scanRGB=colorOf(CONFIG.scanColor,CONFIG.scanSat); scanCss=css(scanRGB);
-      gridRGB=colorOf(CONFIG.gridColor,CONFIG.gridSat); gridCss=css(gridRGB);
-      markRGB=colorOf(CONFIG.markColor,CONFIG.markSat); markCss=css(markRGB,CONFIG.markAlpha);
-      paperOn=!!(CONFIG.background&&String(CONFIG.background).trim());
-      bgRGB=paperOn?colorOf(CONFIG.background,CONFIG.bgSat):[0,0,0]; bgCss=css(bgRGB);
-      solidBuf=document.createElement('canvas'); solidBuf.width=PW; solidBuf.height=PH; sb=solidBuf.getContext('2d',{willReadFrequently:true});
-      buildBrush();
-      if(paperOn) buildPaper(); else paper=null;
-      if(CONFIG.grainAlpha>0) buildGrainTile();
-      if(CONFIG.grid) buildGrid();
-      layoutNumber();
-    }
+      var cw = canvas.clientWidth  || 120;
+      var ch = canvas.clientHeight || 200;
+      PW = Math.max(2, Math.round(cw*dpr));
+      PH = Math.max(2, Math.round(ch*dpr));
+      P  = Math.max(PW,PH);
+      canvas.width = PW; canvas.height = PH;
 
-    function render(now){
-      time=now/1000;
+      // размер шрифта — привязка к высоте, затем ограничение по ширине
+      fontSize = Math.round(PH * C.maxFont * 2.0);
+      ctx.font = '400 '+fontSize+'px '+C.fontStack;
+      var w = ctx.measureText(text).width;
+      var maxW = PW * C.fitW;
+      if(w > maxW){ fontSize = Math.max(4, Math.floor(fontSize * maxW / w)); }
+      baseY = Math.round(PH * C.baselineY) + Math.round(fontSize*0.74);
+
+      // нижний контур цифры по колонкам (через маску)
       ctx.setTransform(1,0,0,1,0,0);
       ctx.clearRect(0,0,PW,PH);
-      if(paperOn&&paper) ctx.drawImage(paper,0,0);
-      for(const dg of digits) renderDigit(dg);
-      if(paperOn&&CONFIG.grainAlpha>0) drawGrain(now);
-      if(CONFIG.marks) drawMarks();
+      ctx.font = '400 '+fontSize+'px '+C.fontStack;
+      ctx.textAlign='center'; ctx.textBaseline='alphabetic';
+      ctx.fillStyle='#fff';
+      ctx.fillText(text, PW/2, baseY);
+      var data;
+      try { data = ctx.getImageData(0,0,PW,PH).data; } catch(e){ data=null; }
+
+      cols.length=0;
+      var n = C.dripCols;
+      var step = PW / n;
+      glyphBottom = 0;
+      for(var i=0;i<n;i++){
+        var x0 = Math.floor(i*step), x1 = Math.floor((i+1)*step);
+        var bottom = -1;
+        if(data){
+          for(var y=PH-1; y>=0; y--){
+            var hit=false;
+            for(var x=x0; x<x1; x+=2){
+              if(data[(y*PW + x)*4 + 3] > 40){ hit=true; break; }
+            }
+            if(hit){ bottom=y; break; }
+          }
+        }
+        if(bottom<0) continue;
+        if(bottom>glyphBottom) glyphBottom=bottom;
+        var seedN = nz(i*0.37+0.11);
+        var ph = nz(i*1.9+3.3) * Math.PI*2;
+        var on = nz(i*0.7+5.0) < C.dripChance;
+        var lenFrac = on ? (C.dripMin + (C.dripMax-C.dripMin)*seedN) : 0;
+        cols.push({ x:(x0+x1)/2, w:step*C.dripWidth, baseY:bottom, len:lenFrac*PH, ph:ph });
+      }
+      ctx.clearRect(0,0,PW,PH);
     }
 
-    buildAll();
-    return { render:render, rebuild:buildAll, canvas:canvas };
+    function render(t){
+      ctx.setTransform(1,0,0,1,0,0);
+      ctx.clearRect(0,0,PW,PH);
+
+      // тело цифры
+      ctx.font = '400 '+fontSize+'px '+C.fontStack;
+      ctx.textAlign='center'; ctx.textBaseline='alphabetic';
+      ctx.fillStyle = css(inkRGB, C.alpha);
+      ctx.fillText(text, PW/2, baseY);
+
+      // потёки
+      for(var i=0;i<cols.length;i++){
+        var c = cols[i];
+        if(c.len<=0) continue;
+        var osc = (Math.sin(t*C.flowSpeed + c.ph)*0.5 + 0.5);
+        var jit = (nz(i*2.1 + t*0.0006) - 0.5) * C.jitter * c.w;
+        var L = c.len * (0.45 + 0.55*osc);
+        var x = c.x + jit*0.2;
+        var top = c.baseY - Math.round(P*0.004);
+        var bot = c.baseY + L;
+        var g = ctx.createLinearGradient(0, top, 0, bot);
+        g.addColorStop(0, css(inkRGB, C.alpha*0.95));
+        g.addColorStop(0.7, css(inkRGB, C.alpha*0.5));
+        g.addColorStop(1, css(inkRGB, 0));
+        ctx.fillStyle = g;
+        var wTop = c.w*0.9, wBot = c.w*0.32;
+        ctx.beginPath();
+        ctx.moveTo(x - wTop/2, top);
+        ctx.lineTo(x + wTop/2, top);
+        ctx.lineTo(x + wBot/2, bot);
+        ctx.lineTo(x - wBot/2, bot);
+        ctx.closePath();
+        ctx.fill();
+        // капля на конце
+        ctx.fillStyle = css(inkRGB, C.alpha*0.6);
+        ctx.beginPath();
+        ctx.arc(x + jit*0.15, bot, wBot*0.7, 0, Math.PI*2);
+        ctx.fill();
+      }
+    }
+
+    return { build:buildAll, render:render, canvas:canvas };
   }
 
+  // — инициализация всех канвасов —
   function initAll(){
-    var nodes=[].slice.call(document.querySelectorAll('canvas.ink-num'));
+    var nodes = [].slice.call(document.querySelectorAll('canvas.ink-num'));
     if(!nodes.length) return;
-    var insts=nodes.map(function(cv){ var inst=createInk(cv,{ number: cv.getAttribute('data-number')||'0' }); cv.__ink=inst; return inst; });
-    if(reduce){
-      insts.forEach(function(i){ i.render(0); });
-    } else {
-      var active=new Set();
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var insts = nodes.map(function(cv){ var ink=createInk(cv); ink.build(); return ink; });
+
+    if(reduce){ insts.forEach(function(k){ k.render(0); }); }
+    else {
+      var visible = new WeakSet();
       if('IntersectionObserver' in window){
-        var io=new IntersectionObserver(function(es){ es.forEach(function(e){ var inst=e.target.__ink; if(!inst) return; if(e.isIntersecting) active.add(inst); else active.delete(inst); }); }, {rootMargin:'140px 0px'});
-        insts.forEach(function(i){ io.observe(i.canvas); });
-      } else { insts.forEach(function(i){ active.add(i); }); }
-      requestAnimationFrame(function loop(now){ active.forEach(function(i){ i.render(now); }); requestAnimationFrame(loop); });
+        var io = new IntersectionObserver(function(es){
+          es.forEach(function(e){ if(e.isIntersecting) visible.add(e.target); else visible.delete(e.target); });
+        }, { rootMargin:'140px 0px 140px 0px' });
+        insts.forEach(function(k){ io.observe(k.canvas); });
+      } else { insts.forEach(function(k){ visible.add(k.canvas); }); }
+
+      var start = performance.now();
+      (function loop(now){
+        var t = (now-start)/1000;
+        for(var i=0;i<insts.length;i++){ if(visible.has(insts[i].canvas)) insts[i].render(t); }
+        requestAnimationFrame(loop);
+      })(start);
     }
+
     var rt;
-    window.addEventListener('resize', function(){ clearTimeout(rt); rt=setTimeout(function(){ insts.forEach(function(i){ i.rebuild(); if(reduce) i.render(0); }); },150); });
+    window.addEventListener('resize', function(){
+      clearTimeout(rt);
+      rt = setTimeout(function(){
+        insts.forEach(function(k){ k.build(); if(reduce) k.render(0); });
+      }, 200);
+    }, {passive:true});
   }
 
-  if(document.fonts&&document.fonts.load){
-    Promise.race([ document.fonts.load('1em "Anton"').then(function(){return document.fonts.ready;}), new Promise(function(r){setTimeout(r,1500);}) ]).then(initAll);
-  } else { initAll(); }
+  function boot(){
+    if(document.fonts && document.fonts.ready){
+      Promise.race([ document.fonts.ready, new Promise(function(r){ setTimeout(r,1500); }) ]).then(initAll);
+    } else { setTimeout(initAll, 300); }
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', boot);
+  else boot();
 })();
 </script>
-<!-- ╚════════════════════════════════════════════════════════════════════════╝ -->
 
 </body>
 </html>
