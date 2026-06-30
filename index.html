@@ -13,14 +13,8 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500&family=Rubik+Dirt&family=Rubik+Maps&family=SN+Pro:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Unbounded:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500&family=Rubik+Dirt&family=Rubik+Maps&family=SN+Pro:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
 
-<!-- ╔═══════════════════════════════════════════════════════════════════════╗
-     ║  FOUNDATION — общий слой: токены, тени, типографика, примитивы,       ║
-     ║  движок анимаций + ПЕРЕКЛЮЧАТЕЛЬ НАПРАВЛЕНИЙ.                         ║
-     ║  Персональные блоки 00–03 берут контент из DATA (внизу файла).        ║
-     ║  Общие блоки 04–07 одинаковы для всех направлений.                   ║
-     ╚═══════════════════════════════════════════════════════════════════════╝ -->
 <style id="foundation">
   /* ════════════════════════════════════════════════════════════════════════
      ПЕРЕКЛЮЧАТЕЛЬ ШРИФТОВ.  В теге <html> (2-я строка файла) укажи класс:
@@ -32,7 +26,7 @@
     --bg:#0d0d0d; --surface:#141414; --line:#e8e2d4; --muted:#8a8474; --sand:#d4c5a3;
     --hairline:rgba(232,226,212,.10);
     --wrap:1320px; --pad:7vw; --header-h:80px;
-    /* шрифты (значения по умолчанию = вариант 1; реально переключаются классом на <html>) */
+    /* шрифты (по умолчанию = вариант 1; реально переключаются классом на <html>) */
     --f-xl:"Unbounded",sans-serif;      /* самые крупные надписи */
     --f-display:"Unbounded",sans-serif; /* средние заголовки */
     --f-body:"SN Pro";/* основной текст — одинаков в обоих вариантах */
@@ -47,8 +41,6 @@
   html.variant1{ --f-xl:"Unbounded",sans-serif; --f-display:"Unbounded",sans-serif; }
   /* ── НАБОР 2: крупные надписи Rubik Maps, средние Rubik Dirt, текст SN Pro ── */
   html.variant2{ --f-xl:"Rubik Dirt",system-ui; --f-display:"Rubik Dirt",system-ui; }
-  /* Тир XL (--f-xl): .hero__title, .h2, .abt__year.  Остальные заголовки — тир --f-display.
-     Чтобы перенести элемент между тирами — поменяй у его правила var(--f-display) ↔ var(--f-xl). */
 
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth}
@@ -60,7 +52,6 @@
   ::selection{background:var(--sand);color:#0d0d0d}
   :focus-visible{outline:2px solid var(--sand);outline-offset:3px;border-radius:1px}
 
-  /* — общие примитивы — */
   .wrap{max-width:var(--wrap);margin:0 auto;padding-inline:var(--pad)}
   .section{padding-block:clamp(5rem,11vh,9rem);scroll-margin-top:var(--header-h);position:relative}
   .eyebrow{font-family:var(--f-mono);font-weight:500;letter-spacing:.22em;text-transform:uppercase;
@@ -70,6 +61,13 @@
       font-size:clamp(2rem,4.8vw,3.7rem);line-height:1;letter-spacing:-.01em;margin-top:1.4rem}
   .rule{display:block;width:64px;height:2px;background:var(--sand);margin-top:1.5rem;transform-origin:left}
   .lead{color:var(--muted);max-width:56ch;margin-top:1.6rem;font-size:clamp(1rem,1.4vw,1.15rem)}
+
+  /* — номер раздела слева от заголовка (анимированная чернильная цифра) — */
+  .sec-head{display:flex;align-items:flex-start;gap:clamp(.7rem,1.6vw,1.5rem)}
+  .sec-num{flex:0 0 auto;width:clamp(64px,9vw,128px);height:clamp(64px,9vw,128px)}
+  .sec-head .h2{margin-top:0}
+  .ink-num{display:block;width:100%;height:100%;pointer-events:none}
+
   .arr{display:inline-block;transition:transform .3s var(--ease)}
   .btn{display:inline-flex;align-items:center;justify-content:center;gap:.6rem;
        font-family:var(--f-body);font-weight:500;letter-spacing:.03em;font-size:.9rem;
@@ -81,18 +79,15 @@
   .btn--ghost{background:transparent;color:var(--line);border-color:var(--hairline);box-shadow:none}
   .btn--ghost:hover{border-color:var(--sand);color:var(--sand);box-shadow:var(--glow)}
 
-  /* — атмосфера: зерно + шкала прогресса — */
   .grain{position:fixed;inset:0;z-index:200;pointer-events:none;opacity:.045;mix-blend-mode:overlay;
     background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
     background-size:120px}
   .progress{position:fixed;top:0;left:0;height:2px;width:100%;transform:scaleX(0);transform-origin:left;
     background:var(--sand);z-index:201;will-change:transform}
 
-  /* — плавная подмена контента персональных блоков при смене направления — */
   .swap-target{transition:opacity .3s var(--ease)}
   .swap-target.is-swapping{opacity:.12}
 
-  /* — общий движок reveal (только если движение разрешено) — */
   @media (prefers-reduced-motion: no-preference){
     [data-reveal]{opacity:0;transform:translateY(26px);filter:blur(6px);
       transition:opacity .9s var(--ease),transform .9s var(--ease),filter .9s var(--ease);transition-delay:var(--d,0ms)}
@@ -209,7 +204,6 @@
   function toggle(open){ document.body.classList.toggle('nav-open',open); burger.setAttribute('aria-expanded',open); burger.innerHTML=open?'&#10005;':'&#9776;'; }
   burger.addEventListener('click',function(){ toggle(!document.body.classList.contains('nav-open')); });
   document.querySelectorAll('#nav a').forEach(function(a){ a.addEventListener('click',function(){ toggle(false); }); });
-  // дропдаун: клик/клавиатура (на десктопе ещё и hover через CSS)
   if(trig){ trig.addEventListener('click',function(e){ e.stopPropagation(); drop.classList.toggle('open'); trig.setAttribute('aria-expanded', drop.classList.contains('open')); }); }
   document.addEventListener('click',function(e){ if(drop && !drop.contains(e.target)) drop.classList.remove('open'); });
 })();
@@ -218,8 +212,7 @@
 
 
 <!-- ╔═══════════════ BLOCK: HERO — START · ПЕРСОНАЛЬНЫЙ (00) ══════════════════╗
-     Контент берётся из DATA[направление]. Поля помечены data-f, изображение — #hero-photo.
-     Сетка-фон неподвижная с посекторным свечением; верхний угол фото рассеивается. -->
+     Контент берётся из DATA[направление]. Поля помечены data-f, изображение — #hero-photo. -->
 <style id="b-hero">
   .hero{position:relative;overflow:hidden;--fade-corner:0% 0%}
   .hero__grid{position:absolute;inset:0;z-index:0;overflow:hidden;background:var(--bg)}
@@ -302,8 +295,11 @@
 </style>
 <section class="adv section swap-target" id="advantages">
   <div class="wrap">
-    <p class="eyebrow" data-reveal>01 · Преимущества</p>
-    <h2 class="h2" data-f="adv.h2" data-reveal="clip" style="--d:80ms">Преимущества наших конвейеров</h2>
+    <p class="eyebrow" data-reveal>Преимущества</p>
+    <div class="sec-head">
+      <div class="sec-num" data-reveal aria-hidden="true"><canvas class="ink-num" data-number="01"></canvas></div>
+      <h2 class="h2" data-f="adv.h2" data-reveal="clip" style="--d:80ms">Преимущества наших конвейеров</h2>
+    </div>
     <span class="rule" data-reveal="line" style="--d:240ms"></span>
     <div class="adv__grid">
       <div class="adv__visual shimmer" data-reveal aria-hidden="true"><span>// фото узлов — сменяется по скроллу</span></div>
@@ -339,8 +335,11 @@
 </style>
 <section class="str section swap-target" id="structure">
   <div class="wrap">
-    <p class="eyebrow" data-reveal>02 · Устройство</p>
-    <h2 class="h2" data-f="str.h2" data-reveal="clip" style="--d:80ms">Как устроен вантовый конвейер</h2>
+    <p class="eyebrow" data-reveal>Устройство</p>
+    <div class="sec-head">
+      <div class="sec-num" data-reveal aria-hidden="true"><canvas class="ink-num" data-number="02"></canvas></div>
+      <h2 class="h2" data-f="str.h2" data-reveal="clip" style="--d:80ms">Как устроен вантовый конвейер</h2>
+    </div>
     <span class="rule" data-reveal="line" style="--d:240ms"></span>
     <p class="lead" data-f="str.lead" data-reveal style="--d:200ms">Несущая ферма на одной поворотной опоре, удержанная тросовыми вантами. Минимум конструкций на земле — максимум свободного пространства под конвейером.</p>
     <div class="str__scheme shimmer" data-reveal aria-hidden="true"><span data-f="str.scheme">// схема вантового конвейера</span></div>
@@ -375,8 +374,11 @@
 </style>
 <section class="mdl section swap-target" id="models">
   <div class="wrap">
-    <p class="eyebrow" data-reveal>03 · Модельный ряд</p>
-    <h2 class="h2" data-f="mdl.h2" data-reveal="clip" style="--d:80ms">Серия КВЛ</h2>
+    <p class="eyebrow" data-reveal>Модельный ряд</p>
+    <div class="sec-head">
+      <div class="sec-num" data-reveal aria-hidden="true"><canvas class="ink-num" data-number="03"></canvas></div>
+      <h2 class="h2" data-f="mdl.h2" data-reveal="clip" style="--d:80ms">Серия КВЛ</h2>
+    </div>
     <span class="rule" data-reveal="line" style="--d:240ms"></span>
     <p class="lead" data-f="mdl.lead" data-reveal style="--d:200ms">Готовая серия вантовых ленточных конвейеров. Выбирайте по требуемой длине и ёмкости склада — и запускайте в изготовление без долгого проектирования.</p>
     <div class="mdl__cards" data-list="mdl">
@@ -409,8 +411,11 @@
 </style>
 <section class="dir section" id="directions">
   <div class="wrap">
-    <p class="eyebrow" data-reveal>04 · Направления</p>
-    <h2 class="h2" data-reveal="clip" style="--d:80ms">Направления производства</h2>
+    <p class="eyebrow" data-reveal>Направления</p>
+    <div class="sec-head">
+      <div class="sec-num" data-reveal aria-hidden="true"><canvas class="ink-num" data-number="04"></canvas></div>
+      <h2 class="h2" data-reveal="clip" style="--d:80ms">Направления производства</h2>
+    </div>
     <span class="rule" data-reveal="line" style="--d:240ms"></span>
     <p class="lead" data-reveal style="--d:200ms">Выберите направление — верхняя часть сайта перестроится под него. Проектируем и изготавливаем оборудование для горнодобывающих и перерабатывающих предприятий.</p>
     <div class="dir__cards">
@@ -454,8 +459,11 @@
 </style>
 <section class="stg section" id="stages">
   <div class="wrap">
-    <p class="eyebrow" data-reveal>05 · Полный цикл</p>
-    <h2 class="h2" data-reveal="clip" style="--d:80ms">От проекта до пуска — под ключ</h2>
+    <p class="eyebrow" data-reveal>Полный цикл</p>
+    <div class="sec-head">
+      <div class="sec-num" data-reveal aria-hidden="true"><canvas class="ink-num" data-number="05"></canvas></div>
+      <h2 class="h2" data-reveal="clip" style="--d:80ms">От проекта до пуска — под ключ</h2>
+    </div>
     <span class="rule" data-reveal="line" style="--d:240ms"></span>
     <p class="stg__lead" data-reveal style="--d:200ms">Проектирование · Изготовление · Доставка · Монтаж · Пуско-наладка</p>
     <div class="stg__list">
@@ -491,8 +499,11 @@
 </style>
 <section class="abt section" id="about">
   <div class="wrap">
-    <p class="eyebrow" data-reveal>06 · О компании</p>
-    <h2 class="h2" data-reveal="clip" style="--d:80ms">ГОРТЕХКОНСАЛТ</h2>
+    <p class="eyebrow" data-reveal>О компании</p>
+    <div class="sec-head">
+      <div class="sec-num" data-reveal aria-hidden="true"><canvas class="ink-num" data-number="06"></canvas></div>
+      <h2 class="h2" data-reveal="clip" style="--d:80ms">ГОРТЕХКОНСАЛТ</h2>
+    </div>
     <span class="rule" data-reveal="line" style="--d:240ms"></span>
     <div class="abt__year" data-parallax="0.06"><span data-count="1999">1999</span><small>Год запуска первого вантового конвейера нашей командой.</small></div>
     <p class="abt__geo" data-reveal>Инженерное производство оборудования для горнодобывающей отрасли: вантовые конвейеры, вибрационные и колосниковые грохоты, барабаны конвейеров. Проектируем, изготавливаем и модернизируем производственные линии — от отдельных узлов до законченных решений. Выполнены контракты на модернизацию предприятий Калужской, Рязанской и Липецкой областей.</p>
@@ -535,8 +546,11 @@
 </style>
 <section class="cta section" id="contact">
   <div class="wrap">
-    <p class="eyebrow" data-reveal>07 · Контакты</p>
-    <h2 class="h2" data-reveal="clip" style="--d:80ms">Экономьте время и деньги с оборудованием нового уровня</h2>
+    <p class="eyebrow" data-reveal>Контакты</p>
+    <div class="sec-head">
+      <div class="sec-num" data-reveal aria-hidden="true"><canvas class="ink-num" data-number="07"></canvas></div>
+      <h2 class="h2" data-reveal="clip" style="--d:80ms">Экономьте время и деньги с оборудованием нового уровня</h2>
+    </div>
     <span class="rule" data-reveal="line" style="--d:240ms"></span>
     <div class="cta__grid">
       <div data-reveal>
@@ -562,7 +576,7 @@
 <script>
 (function(){
   var form=document.getElementById('lead-form'), status=document.getElementById('form-status');
-  var ENDPOINT=''; // TODO: серверный прокси (Cloudflare Worker / Supabase Edge Function) → Telegram
+  var ENDPOINT=''; // TODO: серверный прокси (Cloudflare Worker / Supabase Edge Function) -> Telegram
   form.addEventListener('submit', async function(e){
     e.preventDefault();
     if(form.company_url.value){ success(); return; }
@@ -771,7 +785,6 @@
       swapSections.forEach(function(s){ s.classList.remove('is-swapping'); }); }, 230);
   };
 
-  // привязка кликов: пункты дропдауна + карточки блока «Направления»
   qsa('[data-dir]').forEach(function(el){
     el.addEventListener('click', function(e){ e.preventDefault();
       window.setDirection(el.getAttribute('data-dir'));
@@ -781,12 +794,420 @@
     });
   });
 
-  // предзагрузка изображений направлений
   Object.keys(DATA).forEach(function(k){ var im=new Image(); im.src=DATA[k].img; });
 
-  // стартовое направление из ?d=
   var p=null; try{ p=new URLSearchParams(location.search).get('d'); }catch(e){}
   if(p && DATA[p] && p!=='conveyor'){ window.setDirection(p, true); } else { updateActive('conveyor'); }
+})();
+</script>
+
+
+<!-- ╔═══════════════════ INK NUMBERS · анимированные номера разделов ═══════════════════╗
+     Номер каждого раздела (01–07) рисуется как «чернильная» цифра слева от заголовка
+     (<canvas class="ink-num" data-number="0N">), высота задаётся в CSS (.sec-num).
+     Эффект многоэкземплярный: один общий цикл анимации; анимируются только видимые
+     номера (IntersectionObserver); уважает prefers-reduced-motion (статичный кадр).
+     Для компактных номеров отключены ghost/scan/grid/marks и фон (прозрачный) — на тёмном
+     фоне они невидимы, отключение экономит ресурсы. Любой слой включается обратно: true. -->
+<script id="ink-numbers">
+(function(){
+  /* ——— чистые помощники (общие для всех экземпляров) ——— */
+  function makeNoise(seed){
+    let s=seed>>>0;
+    const rnd=()=>(s=(s*1664525+1013904223)>>>0,s/4294967296);
+    const base=new Uint8Array(256);
+    for(let i=0;i<256;i++) base[i]=i;
+    for(let i=255;i>0;i--){ const j=(rnd()*(i+1))|0; const t=base[i]; base[i]=base[j]; base[j]=t; }
+    const perm=new Uint8Array(512);
+    for(let i=0;i<512;i++) perm[i]=base[i&255];
+    const val=(ix,iy)=>perm[(perm[ix&255]+iy)&255]/255;
+    const sm=t=>t*t*(3-2*t);
+    return (x,y)=>{
+      const x0=Math.floor(x),y0=Math.floor(y);
+      const fx=sm(x-x0),fy=sm(y-y0);
+      const v00=val(x0,y0),v10=val(x0+1,y0);
+      const v01=val(x0,y0+1),v11=val(x0+1,y0+1);
+      const a=v00+(v10-v00)*fx,b=v01+(v11-v01)*fx;
+      return a+(b-a)*fy;
+    };
+  }
+  const nFlow=makeNoise(11), nLen=makeNoise(73);
+  const clamp01=v=>v<0?0:v>1?1:v;
+  const smooth01=v=>{ v=clamp01(v); return v*v*(3-2*v); };
+  function hexToRgb(hex){
+    let h=(hex||"#000").replace('#','').trim();
+    if(h.length===3) h=h.split('').map(c=>c+c).join('');
+    const n=parseInt(h,16)||0; return [(n>>16)&255,(n>>8)&255,n&255];
+  }
+  function adjustSat(rgb,sat){
+    let [r,g,b]=rgb; r/=255; g/=255; b/=255;
+    const mx=Math.max(r,g,b),mn=Math.min(r,g,b);
+    let h,s,l=(mx+mn)/2;
+    if(mx===mn){ h=s=0; }
+    else{ const d=mx-mn; s=l>0.5?d/(2-mx-mn):d/(mx+mn);
+      if(mx===r) h=(g-b)/d+(g<b?6:0); else if(mx===g) h=(b-r)/d+2; else h=(r-g)/d+4; h/=6; }
+    s=clamp01(s*sat);
+    const h2=(p,q,t)=>{ if(t<0)t+=1; if(t>1)t-=1; if(t<1/6)return p+(q-p)*6*t; if(t<1/2)return q; if(t<2/3)return p+(q-p)*(2/3-t)*6; return p; };
+    let R,G,B;
+    if(s===0){ R=G=B=l; }
+    else{ const q=l<0.5?l*(1+s):l+s-l*s,p=2*l-q; R=h2(p,q,h+1/3); G=h2(p,q,h); B=h2(p,q,h-1/3); }
+    return [Math.round(R*255),Math.round(G*255),Math.round(B*255)];
+  }
+  const colorOf=(hex,sat)=>adjustSat(hexToRgb(hex),sat);
+  const css=(rgb,a)=> a==null?'rgb('+rgb[0]+','+rgb[1]+','+rgb[2]+')':'rgba('+rgb[0]+','+rgb[1]+','+rgb[2]+','+a+')';
+
+  /* ——— параметры для компактных номеров (полный набор ключей сохранён) ——— */
+  const DEFAULTS = {
+    number:"0", fitW:0.96, maxFont:0.86, digitGap:0.06, baselineY:0.66,
+    fontStack:'"Anton","Arial Black",Impact,sans-serif',
+    background:null, bgSat:1.0, bgTexture:false, pointerThrough:true,
+    ink:"#d4c5a3", inkSat:1.0, inkAlpha:0.9, solidFrac:0.12, maxDripFrac:0.45,
+    streakAlpha:0.5, combFreq:0.5, flowSpeed:1.0, blur:[0,1.1,1.0],
+    waveAmp:0.10, waveSpeed:0.5, waveScale:0.011, waveSharp:0.90, waveOffset:0.0,
+    ghost:false, ghostColor:"#0d0d0d", ghostSat:0.1, ghostAlpha:0.95, ghostBlur:[3.5,9], ghostShimmer:0.10, ghostShimmerSpeed:0.8,
+    jitter:0.1, jitterSpeed:1.0, shift:0.12, shiftSpeed:1.0, focalSpeed:0.5,
+    scan:false, scanColor:"#0d0d0d", scanSat:0.9, scanAlpha:0.85, scanBlend:"screen", scanPeriod:6.4, scanBand:0.12, scanBlur:9, scanShift:0.20, scanShiftSpeed:1.0, scanOffset:0.0,
+    grid:false, gridColor:"#0d0d0d", gridSat:0.0, gridAlpha:1.0, gridStepPx:20, gridDrift:4,
+    grainAlpha:0.0, grainSpeed:1.0,
+    marks:false, markColor:"#0d0d0d", markSat:1.0, markAlpha:0.5, cornerNo:220
+  };
+
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function createInk(canvas, opts){
+    const CONFIG=Object.assign({},DEFAULTS,opts);
+    const ctx=canvas.getContext('2d');
+    let S,dpr,P,drawY,fontStr,fontSize,step,lineW;
+    let fieldBlur,ghostBlur,gridStep;
+    let inkRGB,ghostRGB,scanRGB,gridRGB,markRGB,bgRGB;
+    let inkCss,ghostCss,scanCss,gridCss,markCss,bgCss;
+    let solidBuf,sb,fxBuf,fxc,tmpA,tac,tmpB,tbc;
+    let paper,paperOn,brush,grainTile,gridPattern;
+    let digits=[]; let time=0;
+
+    function buildDigit(ch,cx,adv){
+      const m=Math.round(fontSize*0.14);
+      const x0=Math.max(0,Math.floor(cx-adv/2-m));
+      const x1=Math.min(P-1,Math.ceil(cx+adv/2+m));
+      const w=x1-x0+1;
+      sb.clearRect(0,0,P,P);
+      sb.fillStyle="#000"; sb.textAlign="center"; sb.textBaseline="middle"; sb.font=fontStr;
+      sb.fillText(ch,cx,drawY);
+      const d=sb.getImageData(x0,0,w,P).data;
+      const cols=new Array(P).fill(null);
+      let gl=P,gr=0,gt=P,gb=0;
+      for(let xi=0;xi<w;xi++){
+        let t=-1,b=-1;
+        for(let y=0;y<P;y++){ if(d[(y*w+xi)*4+3]>40){ if(t<0)t=y; b=y; } }
+        if(t>=0){ const x=x0+xi; cols[x]={top:t,bot:b}; if(x<gl)gl=x; if(x>gr)gr=x; if(t<gt)gt=t; if(b>gb)gb=b; }
+      }
+      if(gr<gl) return null;
+      const h=gb-gt, ww=gr-gl+1;
+      sb.clearRect(0,0,P,P);
+      sb.fillStyle=inkCss; sb.font=fontStr; sb.textAlign="center"; sb.textBaseline="middle";
+      sb.fillText(ch,cx,drawY);
+      const full=document.createElement('canvas'); full.width=ww; full.height=h+1;
+      full.getContext('2d').drawImage(sb.canvas,gl,gt,ww,h+1,0,0,ww,h+1);
+      const grad=sb.createLinearGradient(0,gt,0,gb);
+      grad.addColorStop(0,"rgba(255,255,255,1)");
+      grad.addColorStop(Math.min(0.95,CONFIG.solidFrac*0.95),"rgba(255,255,255,1)");
+      grad.addColorStop(1,"rgba(255,255,255,0.10)");
+      sb.globalCompositeOperation="destination-in"; sb.fillStyle=grad; sb.fillRect(0,0,P,P);
+      sb.globalCompositeOperation="source-over";
+      const body=document.createElement('canvas'); body.width=ww; body.height=h+1;
+      body.getContext('2d').drawImage(sb.canvas,gl,gt,ww,h+1,0,0,ww,h+1);
+      const drip=h*CONFIG.maxDripFrac;
+      const padX=Math.ceil(ww*0.40), padY=Math.ceil(h*0.06);
+      const W=ww+padX*2, H=padY+h+drip+Math.ceil(h*0.25);
+      return { ch,cols,gl,gr,gt,gb,h,w:ww,drip,full,body,padX,padY,W,H,originX:gl-padX,originY:gt-padY,seed:Math.random()*1000,ghostBuf:null };
+    }
+
+    function layoutNumber(){
+      const str=String(CONFIG.number||"");
+      digits=[]; if(!str.length) return;
+      let fs=Math.round(P*CONFIG.maxFont);
+      sb.font=fs+'px '+CONFIG.fontStack;
+      let widths=[],total=0;
+      for(const ch of str){ const ww=sb.measureText(ch).width; widths.push(ww); total+=ww; }
+      total+=fs*CONFIG.digitGap*(str.length-1);
+      const maxW=P*CONFIG.fitW;
+      if(total>maxW) fs=Math.floor(fs*(maxW/total));
+      fontSize=fs; fontStr=fs+'px '+CONFIG.fontStack; sb.font=fontStr;
+      widths=[]; total=0;
+      for(const ch of str){ const ww=sb.measureText(ch).width; widths.push(ww); total+=ww; }
+      const gap=fs*CONFIG.digitGap; total+=gap*(str.length-1);
+      let x=(P-total)/2;
+      for(let i=0;i<str.length;i++){ const cx=x+widths[i]/2; const dg=buildDigit(str[i],cx,widths[i]); if(dg) digits.push(dg); x+=widths[i]+gap; }
+      let mw=1,mh=1;
+      for(const dg of digits){ if(dg.W>mw)mw=dg.W; if(dg.H>mh)mh=dg.H; }
+      fxBuf=document.createElement('canvas'); fxBuf.width=mw; fxBuf.height=mh; fxc=fxBuf.getContext('2d');
+      tmpA=document.createElement('canvas'); tmpA.width=mw; tmpA.height=mh; tac=tmpA.getContext('2d');
+      tmpB=document.createElement('canvas'); tmpB.width=mw; tmpB.height=mh; tbc=tmpB.getContext('2d');
+      if(CONFIG.ghost) for(const dg of digits) bakeGhost(dg);
+    }
+
+    function accumBlurRamp(src,W,H,levels,blurTFn,envFn){
+      tac.clearRect(0,0,W,H);
+      const Ln=levels.length;
+      for(let i=Ln-1;i>=0;i--){
+        tbc.clearRect(0,0,W,H);
+        tbc.filter=levels[i]>0?'blur('+levels[i].toFixed(1)+'px)':'none';
+        tbc.drawImage(src,0,0,W,H,0,0,W,H);
+        tbc.filter='none';
+        const g=tbc.createLinearGradient(0,0,0,H);
+        for(let s=0;s<=14;s++){
+          const ly=H*s/14, bt=blurTFn(ly);
+          const w=(i===Ln-1)?1:clamp01((i+1)-bt);
+          g.addColorStop(s/14,'rgba(0,0,0,'+clamp01(envFn(ly)*w)+')');
+        }
+        tbc.globalCompositeOperation='destination-in';
+        tbc.fillStyle=g; tbc.fillRect(0,0,W,H);
+        tbc.globalCompositeOperation='source-over';
+        tac.drawImage(tmpB,0,0,W,H,0,0,W,H);
+      }
+    }
+
+    function bakeGhost(dg){
+      const {W,H,padX,padY,h,drip}=dg;
+      const dissolveL=padY+h*CONFIG.solidFrac, bottomL=padY+h+drip;
+      fxc.clearRect(0,0,W,H);
+      fxc.drawImage(dg.full,padX,padY);
+      fxc.globalCompositeOperation='source-in'; fxc.fillStyle=ghostCss; fxc.fillRect(0,0,W,H);
+      fxc.globalCompositeOperation='source-over';
+      const Lg=ghostBlur;
+      const blurT=ly=>ly<=dissolveL?0:(Lg.length-1)*smooth01((ly-dissolveL)/(bottomL-dissolveL));
+      const env=ly=>clamp01((ly-dissolveL)/(0.35*(bottomL-dissolveL)));
+      accumBlurRamp(fxBuf,W,H,Lg,blurT,env);
+      const g=document.createElement('canvas'); g.width=W; g.height=H;
+      g.getContext('2d').drawImage(tmpA,0,0,W,H,0,0,W,H);
+      dg.ghostBuf=g;
+    }
+
+    function maskGrad(c,W,H,fn){
+      const g=c.createLinearGradient(0,0,0,H);
+      for(let s=0;s<=12;s++){ const ly=H*s/12; g.addColorStop(s/12,'rgba(0,0,0,'+clamp01(fn(ly))+')'); }
+      c.globalCompositeOperation='destination-in'; c.fillStyle=g; c.fillRect(0,0,W,H); c.globalCompositeOperation='source-over';
+    }
+    function maskBand(c,W,H,cy,bh){
+      const cl=v=>v<0?0:v>1?1:v;
+      const a=(cy-bh)/H, b=(cy+bh)/H;
+      const g=c.createLinearGradient(0,0,0,H);
+      g.addColorStop(cl(a-0.002),'rgba(0,0,0,0)');
+      g.addColorStop(cl(a),'rgba(0,0,0,1)');
+      g.addColorStop(cl(b),'rgba(0,0,0,1)');
+      g.addColorStop(cl(b+0.002),'rgba(0,0,0,0)');
+      c.globalCompositeOperation='destination-in'; c.fillStyle=g; c.fillRect(0,0,W,H); c.globalCompositeOperation='source-over';
+    }
+
+    function renderDigit(dg){
+      const {padX,padY,W,H}=dg;
+      const dissolveL=padY+dg.h*CONFIG.solidFrac, bottomL=padY+dg.h+dg.drip;
+      const span=(padY+dg.h-dissolveL)||1;
+      const bh=brush.height;
+      const tf=time*CONFIG.flowSpeed, wt=time*CONFIG.waveSpeed;
+      const waveAmpPx=dg.h*CONFIG.waveAmp;
+      if(CONFIG.ghost && dg.ghostBuf){
+        const sh=CONFIG.ghostShimmer?(1-CONFIG.ghostShimmer*0.5)+CONFIG.ghostShimmer*0.5*Math.sin(time*CONFIG.ghostShimmerSpeed+dg.seed):1;
+        ctx.globalAlpha=clamp01(CONFIG.ghostAlpha*sh);
+        ctx.drawImage(dg.ghostBuf,0,0,W,H,dg.originX,dg.originY,W,H);
+        ctx.globalAlpha=1;
+      }
+      const f=0.18+0.74*nFlow(time*CONFIG.focalSpeed*0.25+dg.seed,dg.seed*0.13);
+      const focalY=padY+dg.h*f, bandH=Math.max(6,dg.h*0.12);
+      fxc.clearRect(0,0,W,H); fxc.globalAlpha=1; fxc.drawImage(dg.body,padX,padY);
+      for(let x=dg.gl;x<=dg.gr;x+=step){
+        const c=dg.cols[x]; if(!c) continue;
+        const lx0=(x-dg.gl)+padX, cTopL=(c.top-dg.gt)+padY, cBotL=(c.bot-dg.gt)+padY;
+        const w1=nFlow(x*CONFIG.waveScale+dg.seed+CONFIG.waveOffset,wt*0.22);
+        const w2=nFlow(x*CONFIG.waveScale*2.5+dg.seed*1.7,wt*0.38);
+        const startOff=((w1-0.5)*1.7+(w2-0.5)*CONFIG.waveSharp)*waveAmpPx;
+        const srcTop=Math.max(cTopL,dissolveL+startOff);
+        const low=smooth01((cBotL-dissolveL)/span);
+        const fine=nFlow((x+dg.seed)*CONFIG.combFreq+tf*1.4,tf*0.5);
+        const broad=nFlow((x+dg.seed)*0.03+13,tf*0.22);
+        const nflow=clamp01(fine*0.55+broad*0.6);
+        const nlen=nLen((x+dg.seed)*0.018+71,tf*0.18);
+        const drip=dg.drip*low*(0.2+0.8*nlen);
+        const len=Math.max(1,(cBotL+drip)-srcTop);
+        const dist=Math.exp(-((srcTop-focalY)*(srcTop-focalY))/(2*bandH*bandH));
+        const jit=(nFlow((x+dg.seed)*0.08,time*CONFIG.jitterSpeed*0.6)-0.5)*2*dg.w*CONFIG.jitter*(0.4+1.8*dist);
+        const lx=lx0+jit;
+        let a=CONFIG.streakAlpha*(0.35+0.65*nflow)*(0.45+0.55*low);
+        if(cBotL<dissolveL) a*=0.15;
+        a=clamp01(a); if(a<=0.01) continue;
+        fxc.globalAlpha=a;
+        fxc.drawImage(brush,0,0,1,bh,lx,srcTop,lineW,len);
+        if(nlen>0.82){ fxc.globalAlpha=clamp01(a*0.5); fxc.drawImage(brush,0,0,1,bh,lx,cBotL,lineW,len*1.8); }
+      }
+      fxc.globalAlpha=1;
+      const burst=smooth01((nFlow(time*CONFIG.shiftSpeed*0.5+dg.seed,7)-0.35)/0.5);
+      const sdx=(nFlow(time*CONFIG.shiftSpeed*0.7+dg.seed,3)-0.5)*2*dg.w*CONFIG.shift*burst;
+      if(Math.abs(sdx)>0.5){
+        const by=Math.max(0,focalY-bandH), bhh=Math.min(H-by,bandH*2);
+        fxc.globalAlpha=0.7; fxc.filter='blur('+(1.4*dpr).toFixed(1)+'px)';
+        fxc.drawImage(fxBuf,0,by,W,bhh,sdx,by,W,bhh);
+        fxc.filter='none'; fxc.globalAlpha=1;
+      }
+      const Lf=fieldBlur;
+      const blurTf=ly=>ly<=dissolveL?0:(Lf.length-1)*smooth01((ly-dissolveL)/(bottomL-dissolveL));
+      accumBlurRamp(fxBuf,W,H,Lf,blurTf,function(){return 1;});
+      ctx.globalAlpha=CONFIG.inkAlpha;
+      ctx.drawImage(tmpA,0,0,W,H,dg.originX,dg.originY,W,H);
+      ctx.globalAlpha=1;
+      if(CONFIG.grid){
+        tac.clearRect(0,0,W,H);
+        const goff=(time*CONFIG.gridDrift)%gridStep;
+        tac.save(); tac.translate(-goff,-goff);
+        tac.fillStyle=gridPattern; tac.fillRect(0,0,W+gridStep*2,H+gridStep*2);
+        tac.restore();
+        tac.globalCompositeOperation='destination-in'; tac.drawImage(fxBuf,0,0,W,H,0,0,W,H); tac.globalCompositeOperation='source-over';
+        maskGrad(tac,W,H,ly=>clamp01((ly-dissolveL)/(bottomL-dissolveL))*CONFIG.gridAlpha);
+        ctx.globalCompositeOperation='difference';
+        ctx.drawImage(tmpA,0,0,W,H,dg.originX,dg.originY,W,H);
+        ctx.globalCompositeOperation='source-over';
+      }
+      if(CONFIG.scan){
+        const bandH2=Math.max(3,dg.h*CONFIG.scanBand);
+        const ph=((time/CONFIG.scanPeriod)+dg.seed*0.137+CONFIG.scanOffset)%1;
+        const scanY=padY+bandH2+ph*(dg.h-2*bandH2);
+        const dxg=(nFlow(time*CONFIG.scanShiftSpeed*1.8+dg.seed,21)-0.5)*2*dg.w*CONFIG.scanShift;
+        tbc.clearRect(0,0,W,H);
+        tbc.drawImage(dg.full,padX+dxg,padY);
+        tbc.globalCompositeOperation='source-in'; tbc.fillStyle=scanCss; tbc.fillRect(0,0,W,H); tbc.globalCompositeOperation='source-over';
+        maskBand(tbc,W,H,scanY,bandH2);
+        ctx.globalCompositeOperation=CONFIG.scanBlend;
+        ctx.globalAlpha=CONFIG.scanAlpha;
+        ctx.filter='blur('+(CONFIG.scanBlur*dpr).toFixed(1)+'px)';
+        ctx.drawImage(tmpB,0,0,W,H,dg.originX,dg.originY,W,H);
+        ctx.filter='none'; ctx.globalAlpha=1; ctx.globalCompositeOperation='source-over';
+      }
+    }
+
+    function buildBrush(){
+      brush=document.createElement('canvas'); brush.width=1; brush.height=700;
+      const b=brush.getContext('2d'); const ink=inkRGB.join(',');
+      const g=b.createLinearGradient(0,0,0,700);
+      g.addColorStop(0.00,'rgba('+ink+',0.95)');
+      g.addColorStop(0.14,'rgba('+ink+',0.80)');
+      g.addColorStop(0.55,'rgba('+ink+',0.22)');
+      g.addColorStop(1.00,'rgba('+ink+',0)');
+      b.fillStyle=g; b.fillRect(0,0,1,700);
+    }
+    function buildPaper(){
+      paper=document.createElement('canvas'); paper.width=P; paper.height=P;
+      const p=paper.getContext('2d',{willReadFrequently:true});
+      p.fillStyle=bgCss; p.fillRect(0,0,P,P);
+      if(CONFIG.bgTexture){
+        for(let i=0;i<16;i++){
+          const x=Math.random()*P,y=Math.random()*P,r=P*(0.18+Math.random()*0.4);
+          const dark=Math.random()<0.5,a=0.04+Math.random()*0.05;
+          const rg=p.createRadialGradient(x,y,0,x,y,r);
+          rg.addColorStop(0,dark?'rgba(120,114,100,'+a+')':'rgba(255,255,250,'+a+')');
+          rg.addColorStop(1,'rgba(0,0,0,0)');
+          p.fillStyle=rg; p.fillRect(0,0,P,P);
+        }
+        const img=p.getImageData(0,0,P,P),d=img.data;
+        for(let i=0;i<d.length;i+=4){ const n=(Math.random()-0.5)*16; d[i]+=n; d[i+1]+=n; d[i+2]+=n; }
+        p.putImageData(img,0,0);
+      }
+    }
+    function buildGrainTile(){
+      grainTile=document.createElement('canvas'); grainTile.width=grainTile.height=256;
+      const g=grainTile.getContext('2d'); const img=g.createImageData(256,256),d=img.data;
+      for(let i=0;i<d.length;i+=4){ const v=Math.random()*255; d[i]=d[i+1]=d[i+2]=v; d[i+3]=Math.random()<0.5?255:0; }
+      g.putImageData(img,0,0);
+    }
+    function buildGrid(){
+      gridStep=Math.max(3,Math.round(CONFIG.gridStepPx*dpr));
+      const g=document.createElement('canvas'); g.width=gridStep; g.height=gridStep;
+      const c=g.getContext('2d');
+      c.fillStyle=css(gridRGB); c.fillRect(0,0,gridStep,1); c.fillRect(0,0,1,gridStep);
+      gridPattern=ctx.createPattern(g,'repeat');
+    }
+    function drawGrain(now){
+      const off=(now*0.018*CONFIG.grainSpeed)%256;
+      ctx.globalAlpha=CONFIG.grainAlpha;
+      for(let y=-256;y<P+256;y+=256) for(let x=-256;x<P+256;x+=256) ctx.drawImage(grainTile,x-off,y+off);
+      ctx.globalAlpha=1;
+    }
+    function drawMarks(){
+      ctx.save();
+      ctx.strokeStyle=markCss; ctx.fillStyle=markCss;
+      const lw=Math.max(1,P*0.0016); ctx.lineWidth=lw; const r=P*0.012;
+      const cross=(x,y,rr)=>{ctx.beginPath();ctx.moveTo(x-rr,y);ctx.lineTo(x+rr,y);ctx.moveTo(x,y-rr);ctx.lineTo(x,y+rr);ctx.stroke();};
+      const lx=P*0.075; for(let i=0;i<5;i++) cross(lx,P*(0.16+0.155*i),r);
+      cross(P*0.5,P*0.45,r*1.4); ctx.fillRect(P*0.5-lw*1.5,P*0.45-lw*1.5,lw*3,lw*3);
+      const rx=P*0.9; for(let i=0;i<4;i++){const y=P*(0.30+0.12*i);ctx.beginPath();ctx.moveTo(rx,y);ctx.lineTo(rx+r*0.9,y);ctx.stroke();}
+      ctx.fillRect(P*0.80,P*0.26,lw*1.5,P*0.12);
+      ctx.font='700 '+Math.round(P*0.030)+'px "Helvetica Neue",Arial,sans-serif';
+      ctx.textAlign="right"; ctx.textBaseline="alphabetic";
+      ctx.fillText(String(CONFIG.cornerNo).padStart(3,'0'),P*0.93,P*0.10);
+      ctx.beginPath(); ctx.moveTo(P*0.855,P*0.115); ctx.lineTo(P*0.93,P*0.115); ctx.stroke();
+      ctx.restore();
+    }
+
+    function buildAll(){
+      const box=Math.max(canvas.clientWidth,canvas.clientHeight)||120;
+      S=Math.round(box);
+      dpr=Math.min(window.devicePixelRatio||1,2);
+      P=Math.round(S*dpr);
+      canvas.width=P; canvas.height=P;
+      if(CONFIG.pointerThrough) canvas.style.pointerEvents='none';
+      drawY=P*CONFIG.baselineY;
+      step=Math.max(2,Math.round(P/900));
+      lineW=Math.max(1,step-1);
+      fieldBlur=CONFIG.blur.map(v=>v*dpr);
+      ghostBlur=CONFIG.ghostBlur.map(v=>v*dpr);
+      inkRGB=colorOf(CONFIG.ink,CONFIG.inkSat); inkCss=css(inkRGB);
+      ghostRGB=colorOf(CONFIG.ghostColor,CONFIG.ghostSat); ghostCss=css(ghostRGB);
+      scanRGB=colorOf(CONFIG.scanColor,CONFIG.scanSat); scanCss=css(scanRGB);
+      gridRGB=colorOf(CONFIG.gridColor,CONFIG.gridSat); gridCss=css(gridRGB);
+      markRGB=colorOf(CONFIG.markColor,CONFIG.markSat); markCss=css(markRGB,CONFIG.markAlpha);
+      paperOn=!!(CONFIG.background&&String(CONFIG.background).trim());
+      bgRGB=paperOn?colorOf(CONFIG.background,CONFIG.bgSat):[0,0,0]; bgCss=css(bgRGB);
+      solidBuf=document.createElement('canvas'); solidBuf.width=P; solidBuf.height=P; sb=solidBuf.getContext('2d',{willReadFrequently:true});
+      buildBrush();
+      if(paperOn) buildPaper(); else paper=null;
+      if(CONFIG.grainAlpha>0) buildGrainTile();
+      if(CONFIG.grid) buildGrid();
+      layoutNumber();
+    }
+
+    function render(now){
+      time=now/1000;
+      ctx.setTransform(1,0,0,1,0,0);
+      ctx.clearRect(0,0,P,P);
+      if(paperOn&&paper) ctx.drawImage(paper,0,0);
+      for(const dg of digits) renderDigit(dg);
+      if(paperOn&&CONFIG.grainAlpha>0) drawGrain(now);
+      if(CONFIG.marks) drawMarks();
+    }
+
+    buildAll();
+    return { render:render, rebuild:buildAll, canvas:canvas };
+  }
+
+  function initAll(){
+    var nodes=[].slice.call(document.querySelectorAll('canvas.ink-num'));
+    if(!nodes.length) return;
+    var insts=nodes.map(function(cv){ var inst=createInk(cv,{ number: cv.getAttribute('data-number')||'0' }); cv.__ink=inst; return inst; });
+    if(reduce){
+      insts.forEach(function(i){ i.render(0); });
+    } else {
+      var active=new Set();
+      if('IntersectionObserver' in window){
+        var io=new IntersectionObserver(function(es){ es.forEach(function(e){ var inst=e.target.__ink; if(!inst) return; if(e.isIntersecting) active.add(inst); else active.delete(inst); }); }, {rootMargin:'140px 0px'});
+        insts.forEach(function(i){ io.observe(i.canvas); });
+      } else { insts.forEach(function(i){ active.add(i); }); }
+      requestAnimationFrame(function loop(now){ active.forEach(function(i){ i.render(now); }); requestAnimationFrame(loop); });
+    }
+    var rt;
+    window.addEventListener('resize', function(){ clearTimeout(rt); rt=setTimeout(function(){ insts.forEach(function(i){ i.rebuild(); if(reduce) i.render(0); }); },150); });
+  }
+
+  if(document.fonts&&document.fonts.load){
+    Promise.race([ document.fonts.load('1em "Anton"').then(function(){return document.fonts.ready;}), new Promise(function(r){setTimeout(r,1500);}) ]).then(initAll);
+  } else { initAll(); }
 })();
 </script>
 <!-- ╚════════════════════════════════════════════════════════════════════════╝ -->
