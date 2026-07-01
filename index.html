@@ -74,9 +74,9 @@
 
   .arr{display:inline-block;transition:transform .3s var(--ease)}
   .btn{display:inline-flex;align-items:center;justify-content:center;gap:.6rem;
-       font-family:var(--f-body);font-weight:500;letter-spacing:.03em;font-size:.9rem;
-       padding:.95rem 1.85rem;border:1px solid var(--sand);background:var(--sand);color:#0d0d0d;
-       border-radius:2px;cursor:pointer;text-transform:uppercase;white-space:nowrap;
+       font-family:var(--f-body);font-weight:700;letter-spacing:.03em;font-size:.9rem;
+       padding:0.6rem 1.4rem;border:1px solid var(--sand);background:var(--sand);color:#0d0d0d;
+       border-radius:8px;cursor:pointer;text-transform:uppercase;white-space:nowrap;
        box-shadow:var(--elev-1);transition:background .25s var(--ease),color .25s var(--ease),box-shadow .35s var(--ease),border-color .25s}
   .btn:hover{background:transparent;color:var(--sand);box-shadow:var(--glow)}
   .btn:hover .arr{transform:translateX(5px)}
@@ -248,7 +248,7 @@
   .hero__kicker::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--sand);box-shadow:0 0 12px var(--sand);animation:pulse 2.4s var(--ease) infinite}
   @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.35;transform:scale(.7)}}
   .hero__title{font-family:var(--f-xl);font-weight:800;text-transform:uppercase;font-size:clamp(2.4rem,6.6vw,5.6rem);line-height:.94;letter-spacing:-.02em;margin-top:1.4rem}
-  .hero__sub{font-family:var(--f-display);font-weight:700;color:var(--muted);font-size:clamp(1.1rem,2.4vw,2rem);line-height:1.05;margin-top:1.1rem;text-transform:uppercase}
+  .hero__sub{font-family:var(--f-display);font-weight:700;color:#181712;font-size:clamp(1.1rem,2.4vw,2rem);line-height:1.05;margin-top:1.1rem;text-transform:uppercase}
   .hero__support{max-width:46ch;margin-top:1.6rem;color:var(--line);opacity:.85;font-size:clamp(1rem,1.4vw,1.15rem)}
   .hero__actions{display:flex;gap:1rem;margin-top:2.2rem;flex-wrap:wrap}
   @media(max-width:760px){
@@ -585,13 +585,13 @@
   .cta__grid{display:grid;grid-template-columns:1.1fr 1fr;gap:clamp(2rem,6vw,6rem);margin-top:2.6rem;align-items:start}
   .cta__sub{color:var(--muted);max-width:42ch;margin-top:1.4rem;font-size:1.1rem}
   .cta__direct{margin-top:2.4rem;display:flex;flex-direction:column;gap:.9rem}
-  .cta__direct a{display:flex;align-items:center;justify-content:space-between;gap:1rem;border:1px solid var(--hairline);border-radius:3px;padding:1rem 1.3rem;transition:border-color .25s,color .25s,box-shadow .35s,transform .3s var(--ease)}
+  .cta__direct a{display:flex;align-items:center;justify-content:space-between;gap:1rem;border:1px solid var(--hairline);border-radius:8px;padding:0.6rem 1.4rem;transition:border-color .25s,color .25s,box-shadow .35s,transform .3s var(--ease)}
   .cta__direct a:hover{border-color:var(--sand);color:var(--sand);box-shadow:var(--glow);transform:translateY(-2px)}
   .cta__direct b{font-family:var(--f-body);font-weight:500}
   .cta__direct span{font-family:var(--f-mono);font-size:.8rem;color:var(--muted)}
   .cta__form{display:flex;flex-direction:column;gap:1.1rem}
   .cta__field label{display:block;font-family:var(--f-mono);font-size:.74rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.5rem}
-  .cta__field input,.cta__field textarea{width:100%;background:var(--surface);border:1px solid var(--hairline);color:var(--line);font-family:var(--f-body);font-size:1rem;padding:.9rem 1rem;border-radius:3px;transition:border-color .25s,box-shadow .3s,background .25s}
+  .cta__field input,.cta__field textarea{width:100%;background:var(--surface);border:1px solid var(--hairline);color:var(--line);font-family:var(--f-body);font-size:1rem;padding:0.6rem 1.4rem;border-radius:8px;transition:border-color .25s,box-shadow .3s,background .25s}
   .cta__field input:focus,.cta__field textarea:focus{outline:none;border-color:var(--sand);box-shadow:0 0 0 3px rgba(212,197,163,.12);background:#171717}
   .cta__field textarea{resize:vertical;min-height:110px}
   .cta__hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
@@ -1418,7 +1418,7 @@
 const CONFIG = {
   /* --- количество и длина линий --- */
   lineCount: 28,                       // сколько линий
-  lineLengths: [1200, 900, 1050],       // длина каждой линии, px (сверху вниз), диапазон 600–900
+  lineLengths: [1000, 700, 850],       // длина каждой линии, px (сверху вниз), диапазон 600–900
 
   /* --- «сердцевина» размытия --- */
   coreThickness: 1,                   // px — высота полосы с максимальным блюром (0 = острый пик)
@@ -1470,7 +1470,7 @@ const CONFIG = {
 
   /* --- прочее --- */
   respectReducedMotion: true,         // уважать системную настройку «уменьшить движение»
-  tint: 'rgba(255, 255, 255, 0.01)',  // светлый оттенок в сердцевине; 'transparent' = выкл
+  tint: 'rgba(152, 126, 93, 0.009)',  // светлый оттенок в сердцевине; 'transparent' = выкл
 };
 
 /* --------------------------------------------------------------------- */
