@@ -64,8 +64,8 @@
 
   /* — номер раздела В ЛЕВОМ ПОЛЕ: absolute, НЕ сдвигает заголовок и контент — */
   .sec-head{position:relative}
-  .sec-num{--w:clamp(64px,9vw,128px);
-           position:absolute;top:0;margin-top:-60px;right:calc(100% + clamp(1rem,2.2vw,2.6rem));
+  .sec-num{--w:clamp(192px,27vw,384px);   /* было clamp(64px,9vw,128px) */;
+           position:absolute;top:0;margin-top:-130px;margin-right: -110px;right:calc(100% + clamp(1rem,2.2vw,2.6rem));
            width:var(--w);height:var(--w)}
   .sec-head .h2{margin-top:0}
   .ink-num{display:block;width:100%;height:100%;pointer-events:none}
@@ -260,6 +260,52 @@
   }
   @media (prefers-reduced-motion: reduce){.hero__sec{animation:none}.hero__kicker::before{animation:none}}
 </style>
+<style id="sub-fx-css">
+  /* ═══ Анимация «размытых линий» ПОДЛОЖКОЙ под hero__sub ═══
+     .stage/.backdrop/.line — ДОСЛОВНО из твоего style.css
+     (без глобальных *{} и html,body{} — они сбросили бы весь сайт).
+     Позиционирование сцены в подложку — через более специфичный
+     селектор .sub-fx .stage; сам код анимации не изменён. */
+  .stage{
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    background: linear-gradient(160deg, var(--bg-top, #12141a), var(--bg-bottom, #05060a));
+  }
+  .backdrop{
+    position: absolute;
+    inset: 0;
+  }
+  .line{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    background: var(--tint, transparent);
+    -webkit-backdrop-filter: blur(var(--blur, 14px));
+            backdrop-filter: blur(var(--blur, 14px));
+    -webkit-mask-image:
+      linear-gradient(to bottom, transparent 0, #000 var(--falloff, 14px), #000 calc(var(--falloff, 14px) + var(--core, 2px)), transparent calc(2 * var(--falloff, 14px) + var(--core, 2px))),
+      linear-gradient(to right, transparent 0, #000 var(--end, 90px), #000 calc(100% - var(--end, 90px)), transparent 100%);
+    -webkit-mask-composite: source-in;
+    mask-image:
+      linear-gradient(to bottom, transparent 0, #000 var(--falloff, 14px), #000 calc(var(--falloff, 14px) + var(--core, 2px)), transparent calc(2 * var(--falloff, 14px) + var(--core, 2px))),
+      linear-gradient(to right, transparent 0, #000 var(--end, 90px), #000 calc(100% - var(--end, 90px)), transparent 100%);
+    mask-composite: intersect;
+    will-change: transform;
+    pointer-events: none;
+  }
+  /* ═══ Обвязка: помещаю сцену за текст sub; анимацию не трогаю ═══ */
+  .hero__sub-wrap{position:relative; isolation:isolate; display:inline-block; max-width:100%; margin-top:1.1rem}
+  .hero__sub-wrap .hero__sub{margin-top:0; position:relative; z-index:1;
+    color:#615c51; color:color-mix(in srgb, var(--muted) 70%, #000)}   /* текст sub: −30% яркости */
+  .sub-fx{position:absolute; z-index:0; left:50%; top:50%;
+    width:min(1320px, 150vw); height:132px; transform:translate(-50%,-50%);
+    overflow:hidden; pointer-events:none;
+    -webkit-mask-image:radial-gradient(62% 100% at 50% 50%, #000 34%, transparent 100%);
+            mask-image:radial-gradient(62% 100% at 50% 50%, #000 34%, transparent 100%)}
+  .sub-fx .stage{position:absolute; inset:0; background:transparent}        /* fixed → absolute + убираем тёмный градиент сцены */
+  .sub-fx .backdrop{background:transparent!important}                        /* убираем чёрную заливку (её ставит JS инлайном → нужен !important) */
+</style>
 <section class="hero swap-target" id="hero">
   <div class="hero__grid" aria-hidden="true">
     <div class="hero__sec hero__sec--a"></div><div class="hero__sec hero__sec--b"></div><div class="hero__sec hero__sec--c"></div>
@@ -270,7 +316,10 @@
     <div class="hero__inner wrap">
       <p class="hero__kicker" data-f="hero.kicker" data-reveal style="--d:80ms">Повышаем эффективность · конвейеры нового уровня</p>
       <h1 class="hero__title" data-f="hero.title" data-reveal="clip" style="--d:160ms">Вантовые<br>конвейеры</h1>
-      <p class="hero__sub" data-f="hero.sub" data-reveal style="--d:320ms">Будущее горнодобывающей отрасли</p>
+      <div class="hero__sub-wrap" data-reveal style="--d:320ms">
+        <div class="sub-fx" aria-hidden="true"><div class="stage"><div class="backdrop"></div></div></div>
+        <p class="hero__sub" data-f="hero.sub">Будущее горнодобывающей отрасли</p>
+      </div>
       <p class="hero__support" data-f="hero.support" data-reveal style="--d:440ms">Одна поворотная опора вместо десятков: свободный проезд техники, мобильный склад готовой продукции, рассчитанный запас прочности несущих конструкций.</p>
       <div class="hero__actions" data-reveal style="--d:560ms">
         <a href="#models" class="btn">Подобрать оборудование <span class="arr">→</span></a>
@@ -908,7 +957,7 @@
     marks:true, markColor:"#0d0d0d", markSat:1.0, markAlpha:0.5, cornerNo:220
   };
   // ПОД НОМЕРА РАЗДЕЛОВ переопределяем ТОЛЬКО размер (вид не трогаем):
-  const OVERRIDE = { maxFont:0.47, fitW:0.96 };
+  const OVERRIDE = { maxFont:0.47, fitW:0.96, background:null };
 
   /* ===== ФАБРИКА ЭКЗЕМПЛЯРА ===== */
   function createInk(canvasEl){
@@ -1355,5 +1404,218 @@
 })();
 </script>
 
+<script id="sub-fx">
+/* ═══════════════════════════════════════════════════════════════════════
+   РАЗМЫТЫЕ ЛИНИИ — подложка под hero__sub.
+   Код анимации ДОСЛОВНЫЙ (твой script.js), обёрнут только в IIFE,
+   чтобы имена (CONFIG/init/frame/…) не конфликтовали с другими скриптами.
+   Сцена (.stage) помещена в контейнер .sub-fx через CSS — сам код не тронут.
+   ═══════════════════════════════════════════════════════════════════════ */
+(function(){
+/* =====================================================================
+   РАЗМЫТЫЕ ЛИНИИ — вся калибровка здесь
+   ===================================================================== */
+const CONFIG = {
+  /* --- количество и длина линий --- */
+  lineCount: 28,                       // сколько линий
+  lineLengths: [1200, 900, 1050],       // длина каждой линии, px (сверху вниз), диапазон 600–900
+
+  /* --- «сердцевина» размытия --- */
+  coreThickness: 1,                   // px — высота полосы с максимальным блюром (0 = острый пик)
+  blurRadius: 8,                     // px — сила blur() в сердцевине (максимум интенсивности)
+  falloffRadius: 10,                  // px — на сколько px блюр затухает вверх/вниз от сердцевины
+  endFade: 90,                        // px — мягкое затухание блюра на торцах линии
+
+ /* --- рандомная раскладка связки --- */
+  bandHeight: 30,                     // px — макс. вертикальный разброс сердцевин (высота полосы)
+  spreadX: 200,                       // px — горизонтальный разброс базовых позиций
+  layoutSeed: 42,                     // зерно рандома — меняй, чтобы «перетасовать» раскладку
+  groupOffsetX: 0,                    // px — сдвиг всей связки по горизонтали
+  groupOffsetY: 0,                    // px — сдвиг всей связки по вертикали
+
+  /* --- авто-реакция на насыщенность --- */
+  densityThreshold: 7,                // с какого числа линий раскладка считается перенасыщенной
+  spreadGrowth: 0.12,                 // доля, на которую расширять spreadX за каждую линию сверх порога
+  bandGrowth: 0.0,                    // то же для bandHeight (0 = держать высоту фиксированной на 60)
+
+/* --- медленное горизонтальное движение (у каждой линии своё, независимое) --- */
+  driftAmpMin: 100,                    // px — мин. половина хода линии
+  driftAmpMax: 70,                    // px — макс. половина хода линии
+  driftPeriodMin: 2,                  // с  — самый быстрый цикл «туда-обратно»
+  driftPeriodMax: 6,                 // с  — самый медленный цикл (больше = медленнее)
+  driftSeed: 99,                      // зерно рандома параметров дрейфа — меняй для перетасовки
+  globalSpeed: 1.0,                   // общий множитель скорости всех линий
+
+  /* --- «дыхание» блюра для более живого мерцания --- */
+  blurPulse: 0,                       // px — амплитуда колебания blur (0 = выкл)
+  blurPulsePeriod: 7,                 // с
+  blurPulsePhase: [0, 1.5, 3.0],      // рад на линию
+
+  /* --- фон --- */
+  bgTop:    '#12141a',                // верх градиента (за картинкой)
+  bgBottom: '#05060a',                // низ градиента
+  grainOpacity: 0.3,                  // 0..1 — плёнка зерна поверх картинки
+  grainScale: 0.9,                    // baseFrequency шума (больше = мельче зерно)
+  vignette: 0.55,                     // 0..1 — затемнение углов
+
+  /* --- тёмный фон-«картинка» (по нему и виден блюр) --- */
+  bgImageURL: '',                     // '' = генерируемые огни ниже; иначе URL своей картинки
+  nightLights: {                      // генерируемая тёмная картинка: огни в темноте
+    base:  '#06070c',                 // цвет тёмной подложки
+    count: 90,                        // число световых точек (больше = плотнее свечение)
+    minR:  2,   maxR: 16,             // радиус точек, px
+    minO:  0.12, maxO: 0.85,          // прозрачность точек (контраст)
+    seed:  7,                         // зерно раскладки — меняй для другого рисунка
+  },
+
+  /* --- прочее --- */
+  respectReducedMotion: true,         // уважать системную настройку «уменьшить движение»
+  tint: 'rgba(255, 255, 255, 0.01)',  // светлый оттенок в сердцевине; 'transparent' = выкл
+};
+
+/* --------------------------------------------------------------------- */
+
+const pick = (v, i) => Array.isArray(v) ? v[Math.min(i, v.length - 1)] : v;
+const avg  = a => a.reduce((s, x) => s + x, 0) / a.length;
+
+// монохромное зерно как data-URI (тонкая плёнка поверх фона)
+function grainURL(freq, opacity){
+  const svg =
+    "<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'>" +
+      "<filter id='n'>" +
+        "<feTurbulence type='fractalNoise' baseFrequency='" + freq +
+          "' numOctaves='2' stitchTiles='stitch'/>" +
+        "<feColorMatrix type='saturate' values='0'/>" +
+      "</filter>" +
+      "<rect width='100%' height='100%' filter='url(#n)' opacity='" + opacity + "'/>" +
+    "</svg>";
+  return "url(\"data:image/svg+xml," + encodeURIComponent(svg) + "\")";
+}
+
+// сид-генератор (mulberry32) — стабильная раскладка огней
+function seedRand(seed){
+  return function(){
+    seed |= 0; seed = seed + 0x6D2B79F5 | 0;
+    let t = Math.imul(seed ^ seed >>> 15, 1 | seed);
+    t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+    return ((t ^ t >>> 14) >>> 0) / 4294967296;
+  };
+}
+
+// тёмная «картинка»: рассеянные мягкие огни на почти чёрном фоне
+function nightURL(o){
+  const W = 1600, H = 1000, rnd = seedRand(o.seed || 1);
+  let dots = '';
+  for (let i = 0; i < o.count; i++){
+    const x = (rnd() * W).toFixed(1);
+    const y = (rnd() * H).toFixed(1);
+    const r = (o.minR + rnd() * (o.maxR - o.minR)).toFixed(1);
+    const a = (o.minO + rnd() * (o.maxO - o.minO)).toFixed(2);
+    dots += "<circle cx='"+x+"' cy='"+y+"' r='"+r+"' fill='url(#g)' opacity='"+a+"'/>";
+  }
+  const svg =
+    "<svg xmlns='http://www.w3.org/2000/svg' width='"+W+"' height='"+H+"' viewBox='0 0 "+W+" "+H+"'>" +
+      "<defs><radialGradient id='g'>" +
+        "<stop offset='0%' stop-color='#fff' stop-opacity='1'/>" +
+        "<stop offset='100%' stop-color='#fff' stop-opacity='0'/>" +
+      "</radialGradient></defs>" +
+      "<rect width='100%' height='100%' fill='"+o.base+"'/>" + dots +
+    "</svg>";
+  return "url(\"data:image/svg+xml," + encodeURIComponent(svg) + "\")";
+}
+
+function init(){
+  const stage    = document.querySelector('.stage');
+  const backdrop = stage.querySelector('.backdrop');
+
+  // фон: тонкое зерно (сверху) + тёмная картинка + виньетка (снизу)
+  // фон: чёрный + тонкая плёнка зерна (без зерна блюр не виден)
+  backdrop.style.backgroundImage =
+    grainURL(CONFIG.grainScale, CONFIG.grainOpacity) + "," +
+    "linear-gradient(#000, #000)";
+
+  backdrop.style.backgroundRepeat = "repeat, no-repeat";
+  backdrop.style.background = "#000";
+
+  // глобальные CSS-переменные
+  const rs = document.documentElement.style;
+  rs.setProperty('--blur',      CONFIG.blurRadius    + 'px');
+  rs.setProperty('--falloff',   CONFIG.falloffRadius + 'px');
+  rs.setProperty('--core',      CONFIG.coreThickness + 'px');
+  rs.setProperty('--end',       CONFIG.endFade       + 'px');
+  rs.setProperty('--bg-top',    CONFIG.bgTop);
+  rs.setProperty('--bg-bottom', CONFIG.bgBottom);
+  rs.setProperty('--tint', CONFIG.tint);
+
+  // геометрия
+  const lengths = Array.from({ length: CONFIG.lineCount }, (_, i) => pick(CONFIG.lineLengths, i));
+  const elemH   = CONFIG.coreThickness + 2 * CONFIG.falloffRadius; // высота элемента
+
+  // насыщенность: линии сверх порога раздувают разброс
+  // (по X — всегда при spreadGrowth>0, по Y — только если bandGrowth>0)
+  const excess  = Math.max(0, CONFIG.lineCount - CONFIG.densityThreshold);
+  const bandH   = CONFIG.bandHeight * (1 + excess * CONFIG.bandGrowth);
+  const spreadX = CONFIG.spreadX    * (1 + excess * CONFIG.spreadGrowth);
+
+  // рандомные, но стабильные раскладка и движение (отдельные зёрна — не влияют друг на друга)
+  const rnd      = seedRand(CONFIG.layoutSeed);   // позиции
+  const rndDrift = seedRand(CONFIG.driftSeed);    // параметры движения
+
+  const lines = [];
+  for (let i = 0; i < CONFIG.lineCount; i++){
+    const el = document.createElement('div');
+    el.className = 'line';
+    el.style.width  = lengths[i] + 'px';
+    el.style.height = elemH + 'px';
+
+    // случайное смещение в пределах ±половины разброса, вокруг центра связки
+    const baseX = (rnd() - 0.5) * spreadX + CONFIG.groupOffsetX;
+    const y     = (rnd() - 0.5) * bandH   + CONFIG.groupOffsetY;
+
+    // у каждой линии свои амплитуда, период и фаза — движение не связано
+    const amp    = CONFIG.driftAmpMin    + rndDrift() * (CONFIG.driftAmpMax    - CONFIG.driftAmpMin);
+    const period = CONFIG.driftPeriodMin + rndDrift() * (CONFIG.driftPeriodMax - CONFIG.driftPeriodMin);
+    const phase  = rndDrift() * Math.PI * 2;
+
+    el.style.transform =
+      'translate(-50%,-50%) translate3d(' + baseX + 'px,' + y + 'px,0)';
+
+    stage.appendChild(el);
+    lines.push({ el, baseX, y, amp, period, phase, bPhase: rndDrift() * Math.PI * 2 });
+  }
+
+  const reduce = CONFIG.respectReducedMotion &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const TAU = Math.PI * 2;
+
+  function frame(now){
+    const t = now / 1000; // секунды
+    for (const L of lines){
+      let x = L.baseX;
+      if (!reduce){
+        const w = (TAU / L.period) * CONFIG.globalSpeed; // угловая скорость дрейфа
+        x += L.amp * Math.sin(w * t + L.phase);
+      }
+      L.el.style.transform =
+        'translate(-50%,-50%) translate3d(' + x.toFixed(2) + 'px,' + L.y + 'px,0)';
+
+      if (CONFIG.blurPulse && !reduce){
+        const b = CONFIG.blurRadius +
+          CONFIG.blurPulse * Math.sin((TAU / CONFIG.blurPulsePeriod) * t + L.bPhase);
+        L.el.style.setProperty('--blur', b.toFixed(2) + 'px');
+      }
+    }
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+}
+
+if (document.readyState === 'loading')
+  document.addEventListener('DOMContentLoaded', init);
+else
+  init();
+})();
+</script>
 </body>
 </html>
